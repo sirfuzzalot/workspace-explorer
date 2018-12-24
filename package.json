@@ -1,0 +1,138 @@
+  {
+    "name": "vscode-workspace-explorer",
+    "displayName": "Workspace Explorer",
+    "description": "An explorer panel that allows you to list your collection of workspaces and load them one at a time into the IDE or open a new window with the selected workspace.",
+    "icon": "resources/icons/icon.png",
+    "publisher": "tomsaunders",
+    "author": {
+        "name": "Tom Saunders"
+    },
+    "galleryBanner": {
+        "color": "#282c34",
+        "theme": "dark"
+    },
+    "license": "Apache 2.0",
+    "homepage": "https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/blob/master/README.md",
+    "bugs": {
+        "url": "https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/issues/new"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer.git"
+    },
+    "version": "1.0.2",
+    "engines": {
+        "vscode": "^1.29.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "keywords": [
+        "workspace",
+        "explorer",
+        "organize",
+        "switch",
+        "change",
+        "panel"
+    ],
+    "activationEvents": [
+        "onView:workspaceExplorer"
+    ],
+    "main": "./extension",
+    "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "Workspace Explorer Configuration",
+            "properties": {
+                "workspaceExplorer.workspaceStorageDirectory": {
+                    "type": "string",
+                    "default": "",
+                    "markdownDescription": "The root directory containing your .code-workspace files. Workspace Explorer will show you any .code-workspace's in this directory and will also display any sub-folders. This will allow you to organize your workspaces into categories by sub-folder. Ex: C:\\Users\\appuser\\workspaces"
+                },
+                "workspaceExplorer.enableCustomIconSearch": {
+                    "type": "boolean",
+                    "default": false,
+                    "markdownDescription": "Allow Workspace Explorer to search for .svg and .png files with the same name as your workspaces and folders. Then to use those as icons in the Workspace Explorer. The search path defaults to the same location as your workspace file. An additional search directory can be added in additionalCustomIconDirectory."
+                },
+                "workspaceExplorer.additionalCustomIconDirectory": {
+                    "type": "string",
+                    "default": "",
+                    "markdownDescription": "Give Workspace Explorer an additional search directory for .svg and .png files with the same name as your workspaces and folders. Then use those as icons in the Workspace Explorer. Workspace Explorer will first look in the Workspace Storage Directory and then will look in the Additional Custom Icon Directory. Ex: C:\\Users\\appuser\\icons"
+                }
+            }
+        },
+        "views": {
+            "explorer": [
+                {
+                    "id": "workspaceExplorer",
+                    "name": "Workspaces"
+                }
+            ]
+        },
+        "commands": [
+            {
+                "command": "workspaceExplorer.openWorkspaceInNewWindow",
+                "title": "Open workspace in new window",
+                "icon": {
+                    "light": "resources/icons/light/new_window.svg",
+                    "dark": "resources/icons/dark/new_window.svg"
+                }
+            },
+            {
+                "command": "workspaceExplorer.openWorkspaceInSameWindow",
+                "title": "Open Workspace in Same Window"
+            },
+            {
+                "command": "workspaceExplorer.refreshWorkspaceExplorer",
+                "title": "Refresh the Workspace Explorer",
+                "icon": {
+                    "light": "resources/icons/light/refresh.svg",
+                    "dark": "resources/icons/dark/refresh.svg"
+                }
+            },
+            {
+                "command": "workspaceExplorer.openWorkspaceExplorerSettings",
+                "title": "Open Settings Editor. Search workspaceExplorer",
+                "icon": {
+                    "light": "resources/icons/light/settings.svg",
+                    "dark": "resources/icons/dark/settings.svg"
+                }
+            }
+        ],
+        "menus": {
+            "view/item/context": [
+                {
+                    "command": "workspaceExplorer.openWorkspaceInNewWindow",
+                    "when": "view == workspaceExplorer && viewItem == workspaceFile",
+                    "group": "inline"
+                }
+            ],
+            "view/title": [
+                {
+                    "command": "workspaceExplorer.refreshWorkspaceExplorer",
+                    "when": "view == workspaceExplorer",
+                    "group": "navigation"
+                },
+                {
+                    "command": "workspaceExplorer.openWorkspaceExplorerSettings",
+                    "when": "view == workspaceExplorer",
+                    "group": "navigation"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test",
+        "lint": "./node_modules/.bin/eslint ."
+    },
+    "devDependencies": {
+        "@types/mocha": "^2.2.42",
+        "@types/node": "^8.10.25",
+        "eslint": "^4.11.0",
+        "typescript": "^2.6.1",
+        "vsce": "^1.54.0",
+        "vscode": "^1.1.21"
+    },
+    "dependencies": {}
+}
