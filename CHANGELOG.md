@@ -6,3 +6,6 @@ All notable changes to the "vscode-workspace-explorer" extension will be documen
 
 ## 1.0.2
 * Added additional details to docs
+
+## 1.0.3
+* Updated .vscodeignore to not include animations.

@@ -20,7 +20,7 @@
         "type": "git",
         "url": "https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer.git"
     },
-    "version": "1.0.2",
+    "version": "1.0.3",
     "engines": {
         "vscode": "^1.29.0"
     },

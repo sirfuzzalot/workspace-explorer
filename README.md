@@ -117,6 +117,9 @@ None
 
 # Release Notes
 
+## 1.0.3
+* Updated .vscodeignore to not include animations.
+
 ## 1.0.2
 * Updated Documentation with proper animations.
 
