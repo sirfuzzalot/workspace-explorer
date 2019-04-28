@@ -1,7 +1,8 @@
-  {
+{
     "name": "vscode-workspace-explorer",
     "displayName": "Workspace Explorer",
     "description": "An explorer panel that allows you to list your collection of workspaces and load them one at a time into the IDE or open a new window with the selected workspace.",
+    "version": "1.1.0",
     "icon": "resources/icons/icon.png",
     "publisher": "tomsaunders",
     "author": {
@@ -11,7 +12,7 @@
         "color": "#282c34",
         "theme": "dark"
     },
-    "license": "Apache 2.0",
+    "license": "Apache-2.0",
     "homepage": "https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/blob/master/README.md",
     "bugs": {
         "url": "https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/issues/new"
@@ -20,9 +21,8 @@
         "type": "git",
         "url": "https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer.git"
     },
-    "version": "1.0.3",
     "engines": {
-        "vscode": "^1.29.0"
+        "vscode": "^1.33.1"
     },
     "categories": [
         "Other"
@@ -124,15 +124,19 @@
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "node ./node_modules/vscode/bin/test",
-        "lint": "./node_modules/.bin/eslint ."
+        "lint": "./node_modules/.bin/eslint extension.js workspaceDataTreeProvider.js",
+        "fix": "./node_modules/.bin/eslint --fix extension.js workspaceDataTreeProvider.js",
+        "build": "vsce package"
     },
     "devDependencies": {
         "@types/mocha": "^2.2.42",
-        "@types/node": "^8.10.25",
-        "eslint": "^4.11.0",
+        "@types/node": "^8.10.47",
+        "eslint": "^4.19.1",
+        "eslint-config-airbnb-base": "^13.1.0",
+        "eslint-plugin-import": "^2.17.2",
         "typescript": "^2.6.1",
-        "vsce": "^1.54.0",
-        "vscode": "^1.1.21"
+        "vsce": "^1.59.0",
+        "vscode": "^1.1.33"
     },
     "dependencies": {}
 }

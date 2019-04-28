@@ -117,6 +117,13 @@ None
 
 # Release Notes
 
+## 1.1.0
+* Added support for symlinked directories.
+
+Workspace Explorer will now follow symlinked directories to find
+.code-workspace files and image files. Thanks to @Xaryphon for providing
+the initial version of the code for this feature.
+
 ## 1.0.3
 * Updated .vscodeignore to not include animations.
 
@@ -169,6 +176,10 @@ in the **Workspace Storage Directory**.
     * Value in settings that indicates how many levels of subfolders to search.
     * Add collapse all button to collapse the sub-folders.
     * Add expand all button to expand all sub-folders.
+
+# Contributors
+* Tom Saunders (original author, primary maintainer)
+* Xaryphon
 
 # Testers
 Special thanks to the project testers.
