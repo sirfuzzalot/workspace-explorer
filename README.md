@@ -117,6 +117,13 @@ None
 
 # Release Notes
 
+## 1.2.0
+* Added support for additional versions of VSCode.
+    * VSCodium
+    * VSCode OSS
+
+Contributed by @stripedpajamas
+
 ## 1.1.0
 * Added support for symlinked directories.
 
@@ -180,6 +187,7 @@ in the **Workspace Storage Directory**.
 # Contributors
 * Tom Saunders (original author, primary maintainer)
 * Xaryphon
+* stripedpajamas
 
 # Testers
 Special thanks to the project testers.

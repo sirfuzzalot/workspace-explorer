@@ -3,6 +3,5 @@
 test/**
 .gitignore
 jsconfig.json
-vsc-extension-quickstart.md
 .eslintrc.json
 resources/images/

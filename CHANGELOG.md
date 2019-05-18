@@ -13,3 +13,7 @@ All notable changes to the "vscode-workspace-explorer" extension will be documen
 ## 1.1.0
 * Updated workspaceDataTreeProvider.js to support symlinks. Thanks to
 @Xaryphon for providing the initial version of the code for this feature.
+
+## 1.2.0
+* Added support for VSCodium and VSCode OSS. Thanks to @stripedpajamas
+for the contribution and @camlafit for the issue.

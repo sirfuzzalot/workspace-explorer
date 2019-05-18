@@ -25,7 +25,7 @@ class WorkspaceTreeDataProvider {
     this.extensionConfig = vscode.workspace.getConfiguration(
       'workspaceExplorer',
     );
-    if (this.extensionConfig.workspaceStorageDirectory == '') {
+    if (this.extensionConfig.workspaceStorageDirectory === '') {
       vscode.window.showErrorMessage(
         'Workspace Explorer: You must set the workspace '
               + 'storage directory in your vscode settings. '
@@ -100,7 +100,7 @@ class WorkspaceElement extends vscode.TreeItem {
     }
 
     // Gives workspace Tree Items click to open in same window behavior.
-    if (collapsableState != vscode.TreeItemCollapsibleState.Collapsed) {
+    if (collapsableState !== vscode.TreeItemCollapsibleState.Collapsed) {
       this.command = {
         command: 'workspaceExplorer.openWorkspaceInSameWindow',
         title: 'Open workspace in same window',
@@ -200,7 +200,7 @@ const getCustomWorkspaceIcons = function getCustomWorkspaceIcons(
   }
 
   // Check the Additional Custom Icon Directory if configured.
-  if (extensionConfig.additionalCustomIconDirectory != '') {
+  if (extensionConfig.additionalCustomIconDirectory !== '') {
     return getCustomWorkspaceIcons(
       path.join(
         extensionConfig.additionalCustomIconDirectory,
@@ -215,7 +215,7 @@ const getCustomWorkspaceIcons = function getCustomWorkspaceIcons(
 
 // Gets light and dark icon paths from default values.
 const getDefaultWorkspaceIcons = function getDefaultWorkspaceIcons(collapsableState) {
-  if (collapsableState == vscode.TreeItemCollapsibleState.Collapsed) {
+  if (collapsableState === vscode.TreeItemCollapsibleState.Collapsed) {
     return {
       light: path.join(
         path.dirname(__filename),
@@ -254,23 +254,23 @@ const getDefaultWorkspaceIcons = function getDefaultWorkspaceIcons(collapsableSt
 // Sort folders and workspace files alphabetically,
 // putting folders above workspace files.
 const sortFilesAndFolders = function sortFilesAndFolders(a, b) {
-  if (a.collapsableState == vscode.TreeItemCollapsibleState.Collapsed) {
-    if (b.collapsableState == vscode.TreeItemCollapsibleState.Collapsed) {
+  if (a.collapsableState === vscode.TreeItemCollapsibleState.Collapsed) {
+    if (b.collapsableState === vscode.TreeItemCollapsibleState.Collapsed) {
       const sortingArray = [a.label, b.label];
       sortingArray.sort();
-      if (a.label == sortingArray[0]) {
+      if (a.label === sortingArray[0]) {
         return -1;
       }
       return 1;
     }
     return -1;
   }
-  if (b.collapsableState == vscode.TreeItemCollapsibleState.Collapsed) {
+  if (b.collapsableState === vscode.TreeItemCollapsibleState.Collapsed) {
     return 1;
   }
   const sortingArray = [a.label, b.label];
   sortingArray.sort();
-  if (a.label == sortingArray[0]) {
+  if (a.label === sortingArray[0]) {
     return -1;
   }
   return 1;
