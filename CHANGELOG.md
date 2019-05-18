@@ -17,3 +17,6 @@ All notable changes to the "vscode-workspace-explorer" extension will be documen
 ## 1.2.0
 * Added support for VSCodium and VSCode OSS. Thanks to @stripedpajamas
 for the contribution and @camlafit for the issue.
+
+## 1.2.1
+* Fixed docs Requirements section to note additional versions of VSCode.
