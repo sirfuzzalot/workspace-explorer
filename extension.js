@@ -33,8 +33,12 @@ function activate() {
 
   // Identify which application to use.
   let applicationName;
-  if (vscode.env.appName == 'Visual Studio Code - Insiders') {
+  if (vscode.env.appName === 'Visual Studio Code - Insiders') {
     applicationName = 'code-insiders';
+  } else if (vscode.env.appName === 'Code - OSS') {
+    applicationName = 'code-oss';
+  } else if (vscode.env.appName === 'VSCodium') {
+    applicationName = 'vscodium';
   } else {
     applicationName = 'code';
   }
