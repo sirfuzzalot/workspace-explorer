@@ -2,7 +2,7 @@
     "name": "vscode-workspace-explorer",
     "displayName": "Workspace Explorer",
     "description": "An explorer panel that allows you to list your collection of workspaces and load them one at a time into the IDE or open a new window with the selected workspace.",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "icon": "resources/icons/icon.png",
     "publisher": "tomsaunders",
     "author": {

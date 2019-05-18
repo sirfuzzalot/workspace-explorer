@@ -74,7 +74,8 @@ setting.
 3. Hit the **refresh** icon on the Workspace Explorer.
 
 # Requirements
-Workspace Explorer requires that **code** or **code-insiders** be added
+Workspace Explorer requires that **code**, **code-insiders**,
+**code-oss**, or **vscodium** be added
 to the **$PATH** environment variable.
 * When opening a new window or switching
 the workspace in the existing window it will use these key words to run
@@ -116,6 +117,9 @@ Workspace Explorer contributes the following settings:
 None
 
 # Release Notes
+
+## 1.2.1
+* Additional Docs update for version 1.2
 
 ## 1.2.0
 * Added support for additional versions of VSCode.
