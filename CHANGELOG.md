@@ -20,3 +20,6 @@ for the contribution and @camlafit for the issue.
 
 ## 1.2.1
 * Fixed docs Requirements section to note additional versions of VSCode.
+
+## 1.2.2
+* Migrated repository to new home.

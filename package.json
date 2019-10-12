@@ -2,7 +2,7 @@
     "name": "vscode-workspace-explorer",
     "displayName": "Workspace Explorer",
     "description": "An explorer panel that allows you to list your collection of workspaces and load them one at a time into the IDE or open a new window with the selected workspace.",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "icon": "resources/icons/icon.png",
     "publisher": "tomsaunders",
     "author": {
@@ -13,13 +13,13 @@
         "theme": "dark"
     },
     "license": "Apache-2.0",
-    "homepage": "https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/blob/master/README.md",
+    "homepage": "https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/blob/master/README.md",
     "bugs": {
-        "url": "https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/issues/new"
+        "url": "https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/issues/new"
     },
     "repository": {
         "type": "git",
-        "url": "https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer.git"
+        "url": "https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer.git"
     },
     "engines": {
         "vscode": "^1.33.1"

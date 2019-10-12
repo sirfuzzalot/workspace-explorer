@@ -2,14 +2,14 @@
 Workspace Explorer provides a convenient UI to quickly switch your
 workspace or open a workspace in a new window.
 
-<a href="https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/raw/master/resources/images/openWorkspace.gif"><img alt="https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/raw/master/resources/images/openWorkspace_lowres.gif" src="https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/raw/master/resources/images/openWorkspace_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/openWorkspace.gif"><img alt="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/openWorkspace_lowres.gif" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/openWorkspace_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 # Getting Started
 I should note before we dive into setup, VSCode currently allows you to **only have one instance of
 a workspace open at a time**, i.e. your **node.code-workspace** can only be open
 in one window of VSCode.
 
-<a href="https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/raw/master/resources/images/workspaceStorageDirectory.gif"><img alt="https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/raw/master/resources/images/workspaceStorageDirectory_lowres.gif" src="https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/raw/master/resources/images/workspaceStorageDirectory_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/workspaceStorageDirectory.gif"><img alt="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/workspaceStorageDirectory_lowres.gif" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/workspaceStorageDirectory_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 Five quick steps to get you up and running:
 1. Install the Workspace Explorer extension.
@@ -38,7 +38,7 @@ organize and quickly recognize your workspaces/sub-folders.
 To add custom icons do the following:
 ### **OPTION ONE: Store icons in the Workspace Storage Directory and sub-folders.**
 
-<a href="https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/raw/master/resources/images/enableCustomIconSearch.gif"><img alt="https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/raw/master/resources/images/enableCustomIconSearch_lowres.gif" src="https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/raw/master/resources/images/enableCustomIconSearch_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/enableCustomIconSearch.gif"><img alt="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/enableCustomIconSearch_lowres.gif" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/enableCustomIconSearch_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 1. Enable custom icons in the Workspace Explorer settings.
     * Check the box for the **Workspace Explorer: Enable Custom Icon Search** setting.
@@ -64,7 +64,7 @@ and where to put them) then it will search the **Additional Custom Icon Director
 It will only search one level of the directory (no sub-directories). If
 no icon is found at that point, default icons are used.
 
-<a href="https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/raw/master/resources/images/additionalCustomIconDirectory.gif"><img alt="https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/raw/master/resources/images/additionalCustomIconDirectory_lowres.gif" src="https://gitlab.com/jfwy2bhilv/9vsgwopwel/vscode-workspace-explorer/raw/master/resources/images/additionalCustomIconDirectory_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/additionalCustomIconDirectory.gif"><img alt="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/additionalCustomIconDirectory_lowres.gif" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/additionalCustomIconDirectory_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 Enabling the **Additional Custom Icon Directory**
 1. Ensure the **Workspace Explorer: Enable Custom Icon Search** setting
@@ -117,6 +117,9 @@ Workspace Explorer contributes the following settings:
 None
 
 # Release Notes
+
+## 1.2.2
+* Migrated repository to new home.
 
 ## 1.2.1
 * Additional Docs update for version 1.2
