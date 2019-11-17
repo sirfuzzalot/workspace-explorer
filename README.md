@@ -114,9 +114,12 @@ Workspace Explorer contributes the following settings:
 
 # Known Issues
 
-None
+* No support for [ENV variables](https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/issues/2) in configured file paths.
 
 # Release Notes
+
+## 1.3.0
+* Updated default icon sets to use default icons from [VSCode](https://github.com/microsoft/vscode-icons).
 
 ## 1.2.2
 * Migrated repository to new home.
@@ -201,6 +204,3 @@ Special thanks to the project testers.
 * Renaud Talon
 * Robert Tomcik
 * Ryan Gold
-
-# Additional Attribution
-Some icons courtesy of [Material Design](http://material.io).
