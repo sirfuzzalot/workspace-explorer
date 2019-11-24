@@ -1,6 +1,16 @@
 # Change Log
 All notable changes to the "vscode-workspace-explorer" extension will be documented in this file.
 
+## 1.4.0
+* Added Open workspace storage directory button.
+* Added Collapse All button
+* Add Change Icon option in right click menu
+* Removed Settings button.
+* Updated Requirements Section of README
+* Fixed support for VSCodium to call **codium** when changing workspace.
+* Refactored extension code. Breaking it into additional modules.
+* Added Create Subfolder in Folder Right Click menu - DISABLED until [drag and drop](https://github.com/microsoft/vscode/issues/32592) arrives in VSCode API
+
 ## 1.3.0
 * Updated default icon sets to use default icons from [VSCode](https://github.com/microsoft/vscode-icons).
 

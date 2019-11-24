@@ -2,7 +2,7 @@
     "name": "vscode-workspace-explorer",
     "displayName": "Workspace Explorer",
     "description": "An explorer panel that allows you to list your collection of workspaces and load them one at a time into the IDE or open a new window with the selected workspace.",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "icon": "resources/icons/icon.png",
     "publisher": "tomsaunders",
     "author": {
@@ -38,7 +38,7 @@
     "activationEvents": [
         "onView:workspaceExplorer"
     ],
-    "main": "./extension",
+    "main": "./src/extension",
     "contributes": {
         "configuration": {
             "type": "object",
@@ -91,12 +91,20 @@
                 }
             },
             {
-                "command": "workspaceExplorer.openWorkspaceExplorerSettings",
-                "title": "Open Settings Editor. Search workspaceExplorer",
+                "command": "workspaceExplorer.openWorkspaceExplorerStorageDirectory",
+                "title": "Open the Workspace Explorer Storage Directory",
                 "icon": {
-                    "light": "resources/icons/light/settings.svg",
-                    "dark": "resources/icons/dark/settings.svg"
+                    "light": "resources/icons/light/workspace_storage.svg",
+                    "dark": "resources/icons/dark/workspace_storage.svg"
                 }
+            },
+            {
+                "command": "workspaceExplorer.changeWorkspaceIcon",
+                "title": "Change Workspace Icon"
+            },
+            {
+                "command": "workspaceExplorer.changeFolderIcon",
+                "title": "Change Folder Icon"
             }
         ],
         "menus": {
@@ -105,6 +113,14 @@
                     "command": "workspaceExplorer.openWorkspaceInNewWindow",
                     "when": "view == workspaceExplorer && viewItem == workspaceFile",
                     "group": "inline"
+                },
+                {
+                    "command": "workspaceExplorer.changeWorkspaceIcon",
+                    "when": "view == workspaceExplorer && viewItem == workspaceFile"
+                },
+                {
+                    "command": "workspaceExplorer.changeFolderIcon",
+                    "when": "view == workspaceExplorer && viewItem == folder"
                 }
             ],
             "view/title": [
@@ -114,7 +130,7 @@
                     "group": "navigation"
                 },
                 {
-                    "command": "workspaceExplorer.openWorkspaceExplorerSettings",
+                    "command": "workspaceExplorer.openWorkspaceExplorerStorageDirectory",
                     "when": "view == workspaceExplorer",
                     "group": "navigation"
                 }

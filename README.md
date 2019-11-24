@@ -2,14 +2,14 @@
 Workspace Explorer provides a convenient UI to quickly switch your
 workspace or open a workspace in a new window.
 
-<a href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/openWorkspace.gif"><img alt="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/openWorkspace_lowres.gif" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/openWorkspace_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/openWorkspace.gif"><img alt="Opening a workspace using the explorer" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/openWorkspace_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 # Getting Started
 I should note before we dive into setup, VSCode currently allows you to **only have one instance of
 a workspace open at a time**, i.e. your **node.code-workspace** can only be open
 in one window of VSCode.
 
-<a href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/workspaceStorageDirectory.gif"><img alt="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/workspaceStorageDirectory_lowres.gif" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/workspaceStorageDirectory_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/workspaceStorageDirectory.gif"><img alt="Setting up the workspace explorer storage directory configuration" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/workspaceStorageDirectory_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 Five quick steps to get you up and running:
 1. Install the Workspace Explorer extension.
@@ -38,7 +38,7 @@ organize and quickly recognize your workspaces/sub-folders.
 To add custom icons do the following:
 ### **OPTION ONE: Store icons in the Workspace Storage Directory and sub-folders.**
 
-<a href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/enableCustomIconSearch.gif"><img alt="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/enableCustomIconSearch_lowres.gif" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/enableCustomIconSearch_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/enableCustomIconSearch.gif"><img alt="Enabling custom icon search" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/enableCustomIconSearch_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 1. Enable custom icons in the Workspace Explorer settings.
     * Check the box for the **Workspace Explorer: Enable Custom Icon Search** setting.
@@ -64,7 +64,7 @@ and where to put them) then it will search the **Additional Custom Icon Director
 It will only search one level of the directory (no sub-directories). If
 no icon is found at that point, default icons are used.
 
-<a href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/additionalCustomIconDirectory.gif"><img alt="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/additionalCustomIconDirectory_lowres.gif" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/additionalCustomIconDirectory_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/additionalCustomIconDirectory.gif"><img alt="Enabling the custom icon configuration." src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/additionalCustomIconDirectory_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 Enabling the **Additional Custom Icon Directory**
 1. Ensure the **Workspace Explorer: Enable Custom Icon Search** setting
@@ -73,15 +73,37 @@ is enabled. See OPTION ONE for details.
 setting.
 3. Hit the **refresh** icon on the Workspace Explorer.
 
+### Updating Icons
+Workspace Explorer allows you quickly update your workspace and folder icons
+via one of two methods:
+
+1. Through the open Workspace Storage directory button.
+2. Right clicking on a folder or workspace in the Workspace Explorer > **Change Icon**.
+
+From Open Workspace Storage Directory button.
+
+<a href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/changeIconInDialog.gif"><img alt="Click on the Workspace Storage button animation." src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/changeIconInDialog.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+
+From Right Click Menu option.
+
+<a href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/changeIconRightClick.gif"><img alt="Right Click on Item animation." src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/changeIconRightClick.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+
 # Requirements
 Workspace Explorer requires that **code**, **code-insiders**,
-**code-oss**, or **vscodium** be added
+**code-oss**, or **codium** be added
 to the **$PATH** environment variable.
 * When opening a new window or switching
 the workspace in the existing window it will use these key words to run
 the application via command-line.
 
 If working on **MacOS** run the Command Palette Command **Install code command in Path**
+
+The easiest way to test this is to open a terminal/cmd/bash and type `code` or your
+specific flavor. See above. If VSCode opens then it's working. Otherswise you can do
+the following.
+* If on MacOS run the Command Palette Command **Install code command in Path**
+* Reboot
+* Reinstall VSCode and Reboot (for most OS's `code` is setup in the install).
 
 # Extension Settings
 Workspace Explorer contributes the following settings:
@@ -117,6 +139,14 @@ Workspace Explorer contributes the following settings:
 * No support for [ENV variables](https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/issues/2) in configured file paths.
 
 # Release Notes
+
+## 1.4.0
+* Added Open workspace storage directory button.
+* Added Collapse All button
+* Add Change Icon option in right click menu
+* Removed Settings button.
+* Updated Requirements Section of README
+* Fixed support for VSCodium to call **codium** when changing workspace.
 
 ## 1.3.0
 * Updated default icon sets to use default icons from [VSCode](https://github.com/microsoft/vscode-icons).
@@ -163,18 +193,11 @@ the initial version of the code for this feature.
     Explorer could be selected before clicking the button.
     * The workspace could be named and saved.
 * Add the ability to create a new sub-folder.
+    * **Feature Built** Waiting for tree view drag and drop API to be stable in VSCode.
     * A button would be added to the title bar indicating a new folder.
     * The default location of the new folder would be in the
     **Workspace Storage Directory**, but a **sub-folder** in the Workspace
     Explorer could be selected before clicking the button.
-* Add the ability to add an icon to a workspace or subfolder directly in the explorer.
-    * Right-click on a workspace or sub-folder to open a file dialog.
-    * Support for **.svg** and **.png** files
-    * File would be saved in the **Workspace Storage Directory** or sub-folder and renamed.
-    **Ex: "Node Testing.code-workspace" + nodejs.svg ==> "Node Testing.svg"**.
-* Add the ability to open the Workspace Storage Directory from the Workspace Explorer
-    * Add a button the the title bar that would open a file explorer
-    at the Workspace Storage Directory.
 * Add the ability to open the Additional Custom Icon Directory from the Workspace Explorer
     * Add a button the the title bar that would open a file explorer
     at the Additional Custom Icon Directory.
@@ -188,11 +211,6 @@ in the **Workspace Storage Directory**.
 * Add a warning message to the workspace explorer if the Workspace Storage Directory is not set.
     * Waiting on the proposed API to become stable in VSCode.
     * Will remove the notification message when this is implemented.
-* Add Expand all and Collapse all sub-folders ability.
-    * Configuration in settings to auto expand sub-folders
-    * Value in settings that indicates how many levels of subfolders to search.
-    * Add collapse all button to collapse the sub-folders.
-    * Add expand all button to expand all sub-folders.
 
 # Contributors
 * Tom Saunders (original author, primary maintainer)
