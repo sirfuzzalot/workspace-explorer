@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "vscode-workspace-explorer" extension will be documented in this file.
 
+## 1.4.1
+* Fix for POSIX style pathing on extension load that would prevent the extension from finding its version.
+
 ## 1.4.0
 * Added Open workspace storage directory button.
 * Added Collapse All button

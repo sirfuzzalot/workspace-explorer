@@ -140,6 +140,9 @@ Workspace Explorer contributes the following settings:
 
 # Release Notes
 
+## 1.4.1
+* Fix for POSIX style pathing on extension load that would prevent the extension from finding its version.
+
 ## 1.4.0
 * Added Open workspace storage directory button.
 * Added Collapse All button
@@ -216,6 +219,7 @@ in the **Workspace Storage Directory**.
 * Tom Saunders (original author, primary maintainer)
 * Xaryphon
 * stripedpajamas
+* CugeDe
 
 # Testers
 Special thanks to the project testers.
