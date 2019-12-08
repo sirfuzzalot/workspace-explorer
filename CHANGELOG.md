@@ -1,6 +1,17 @@
 # Change Log
 All notable changes to the "vscode-workspace-explorer" extension will be documented in this file.
 
+## 1.5.0
+* Added Container Development Environment
+* Enabled multi-select in Open Workspace Storage Directory dialog.
+* Added Experimantal Create Workspace right click option.
+* Added Experimental Create Workspace button on the Workspace Explorer navigation menu.
+* Added Delete right click option. Works for both folders and workspaces.
+* Added Create Sub-folder right click option.
+* Added Create Sub-folder button on the Workspace Explorer navigation menu.
+* Added Rename right click options. Works for both folders and workspaces.
+* Updated Enable Custom Icon Search Configuration to be enabled by default
+
 ## 1.4.1
 * Fix for POSIX style pathing on extension load that would prevent the extension from finding its version.
 

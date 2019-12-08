@@ -1,0 +1,12 @@
+version: "3.7"
+
+volumes:
+  reserved: {}
+
+services:
+  workspace-explorer-linux-dev-env:
+    image: node:12.13.0-buster
+    volumes:
+      - "./:/app"
+      - reserved:/app/node_modules
+    command: [ "bash" , "/app/tools/container_environment/startup.sh" ]

@@ -1,5 +1,3 @@
-const fs = require('fs').promises;
-
 const path = require('path');
 
 const vscode = require('vscode');
@@ -24,12 +22,17 @@ const addSubFolder = async (context, treeDataProvider) => {
     return;
   }
 
+  let basePath = context ? context.workspaceFileNameAndFilePath : undefined;
+  if (basePath === undefined) {
+    const config = vscode.workspace.getConfiguration('workspaceExplorer');
+    basePath = config.get('workspaceStorageDirectory');
+  }
 
   // Build new Directory path.
-  const newFolder = path.join(
-    context.workspaceFileNameAndFilePath,
+  const newFolder = vscode.Uri.file(path.join(
+    basePath,
     inputResults,
-  );
+  ));
 
   // Create directory
   await vscode.workspace.fs.createDirectory(newFolder);
@@ -38,6 +41,4 @@ const addSubFolder = async (context, treeDataProvider) => {
   treeDataProvider.refresh();
 };
 
-module.exports = {
-  addSubFolder,
-};
+module.exports = addSubFolder;

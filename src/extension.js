@@ -16,9 +16,17 @@ const vscode = require('vscode');
 
 const { WorkspaceTreeDataProvider } = require('./workspaceTreeDataProvider');
 
-// const { addSubFolder } = require('./addSubFolder');
+const changeIcon = require('./changeIcon');
 
-const { changeIcon } = require('./changeIcon');
+const addSubFolder = require('./addSubFolder');
+
+const deleteFolder = require('./deleteFolder');
+
+const createWorkspace = require('./createWorkspace');
+
+const deleteWorkspace = require('./deleteWorkspace');
+
+const renameTreeItem = require('./renameTreeItem');
 
 // Activates the Extension when the Explorer view-container is open
 // and the workspace explorer is expanded.
@@ -50,19 +58,15 @@ const activate = async () => {
     vscode.commands.registerCommand(
       'workspaceExplorer.openWorkspaceInNewWindow',
       (context) => {
-        console.log(
-          `[vscode-workspace-explorer] ${extensionVersion} ==> Opening `
-              + `${context.workspaceFileNameAndFilePath} in a new window.`,
-        );
-        const results = spawn(
-          applicationName,
-          [`"${context.workspaceFileNameAndFilePath}"`],
-          { cwd: os.homedir(), detached: true, shell: true },
-        );
-
-        results.stdout.on('data', (data) => {
-          console.log(`stdout ${data}`);
-        });
+        try {
+          spawn(
+            applicationName,
+            [`"${context.workspaceFileNameAndFilePath}"`],
+            { cwd: os.homedir(), detached: true, shell: true },
+          );
+        } catch (err) {
+          vscode.window.showErrorMessage(err);
+        }
       },
     );
 
@@ -70,16 +74,15 @@ const activate = async () => {
     vscode.commands.registerCommand(
       'workspaceExplorer.openWorkspaceInSameWindow',
       (workspaceFileNameAndFilePath) => {
-        console.log(
-          `[vscode-workspace-explorer] ${extensionVersion} `
-                  + '==> Opening '
-                  + `${workspaceFileNameAndFilePath} in this window.`,
-        );
-        spawn(
-          applicationName,
-          ['-r', `"${workspaceFileNameAndFilePath}"`],
-          { cwd: os.homedir(), detached: true, shell: true },
-        );
+        try {
+          spawn(
+            applicationName,
+            ['-r', `"${workspaceFileNameAndFilePath}"`],
+            { cwd: os.homedir(), detached: true, shell: true },
+          );
+        } catch (err) {
+          vscode.window.showErrorMessage(err);
+        }
       },
     );
 
@@ -88,23 +91,24 @@ const activate = async () => {
     vscode.commands.registerCommand(
       'workspaceExplorer.openWorkspaceExplorerStorageDirectory',
       () => {
-        console.log(
-          `[vscode-workspace-explorer] ${extensionVersion} `
-              + '==> Open the Workspace Explorer Storage Directory',
-        );
-        const config = vscode.workspace.getConfiguration(
-          'workspaceExplorer',
-        );
-        vscode.window.showOpenDialog(
-          {
-            defaultUri: vscode.Uri.file(config.workspaceStorageDirectory),
-            canSelectFiles: false,
-            canSelectFolders: false,
-            filters: {
-              'Workspaces and Images': ['svg', 'png', 'code-workspace'],
+        try {
+          const config = vscode.workspace.getConfiguration(
+            'workspaceExplorer',
+          );
+          vscode.window.showOpenDialog(
+            {
+              defaultUri: vscode.Uri.file(config.workspaceStorageDirectory),
+              canSelectFiles: true,
+              canSelectFolders: false,
+              canSelectMany: true,
+              filters: {
+                'Workspaces and Images': ['svg', 'png', 'code-workspace'],
+              },
             },
-          },
-        );
+          );
+        } catch (err) {
+          vscode.window.showErrorMessage(err);
+        }
       },
     );
 
@@ -118,36 +122,39 @@ const activate = async () => {
       },
     );
 
-    // Awaiting API stablization
+    // TODO: Add default text in tree view. Awaiting API stablization
     // treeView.message = 'Choose a Workspace Storage Directory';
 
-    // Register Add sub-folder Command.
-    // TODO: Disabled Until Drag and Drop can be implemented in TreeView API
-    // vscode.commands.registerCommand(
-    //   'workspaceExplorer.addSubFolder',
-    //   async (context) => {
-    //     try {
-    //       console.log(
-    //         `[vscode-workspace-explorer] ${extensionVersion} `
-    //             + '==> Add sub-folder',
-    //       );
+    // TODO: Add Configuration Change Listener
 
-    //       await addSubFolder(context, treeDataProvider);
-    //     } catch (err) {
-    //       console.error(err);
-    //       vscode.window.showErrorMessage(err);
-    //     }
-    //   },
-    // );
+    // Register Add sub-folder Command.
+    vscode.commands.registerCommand(
+      'workspaceExplorer.addSubFolder',
+      async (context) => {
+        try {
+          await addSubFolder(context, treeDataProvider);
+        } catch (err) {
+          vscode.window.showErrorMessage(err);
+        }
+      },
+    );
+
+    // Register Delete Folder Command.
+    vscode.commands.registerCommand(
+      'workspaceExplorer.deleteFolder',
+      async (context) => {
+        try {
+          await deleteFolder(context, treeDataProvider);
+        } catch (err) {
+          vscode.window.showErrorMessage(err);
+        }
+      },
+    );
 
     // Register Refresh Command.
     vscode.commands.registerCommand(
       'workspaceExplorer.refreshWorkspaceExplorer',
       () => {
-        console.log(
-          `[vscode-workspace-explorer] ${extensionVersion} `
-              + '==> Refreshing Workspace Explorer',
-        );
         treeDataProvider.refresh();
       },
     );
@@ -157,10 +164,6 @@ const activate = async () => {
       'workspaceExplorer.changeFolderIcon',
       async (e) => {
         try {
-          console.log(
-            `[vscode-workspace-explorer] ${extensionVersion} `
-                + '==> Changing Folder Icon',
-          );
           await changeIcon(e, treeDataProvider);
         } catch (err) {
           vscode.window.showErrorMessage(err);
@@ -173,11 +176,43 @@ const activate = async () => {
       'workspaceExplorer.changeWorkspaceIcon',
       async (e) => {
         try {
-          console.log(
-            `[vscode-workspace-explorer] ${extensionVersion} `
-                + '==> Changing Workspace Icon',
-          );
           await changeIcon(e, treeDataProvider);
+        } catch (err) {
+          vscode.window.showErrorMessage(err);
+        }
+      },
+    );
+
+    // Register Create Workspace Command.
+    vscode.commands.registerCommand(
+      'workspaceExplorer.createWorkspace',
+      async (e) => {
+        try {
+          await createWorkspace(e, treeDataProvider);
+        } catch (err) {
+          vscode.window.showErrorMessage(err);
+        }
+      },
+    );
+
+    // Register Delete Workspace Command.
+    vscode.commands.registerCommand(
+      'workspaceExplorer.deleteWorkspace',
+      async (e) => {
+        try {
+          await deleteWorkspace(e, treeDataProvider);
+        } catch (err) {
+          vscode.window.showErrorMessage(err);
+        }
+      },
+    );
+
+    // Register Rename Command.
+    vscode.commands.registerCommand(
+      'workspaceExplorer.rename',
+      async (e) => {
+        try {
+          await renameTreeItem(e, treeDataProvider);
         } catch (err) {
           vscode.window.showErrorMessage(err);
         }
@@ -190,6 +225,6 @@ const activate = async () => {
   } catch (err) {
     vscode.window.showErrorMessage(err);
   }
-}
+};
 
 exports.activate = activate;

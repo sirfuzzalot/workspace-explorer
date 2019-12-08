@@ -92,17 +92,17 @@ class WorkspaceTreeDataProvider {
       'workspaceExplorer',
     );
     if (this.extensionConfig.workspaceStorageDirectory === '') {
-      vscode.window.showErrorMessage(
+      vscode.window.showWarningMessage(
         'Workspace Explorer: You must set the workspace '
-              + 'storage directory in your vscode settings. '
-              + 'workspaceExplorer.workspaceStorageDirectory',
-      );
-      this.workspaceStorageDirectory = path.join(
-        path.dirname(__filename),
-        'resources',
-        'icons',
-        'light',
-      );
+        + 'storage directory in your vscode settings. Copy this to your '
+        + 'clipboard: workspaceExplorer.workspaceStorageDirectory. Then '
+        + 'click Open Settings and paste it in the search window.',
+        ...['Open Settings'],
+      ).then((results) => {
+        if (results === 'Open Settings') {
+          vscode.commands.executeCommand('workbench.action.openSettings2');
+        }
+      });
     } else {
       this.workspaceStorageDirectory = (
         this.extensionConfig.workspaceStorageDirectory
@@ -134,6 +134,9 @@ class WorkspaceTreeDataProvider {
 
   // This runs on activation and any time a collapsed item is expanded.
   async getChildren(element) {
+    if (this.workspaceStorageDirectory === undefined) {
+      return [];
+    }
     if (element === undefined) {
       return findChildren(this.workspaceStorageDirectory);
     }

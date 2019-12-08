@@ -53,9 +53,7 @@ const changeIcon = async (context, treeDataProvider) => {
     );
 
     const filteredWorkspaceDirectoryContents = workspaceDirectoryContents.filter(
-      (item) => {
-        return allowedExtensions.includes(path.extname(item[0]));
-      }
+      (item) => allowedExtensions.includes(path.extname(item[0])),
     );
 
     const existingIcons = filteredWorkspaceDirectoryContents.filter((item) => {
@@ -70,7 +68,7 @@ const changeIcon = async (context, treeDataProvider) => {
     let conflictingFile;
     try {
       if (existingIcons.length !== 0) {
-        const conflictingFiles = existingIcons.map(x => x[0]).join(',')
+        const conflictingFiles = existingIcons.map(x => x[0]).join(',');
         const userFeedBack = await vscode.window.showWarningMessage(
           `Conflicting file(s) exists in this directory: ${conflictingFiles}`,
           'Remove File(s)', 'Cancel',
@@ -89,7 +87,9 @@ const changeIcon = async (context, treeDataProvider) => {
         }
       }
     } catch (err) {
-      vscode.window.showErrorMessage(`ERROR: There was an Error Deleting the Duplicate - ${err}`);
+      vscode.window.showErrorMessage(
+        `ERROR: There was an Error Deleting the Duplicate - ${err}`,
+      );
     }
 
     if (isCancelled) {
@@ -117,6 +117,4 @@ const changeIcon = async (context, treeDataProvider) => {
   }
 };
 
-module.exports = {
-  changeIcon,
-};
+module.exports = changeIcon;
