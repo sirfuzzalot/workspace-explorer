@@ -102,6 +102,7 @@ class WorkspaceTreeItem extends vscode.TreeItem {
     workspaceFileNameAndFilePath,
     collapsableState,
     extensionConfig,
+    useNewUri,
   ) {
     super(label, collapsableState);
     this.workspaceFileNameAndFilePath = workspaceFileNameAndFilePath;
@@ -109,11 +110,25 @@ class WorkspaceTreeItem extends vscode.TreeItem {
     // Look for custom icons if configuration setting is enabled.
     // Else, get defaults.
     if (extensionConfig.enableCustomIconSearch === true) {
-      this.iconPath = getCustomWorkspaceIcons(
+      const icons = getCustomWorkspaceIcons(
         workspaceFileNameAndFilePath,
         collapsableState,
         extensionConfig,
       );
+      if (useNewUri) {
+        // Create dummy query args to force reload of icon that has
+        // been overwritten by the user.
+        this.iconPath = {
+          light: vscode.Uri.file(icons.light).with(
+            { query: `x=${Math.random()}` },
+          ),
+          dark: vscode.Uri.file(icons.dark).with(
+            { query: `x=${Math.random()}` },
+          ),
+        };
+      } else {
+        this.iconPath = icons;
+      }
     } else {
       this.iconPath = getDefaultWorkspaceIcons(collapsableState);
     }

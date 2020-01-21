@@ -181,6 +181,10 @@ Workspace Explorer contributes the following settings:
 
 # Release Notes
 
+## 1.6.0
+* When workspace storage directory has not been entered the notification dialog will now provide an option to choose the workspace by opening a file dialog.
+* Updated Change Icon to force reload icons that are overwritten by the user
+
 ## 1.5.0
 * Added Experimantal Create Workspace right click option.
 * Added Experimental Create Workspace button on the Workspace Explorer navigation menu.
@@ -238,12 +242,6 @@ the initial version of the code for this feature.
 
 # Development Roadmap
 ## Proposed Features:
-* Add the ability to create a new sub-folder.
-    * **Feature Built** Waiting for tree view drag and drop API to be stable in VSCode.
-    * A button would be added to the title bar indicating a new folder.
-    * The default location of the new folder would be in the
-    **Workspace Storage Directory**, but a **sub-folder** in the Workspace
-    Explorer could be selected before clicking the button.
 * Add the ability to open the Additional Custom Icon Directory from the Workspace Explorer
     * Add a button the the title bar that would open a file explorer
     at the Additional Custom Icon Directory.

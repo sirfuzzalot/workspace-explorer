@@ -99,19 +99,10 @@ const changeIcon = async (context, treeDataProvider) => {
     // Copy the file to the Workspace Storage Directory.
     await vscode.workspace.fs.copy(inputResults[0], destinationUri);
 
-    // Refresh Tree
-    treeDataProvider.refresh();
+    // Refresh Tree and send URI to force VSCode to relaod
+    // with dummy query args.
+    treeDataProvider.refresh(conflictingFile);
 
-    // VSCode does not reload image resources with same URI.
-    if (conflictingFile) {
-      const response = await vscode.window.showInformationMessage(
-        'VSCode requires a reload for images with the same name',
-        ...['Reload Now', 'Do it Later'],
-      );
-      if (response === 'Reload Now') {
-        vscode.commands.executeCommand('workbench.action.reloadWindow');
-      }
-    }
   } catch (err) {
     vscode.window.showErrorMessage(`ERROR: ${err}`);
   }

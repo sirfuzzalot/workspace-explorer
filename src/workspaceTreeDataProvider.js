@@ -83,37 +83,59 @@ class WorkspaceTreeDataProvider {
     this.onDidChangeTreeData = this._onDidChangeTreeData.event;
     this.extensionConfig;
     this.workspaceStorageDirectory;
+    this.targetIconUri;
     this.getConfigs();
   }
 
   // Gets user set configuration values.
-  getConfigs() {
-    this.extensionConfig = vscode.workspace.getConfiguration(
-      'workspaceExplorer',
-    );
-    if (this.extensionConfig.workspaceStorageDirectory === '') {
-      vscode.window.showWarningMessage(
-        'Workspace Explorer: You must set the workspace '
-        + 'storage directory in your vscode settings. Copy this to your '
-        + 'clipboard: workspaceExplorer.workspaceStorageDirectory. Then '
-        + 'click Open Settings and paste it in the search window.',
-        ...['Open Settings'],
-      ).then((results) => {
-        if (results === 'Open Settings') {
-          vscode.commands.executeCommand('workbench.action.openSettings2');
-        }
-      });
-    } else {
-      this.workspaceStorageDirectory = (
-        this.extensionConfig.workspaceStorageDirectory
+  async getConfigs() {
+    try {
+      this.extensionConfig = vscode.workspace.getConfiguration(
+        'workspaceExplorer',
       );
+      if (this.extensionConfig.workspaceStorageDirectory === '') {
+        const results = await vscode.window.showWarningMessage(
+          'Workspace Explorer: You must set the workspace '
+          + 'storage directory to use the Workspace Explorer. '
+          + 'This is the directory where you want to keep your '
+          + 'workspace configuration files.',
+          ...['Choose a Directory'],
+        );
+        if (results === 'Choose a Directory') {
+          const config = vscode.workspace.getConfiguration(
+            'workspaceExplorer',
+          );
+          const userFolder = await vscode.window.showOpenDialog(
+            {
+              canSelectFiles: false,
+              canSelectFolders: true,
+              canSelectMany: false,
+            },
+          );
+          if (userFolder) {
+            await config.update(
+              'workspaceStorageDirectory',
+              userFolder[0].fsPath,
+              vscode.ConfigurationTarget.Global,
+            );
+            this.refresh();
+          }
+        }
+      } else {
+        this.workspaceStorageDirectory = (
+          this.extensionConfig.workspaceStorageDirectory
+        );
+      }
+    } catch (err) {
+      vscode.window.showErrorMessage(err);
     }
   }
 
   // Rebuilds the Tree of workspaces and sub-folders.
   // Repopulates the Workspace Explorer view.
-  refresh() {
+  refresh(targetIconUri) {
     this.getConfigs();
+    this.targetIconUri = targetIconUri;
     this._onDidChangeTreeData.fire();
   }
 
@@ -124,12 +146,36 @@ class WorkspaceTreeDataProvider {
 
   // Gets vscode Tree Items representing a workspace or folder.
   getTreeItem(element) {
-    return new WorkspaceTreeItem(
+    // Check if item is using an icon that must be force reloaded due
+    // to a change icon action initiated by the user who overwrote the
+    // original icon file.
+    let useNewUri = false;
+    if (this.targetIconUri) {
+      const partialIconPath = this.targetIconUri.fsPath.replace(
+        path.extname(this.targetIconUri.fsPath),
+        '',
+      );
+      const partialWorkspacePath = element.workspaceFileNameAndFilePath.replace(
+        path.extname(element.workspaceFileNameAndFilePath),
+        '',
+      );
+      if (partialIconPath === partialWorkspacePath) {
+        useNewUri = true;
+      }
+    }
+    const treeItem = new WorkspaceTreeItem(
       element.label,
       element.workspaceFileNameAndFilePath,
       element.collapsableState,
       this.extensionConfig,
+      useNewUri,
     );
+
+    if (useNewUri) {
+      this.targetIconUri = '';
+    }
+
+    return treeItem;
   }
 
   // This runs on activation and any time a collapsed item is expanded.
