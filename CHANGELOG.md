@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the "vscode-workspace-explorer" extension will be documented in this file.
 
+## 1.6.1
+* Updated docs with information about new marketplace name
+
 ## 1.6.0
 * When workspace storage directory has not been entered the notification dialog will now provide an option to choose the workspace by opening a file dialog.
 * Updated Change Icon to force reload icons that are overwritten by the user

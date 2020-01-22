@@ -1,3 +1,9 @@
+# **Note to All Users**
+This extension is now published and supported under the name
+[workspace-explorer](https://marketplace.visualstudio.com/items?itemName=tomsaunders-code.workspace-explorer). If you have **vscode-workspace-explorer** please
+install this version instead as **vscode-workspace-explorer** is no
+longer supported.
+
 # Introduction
 Workspace Explorer provides a convenient UI to quickly switch your
 workspace or open a workspace in a new window.
@@ -180,6 +186,9 @@ Workspace Explorer contributes the following settings:
 * No support for [ENV variables](https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/issues/2) in configured file paths.
 
 # Release Notes
+
+## 1.6.1
+* Updated docs with information about new marketplace name
 
 ## 1.6.0
 * When workspace storage directory has not been entered the notification dialog will now provide an option to choose the workspace by opening a file dialog.
