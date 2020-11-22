@@ -2,7 +2,7 @@
     "name": "workspace-explorer",
     "displayName": "Workspace Explorer",
     "description": "An explorer panel that allows you to list your collection of workspaces and load them one at a time into the IDE or open a new window with the selected workspace.",
-    "version": "1.6.1",
+    "version": "1.6.2",
     "icon": "resources/icons/icon.png",
     "publisher": "tomsaunders-code",
     "author": {
@@ -22,7 +22,7 @@
         "url": "https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer.git"
     },
     "engines": {
-        "vscode": "^1.33.1"
+        "vscode": "^1.51.1"
     },
     "categories": [
         "Other"
@@ -205,19 +205,19 @@
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "node ./node_modules/vscode/bin/test",
-        "lint": "./node_modules/.bin/eslint extension.js workspaceDataTreeProvider.js",
-        "fix": "./node_modules/.bin/eslint --fix extension.js workspaceDataTreeProvider.js",
-        "build": "vsce package"
+        "lint": "./node_modules/.bin/eslint ./src",
+        "fix": "./node_modules/.bin/eslint --fix ./src",
+        "build": "vsce package",
+        "publish": "vsce publish"
     },
     "devDependencies": {
-        "@types/mocha": "^5.2.7",
-        "@types/node": "^12.12.14",
-        "eslint": "^6.7.1",
-        "eslint-config-airbnb-base": "^14.0.0",
-        "eslint-plugin-import": "^2.18.2",
-        "typescript": "^3.7.2",
-        "vsce": "^1.69.0",
-        "vscode": "^1.1.36"
-    },
-    "dependencies": {}
+        "@types/node": "^14.14.9",
+        "@types/vscode": "^1.51.0",
+        "eslint": "^7.14.0",
+        "eslint-config-airbnb-base": "^14.2.1",
+        "eslint-plugin-import": "^2.22.1",
+        "typescript": "^4.1.2",
+        "vsce": "^1.81.1",
+        "vscode-test": "^1.4.1"
+    }
 }

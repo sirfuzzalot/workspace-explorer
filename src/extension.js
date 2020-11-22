@@ -40,29 +40,15 @@ const activate = async () => {
       await fsPromises.readFile(path.join(extensionRootPath, 'package.json'), 'utf8'),
     ).version;
 
-    // Identify which application to use.
-    let applicationName;
-    if (vscode.env.appName === 'Visual Studio Code - Insiders') {
-      applicationName = 'code-insiders';
-    } else if (vscode.env.appName === 'Code - OSS') {
-      applicationName = 'code-oss';
-    } else if (vscode.env.appName === 'VSCodium') {
-      applicationName = 'codium';
-    } else {
-      applicationName = 'code';
-    }
-
-    // TODO: Add check for code in path.
-
     // Register open in new window command.
     vscode.commands.registerCommand(
       'workspaceExplorer.openWorkspaceInNewWindow',
       (context) => {
         try {
-          spawn(
-            applicationName,
-            [`"${context.workspaceFileNameAndFilePath}"`],
-            { cwd: os.homedir(), detached: true, shell: true },
+          vscode.commands.executeCommand(
+            'vscode.openFolder',
+            vscode.Uri.file(context.workspaceFileNameAndFilePath),
+            true,
           );
         } catch (err) {
           vscode.window.showErrorMessage(err);
@@ -75,17 +61,16 @@ const activate = async () => {
       'workspaceExplorer.openWorkspaceInSameWindow',
       (workspaceFileNameAndFilePath) => {
         try {
-          spawn(
-            applicationName,
-            ['-r', `"${workspaceFileNameAndFilePath}"`],
-            { cwd: os.homedir(), detached: true, shell: true },
+          vscode.commands.executeCommand(
+            'vscode.openFolder',
+            vscode.Uri.file(workspaceFileNameAndFilePath),
+            false,
           );
         } catch (err) {
           vscode.window.showErrorMessage(err);
         }
       },
     );
-
 
     // Register Open Workspace Explorer Storage Directory Command.
     vscode.commands.registerCommand(

@@ -1,6 +1,15 @@
 # Change Log
 All notable changes to the "vscode-workspace-explorer" extension will be documented in this file.
 
+## 1.6.2
+* Patched workspaceExplorer.openWorkspaceInSameWindow and workspaceExplorer.openWorkspaceInNewWindow commands to use existing VSCode internal commands. This fixes an issue in the browser version of VSCode. This also removes the dependency
+on having `code` in your system `$PATH`.
+* Removed sections in `extension.js` that referred to `applicationName`,
+which was used to open a new or existing window of code via command line.
+* Updated dev dependencies. Removed `vscode`, and `@types/mocha`. Added `@types/vscode` and `vscode-test`. Updated `@types/node`, `eslint`, `eslint-config-airbnb-base`, and `eslint-plugin-import`.
+* Removed Requirements section from README after removing dependency on `code` in system path.
+* Updated version of VSCode required as I'm not sure when vscode.openFolder command was introduced.
+
 ## 1.6.1
 * Updated docs with information about new marketplace name
 
