@@ -135,23 +135,6 @@ is enabled. It is enabled by default.
 setting.
 3. Hit the **refresh** icon on the Workspace Explorer.
 
-# Requirements
-Workspace Explorer requires that **code**, **code-insiders**,
-**code-oss**, or **codium** be added
-to the **$PATH** environment variable.
-* When opening a new window or switching
-the workspace in the existing window it will use these key words to run
-the application via command-line.
-
-If working on **MacOS** run the Command Palette Command **Install code command in Path**
-
-The easiest way to test this is to open a terminal/cmd/bash and type `code` or your
-specific flavor. See above. If VSCode opens then it's working. Otherswise you can do
-the following.
-* If on MacOS run the Command Palette Command **Install code command in Path**
-* Reboot
-* Reinstall VSCode and Reboot (for most OS's `code` is setup in the install).
-
 # Extension Settings
 Workspace Explorer contributes the following settings:
 
@@ -186,6 +169,10 @@ Workspace Explorer contributes the following settings:
 * No support for [ENV variables](https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/issues/2) in configured file paths.
 
 # Release Notes
+
+## 1.6.2
+* Patched workspaceExplorer.openWorkspaceInSameWindow and workspaceExplorer.openWorkspaceInNewWindow commands to use existing VSCode internal commands. This fixes an issue in the browser version of VSCode. This also removes the dependency
+on having `code` in your system `$PATH`.
 
 ## 1.6.1
 * Updated docs with information about new marketplace name
