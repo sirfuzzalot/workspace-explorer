@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to the "vscode-workspace-explorer" extension will be documented in this file.
 
+## 1.7.0
+* Moved Workspaces View to a new Workspaces view container to allow for addition of views and more scren space for large collections of workspaces.
+* Added icon for view container - https://github.com/microsoft/vscode-icons/blob/master/icons/light/multiple-windows.svg?short_path=2859a0a
+* Updated Docs and doc gifs to reflect the new location of the Workspaces view.
+
 ## 1.6.2
 * Patched workspaceExplorer.openWorkspaceInSameWindow and workspaceExplorer.openWorkspaceInNewWindow commands to use existing VSCode internal commands. This fixes an issue in the browser version of VSCode. This also removes the dependency
 on having `code` in your system `$PATH`.
