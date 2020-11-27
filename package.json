@@ -1,8 +1,8 @@
 {
     "name": "workspace-explorer",
     "displayName": "Workspace Explorer",
-    "description": "An explorer panel that allows you to list your collection of workspaces and load them one at a time into the IDE or open a new window with the selected workspace.",
-    "version": "1.6.2",
+    "description": "Browse, open, and manage your VSCode workspaces in this simple view.",
+    "version": "1.7.0",
     "icon": "resources/icons/icon.png",
     "publisher": "tomsaunders-code",
     "author": {
@@ -36,6 +36,7 @@
         "panel"
     ],
     "activationEvents": [
+        "onView:workspace-explorer",
         "onView:workspaceExplorer"
     ],
     "main": "./src/extension",
@@ -61,11 +62,21 @@
                 }
             }
         },
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "workspace-explorer",
+                    "title": "Workspaces",
+                    "icon": "resources/icons/view_container_icon.svg"
+                }
+            ]
+        },
         "views": {
-            "explorer": [
+            "workspace-explorer": [
                 {
                     "id": "workspaceExplorer",
-                    "name": "Workspaces"
+                    "name": "Workspaces",
+                    "contextualTitle": "Workspaces"
                 }
             ]
         },
