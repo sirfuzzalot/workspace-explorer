@@ -4,6 +4,8 @@ const path = require('path');
 
 const vscode = require('vscode');
 
+const config = require('./config');
+
 // Establish Extension's Root Path.
 const currentFilePathSegmentList = path.dirname(__filename).split(path.sep);
 currentFilePathSegmentList.pop();
@@ -54,29 +56,25 @@ const getCustomWorkspaceIcons = function getCustomWorkspaceIcons(
   collapsableState,
   extensionConfig,
 ) {
-  let svg;
-  let png;
+  // Check if custom image exists. Else use the default.
+  for (let x = 0; x < config.supportedExtensions.length; x += 1) {
+    let imagePath;
 
-  // Check if the path is a workspace or folder.
-  if (workspaceFileNameAndFilePath.includes('.code-workspace')) {
-    svg = workspaceFileNameAndFilePath.replace('.code-workspace', '.svg');
-    png = workspaceFileNameAndFilePath.replace('.code-workspace', '.png');
-  } else {
-    svg = `${workspaceFileNameAndFilePath}.svg`;
-    png = `${workspaceFileNameAndFilePath}.png`;
-  }
-
-  // Check if the .svg or .png exists. Else use the default.
-  if (fs.existsSync(svg)) {
-    return {
-      light: svg,
-      dark: svg,
-    };
-  } if (fs.existsSync(png)) { // TODO: switch out for promises
-    return {
-      light: png,
-      dark: png,
-    };
+    // Check if the path is a workspace or folder.
+    if (workspaceFileNameAndFilePath.includes('.code-workspace')) {
+      imagePath = workspaceFileNameAndFilePath.replace(
+        '.code-workspace',
+        config.supportedExtensions[x],
+      );
+    } else {
+      imagePath = `${workspaceFileNameAndFilePath}${config.supportedExtensions[x]}`;
+    }
+    if (fs.existsSync(imagePath)) {
+      return {
+        light: imagePath,
+        dark: imagePath,
+      };
+    }
   }
 
   // Check the Additional Custom Icon Directory if configured.
@@ -92,7 +90,6 @@ const getCustomWorkspaceIcons = function getCustomWorkspaceIcons(
   }
   return getDefaultWorkspaceIcons(collapsableState);
 };
-
 
 // Reimplemented vscode.TreeItem. Provides functionality to each item in
 // the TreeView. Calls functions to get custom and default icons.
