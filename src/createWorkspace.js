@@ -6,9 +6,10 @@ const vscode = require('vscode');
 const createWorkspace = async (context, treeDataProvider) => {
   const inputResults = await vscode.window.showInputBox(
     {
-      prompt: 'Enter a name for the workspace. The contents of your '
-        + 'current Explorer window will be saved as the workspace. If '
-        + 'the Explorer is empty you will be prompted to choose a folder.',
+      prompt: 'Enter a name for the workspace. The contents of your ' +
+      'current file browser panel will be set as the workspace. If ' +
+      'the file browser panel is empty you will be prompted to choose ' +
+      'a folder.',
       validateInput: (value) => {
         if (/[/\\:?*"<>|]/.test(value)) {
           return 'Folder name may not contain /\\:?*"<>|';
