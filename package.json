@@ -83,7 +83,7 @@
         "commands": [
             {
                 "command": "workspaceExplorer.openWorkspaceInNewWindow",
-                "title": "Open workspace in new window",
+                "title": "Open Workspace in New Window",
                 "icon": {
                     "light": "resources/icons/light/new_window.svg",
                     "dark": "resources/icons/dark/new_window.svg"
@@ -209,6 +209,63 @@
                     "command": "workspaceExplorer.createWorkspace",
                     "when": "view == workspaceExplorer  && config.workspaceExplorer.workspaceStorageDirectory != ''",
                     "group": "navigation@1"
+                }
+            ],
+            "commandPalette": [
+                {
+
+                    "command": "workspaceExplorer.openWorkspaceInNewWindow",
+                    "when": "false"
+                },
+                {
+
+                    "command": "workspaceExplorer.openWorkspaceInSameWindow",
+                    "when": "false"
+                },
+                {
+
+                    "command": "workspaceExplorer.refreshWorkspaceExplorer",
+                    "when": "false"
+                },
+                {
+
+                    "command": "workspaceExplorer.openWorkspaceExplorerStorageDirectory",
+                    "when": "false"
+                },
+                {
+
+                    "command": "workspaceExplorer.addSubFolder",
+                    "when": "false"
+                },
+                {
+
+                    "command": "workspaceExplorer.deleteFolder",
+                    "when": "false"
+                },
+                {
+
+                    "command": "workspaceExplorer.changeWorkspaceIcon",
+                    "when": "false"
+                },
+                {
+
+                    "command": "workspaceExplorer.changeFolderIcon",
+                    "when": "false"
+                },
+                {
+
+                    "command": "workspaceExplorer.createWorkspace",
+                    "when": "false"
+                },
+                {
+
+                    "command": "workspaceExplorer.deleteWorkspace",
+                    "when": "false"
+                },
+                {
+
+                    "command": "workspaceExplorer.rename",
+                    "when": "false"
                 }
             ]
         }
