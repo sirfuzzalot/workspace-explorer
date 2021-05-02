@@ -2,7 +2,7 @@ const path = require('path');
 
 const vscode = require('vscode');
 
-const config = require('./config');
+const constants = require('./constants');
 
 // Creates a copy of the selected file and renames it the name of the
 // folder or workspace file.
@@ -15,7 +15,7 @@ const changeIcon = async (context, treeDataProvider) => {
         canSelectFolders: false,
         canSelectMany: false,
         filters: {
-          Images: config.supportedFormats,
+          Images: constants.supportedFormats,
         },
       },
     );
@@ -54,7 +54,7 @@ const changeIcon = async (context, treeDataProvider) => {
 
     const existingIcons = workspaceDirectoryContents.filter(
       (item) => item[1] === 1 // Is file
-          && config.supportedExtensions.includes(path.extname(item[0]))
+          && constants.supportedExtensions.includes(path.extname(item[0]))
           && item[0].replace(path.extname(item[0]), '') === contextualWorkspaceOrDirectoryName
     ).map((x) => x[0]);
 

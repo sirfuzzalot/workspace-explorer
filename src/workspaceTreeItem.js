@@ -4,7 +4,7 @@ const path = require('path');
 
 const vscode = require('vscode');
 
-const config = require('./config');
+const constants = require('./constants');
 
 // Establish Extension's Root Path.
 const currentFilePathSegmentList = path.dirname(__filename).split(path.sep);
@@ -51,23 +51,22 @@ const getDefaultWorkspaceIcons = function getDefaultWorkspaceIcons(collapsableSt
 
 // Searches the same directory as the workspace file or folder
 // in search of images of the same name.
-const getCustomWorkspaceIcons = function getCustomWorkspaceIcons(
+const getCustomWorkspaceIcons = (
   workspaceFileNameAndFilePath,
   collapsableState,
   extensionConfig,
-) {
+) => {
   // Check if custom image exists. Else use the default.
-  for (let x = 0; x < config.supportedExtensions.length; x += 1) {
+  for (let x = 0; x < constants.supportedExtensions.length; x += 1) {
     let imagePath;
-
     // Check if the path is a workspace or folder.
     if (workspaceFileNameAndFilePath.includes('.code-workspace')) {
       imagePath = workspaceFileNameAndFilePath.replace(
         '.code-workspace',
-        config.supportedExtensions[x],
+        constants.supportedExtensions[x],
       );
     } else {
-      imagePath = `${workspaceFileNameAndFilePath}${config.supportedExtensions[x]}`;
+      imagePath = `${workspaceFileNameAndFilePath}${constants.supportedExtensions[x]}`;
     }
     if (fs.existsSync(imagePath)) {
       return {

@@ -4,17 +4,13 @@
 // data tree provider.
 // ------------------------------------------------------------------ //
 
-const { spawn } = require('child_process');
-
-const os = require('os');
-
 const fsPromises = require('fs').promises;
 
 const path = require('path');
 
 const vscode = require('vscode');
 
-const { WorkspaceTreeDataProvider } = require('./workspaceTreeDataProvider');
+const WorkspaceTreeDataProvider = require('./workspaceTreeDataProvider');
 
 const changeIcon = require('./changeIcon');
 

@@ -2,9 +2,9 @@
  * Shared constants and configuration values
  */
 
-const config = {
+const constants = {
   supportedFormats: ['png', 'jpg'],
   supportedExtensions: ['.png', '.jpg'],
 };
 
-module.exports = config;
+module.exports = constants;

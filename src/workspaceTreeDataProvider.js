@@ -13,6 +13,8 @@ const vscode = require('vscode');
 
 const { WorkspaceTreeItem } = require('./workspaceTreeItem');
 
+const resolveConfigs = require('./resolveConfigs');
+
 // Sort folders and workspace files alphabetically,
 // putting folders above workspace files.
 const sortFilesAndFolders = function sortFilesAndFolders(a, b) {
@@ -88,47 +90,15 @@ class WorkspaceTreeDataProvider {
   }
 
   // Gets user set configuration values.
-  async getConfigs() {
-    try {
-      this.extensionConfig = vscode.workspace.getConfiguration(
-        'workspaceExplorer',
-      );
-      if (this.extensionConfig.workspaceStorageDirectory === '') {
-        const results = await vscode.window.showWarningMessage(
-          'Workspace Explorer: You must set the workspace '
-          + 'storage directory to use the Workspace Explorer. '
-          + 'This is the directory where you want to keep your '
-          + 'workspace configuration files.',
-          ...['Choose a Directory'],
-        );
-        if (results === 'Choose a Directory') {
-          const config = vscode.workspace.getConfiguration(
-            'workspaceExplorer',
-          );
-          const userFolder = await vscode.window.showOpenDialog(
-            {
-              canSelectFiles: false,
-              canSelectFolders: true,
-              canSelectMany: false,
-            },
-          );
-          if (userFolder) {
-            await config.update(
-              'workspaceStorageDirectory',
-              userFolder[0].fsPath,
-              vscode.ConfigurationTarget.Global,
-            );
-            this.refresh();
-          }
-        }
-      } else {
+  getConfigs() {
+    return resolveConfigs(this.refresh.bind(this))
+      .then((configs) => {
+        this.extensionConfig = configs;
         this.workspaceStorageDirectory = (
-          this.extensionConfig.workspaceStorageDirectory
+          configs.workspaceStorageDirectory
         );
-      }
-    } catch (err) {
-      vscode.window.showErrorMessage(err);
-    }
+      })
+      .catch((err) => vscode.window.showErrorMessage(err));
   }
 
   // Rebuilds the Tree of workspaces and sub-folders.
@@ -190,6 +160,4 @@ class WorkspaceTreeDataProvider {
   }
 }
 
-module.exports = {
-  WorkspaceTreeDataProvider,
-};
+module.exports = WorkspaceTreeDataProvider;
