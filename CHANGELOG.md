@@ -1,8 +1,16 @@
 # Change Log
 All notable changes to the "vscode-workspace-explorer" extension will be documented in this file.
 
+## 2.0.0
+* Removed support for `.svg` icons.
+* Added support for `.jpg` icons.
+* Added support for environment variables in config paths, using template syntax.
+* Added clearer workspace save prompt.
+* Removed all command palette commands. These were unsupported.
+* Removed unused imports in `extension.js`.
+
 ## 1.7.0
-* Moved Workspaces View to a new Workspaces view container to allow for addition of views and more scren space for large collections of workspaces.
+* Moved Workspaces View to a new Workspaces view container to allow for addition of views and more screen space for large collections of workspaces.
 * Added icon for view container - https://github.com/microsoft/vscode-icons/blob/master/icons/light/multiple-windows.svg?short_path=2859a0a
 * Updated Docs and doc gifs to reflect the new location of the Workspaces view.
 
