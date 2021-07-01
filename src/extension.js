@@ -27,6 +27,9 @@ const renameTreeItem = require('./renameTreeItem');
 // Activates the Extension when the Explorer view-container is open
 // and the workspace explorer is expanded.
 const activate = async () => {
+  // Setup tree data structure
+  const treeDataProvider = new WorkspaceTreeDataProvider();
+
   // Grab the extension version from the package.json file and publish
   // it on key commands.
   let extensionVersion;
@@ -45,6 +48,72 @@ const activate = async () => {
             'vscode.openFolder',
             vscode.Uri.file(context.workspaceFileNameAndFilePath),
             true,
+          );
+        } catch (err) {
+          vscode.window.showErrorMessage(err);
+        }
+      },
+    );
+
+    const selectWorkspace = async (placeHolder, tree, node) => {
+      const workspaceEntries = await tree.getChildren(node);
+
+      if (!workspaceEntries) {
+        vscode.window.showInformationMessage('No workspaces found');
+        return {};
+      }
+
+      const options = {
+        matchOnDescription: false,
+        matchOnDetail: false,
+        placeHolder,
+      };
+
+      const selectedItem = await vscode.window.showQuickPick(workspaceEntries, options);
+      if (!selectedItem) {
+        return {};
+      }
+
+      if (selectedItem.collapsableState === 1) {
+        return selectWorkspace(placeHolder, tree, selectedItem);
+      }
+
+      return selectedItem;
+    };
+
+    vscode.commands.registerCommand(
+      'workspaceExplorer.openWorkspaceInNewWindowQuickPick',
+      async () => {
+        try {
+          const workspace = await selectWorkspace('Choose a workspace to switch to in a new window ...', treeDataProvider);
+          if (!Object.keys(workspace).length) {
+            return;
+          }
+
+          vscode.commands.executeCommand(
+            'vscode.openFolder',
+            vscode.Uri.file(workspace.workspaceFileNameAndFilePath),
+            true,
+          );
+        } catch (err) {
+          vscode.window.showErrorMessage(err);
+        }
+      },
+    );
+
+    vscode.commands.registerCommand(
+      'workspaceExplorer.openWorkspaceInSameWindowQuickPick',
+      async () => {
+        try {
+          const workspace = await selectWorkspace('Choose a workspace to switch to ...', treeDataProvider);
+          if (!Object.keys(workspace).length) {
+            return;
+          }
+
+          vscode.commands.executeCommand(
+            'vscode.openFolder',
+            vscode.Uri.file(workspace.workspaceFileNameAndFilePath),
+            false,
           );
         } catch (err) {
           vscode.window.showErrorMessage(err);
@@ -93,8 +162,7 @@ const activate = async () => {
       },
     );
 
-    // Setup TreeView and tree data structure
-    const treeDataProvider = new WorkspaceTreeDataProvider();
+    // Setup TreeView
     vscode.window.createTreeView(
       'workspaceExplorer',
       {

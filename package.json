@@ -36,8 +36,7 @@
         "panel"
     ],
     "activationEvents": [
-        "onView:workspace-explorer",
-        "onView:workspaceExplorer"
+        "*"
     ],
     "main": "./src/extension",
     "contributes": {
@@ -91,6 +90,14 @@
             },
             {
                 "command": "workspaceExplorer.openWorkspaceInSameWindow",
+                "title": "Open Workspace in Same Window"
+            },
+            {
+                "command": "workspaceExplorer.openWorkspaceInNewWindowQuickPick",
+                "title": "Open Workspace in New Window"
+            },
+            {
+                "command": "workspaceExplorer.openWorkspaceInSameWindowQuickPick",
                 "title": "Open Workspace in Same Window"
             },
             {
@@ -213,62 +220,61 @@
             ],
             "commandPalette": [
                 {
-
                     "command": "workspaceExplorer.openWorkspaceInNewWindow",
                     "when": "false"
                 },
                 {
-
                     "command": "workspaceExplorer.openWorkspaceInSameWindow",
                     "when": "false"
                 },
                 {
-
                     "command": "workspaceExplorer.refreshWorkspaceExplorer",
                     "when": "false"
                 },
                 {
-
                     "command": "workspaceExplorer.openWorkspaceExplorerStorageDirectory",
                     "when": "false"
                 },
                 {
-
                     "command": "workspaceExplorer.addSubFolder",
                     "when": "false"
                 },
                 {
-
                     "command": "workspaceExplorer.deleteFolder",
                     "when": "false"
                 },
                 {
-
                     "command": "workspaceExplorer.changeWorkspaceIcon",
                     "when": "false"
                 },
                 {
-
                     "command": "workspaceExplorer.changeFolderIcon",
                     "when": "false"
                 },
                 {
-
                     "command": "workspaceExplorer.createWorkspace",
                     "when": "false"
                 },
                 {
-
                     "command": "workspaceExplorer.deleteWorkspace",
                     "when": "false"
                 },
                 {
-
                     "command": "workspaceExplorer.rename",
                     "when": "false"
                 }
             ]
-        }
+        },
+        "keybindings": [
+            {
+                "key": "Ctrl-k w",
+                "command": "workspaceExplorer.openWorkspaceInSameWindowQuickPick"
+            },
+            {
+                "key": "Ctrl-k Ctrl-w",
+                "command": "workspaceExplorer.openWorkspaceInNewWindowQuickPick"
+            }
+        ]
     },
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
