@@ -1,5 +1,9 @@
 # Change Log
-All notable changes to the "vscode-workspace-explorer" extension will be documented in this file.
+All notable changes to the "workspace-explorer" extension will be documented in this file.
+
+## 2.1.0
+* Added experimental support for opening workspaces via command palette. PR by @fhemberger.
+* Migrated Git repo from GitLab to GitHub
 
 ## 2.0.0
 * Removed support for `.svg` icons.
