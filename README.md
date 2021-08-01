@@ -6,42 +6,27 @@ This extension is now published and supported under the name
 [workspace-explorer](https://marketplace.visualstudio.com/items?itemName=tomsaunders-code.workspace-explorer). If you have **vscode-workspace-explorer** please
 install this version instead, as **vscode-workspace-explorer** is no longer supported.
 
-## Release 2.0.0
+## Release 2.1.0
 
-This version primarily addresses an issue that arose in versions of VSCode released in
-2020 where `.svg` icon support in the tree-view became unreliable.
+In this release we've added experimental support for opening workspaces using the command palette. Courtesy of [@fhemberger](https://github.com/fhemberger).
 
-- Removed support for `.svg` icons.
-- Added support for `.jpg` icons.
+- `Ctrl-k w` - open a workspace in same window
+- `Ctrl-k Ctrl-w` - open a workspace in a new window
 
-You can now use environment variables in your workspace storage directory and
-in your additional custom icon directory paths. Here's the supported syntax,
-note the environment variable(s) can be placed where ever you like in the path
-and you can have more than one.
-
-```
-${env:NAME_OF_ENV_VAR}/remainder/of/your/path
-
-/root/of/my/path/${env:NAME_OF_ENV_VAR}/remainder/of/your/path
-
-${env:USERPROFILE}\my\windows\path
-```
-
-See [2.0.0](#2.0.0) for complete release notes.
-
+Also, this release marks the migration of the project source code from GitLab to GitHub. You can now find the project at [sirfuzzalot/workspace-explorer](https://github.com/sirfuzzalot/workspace-explorer/). The default branch has changed from `master` to `main`.
 
 # Introduction
 
 Workspace Explorer provides a convenient UI to quickly switch your
 workspace or open a workspace in a new window.
 
-<a title="Click to view high resolution gif" href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/openWorkspace.gif"><img alt="Opening a workspace using the explorer" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/openWorkspace_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a title="Click to view high resolution gif" href="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/openWorkspace.gif"><img alt="Opening a workspace using the explorer" src="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/openWorkspace_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 # Getting Started
 
 I should note before we dive into setup, VSCode currently allows you to **only have one instance of a workspace open at a time**, i.e. your **node.code-workspace** can only be open in one window of VSCode.
 
-<a title="Click to view high resolution gif" href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/workspaceStorageDirectory.gif"><img alt="Setting up the workspace explorer storage directory configuration" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/workspaceStorageDirectory_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a title="Click to view high resolution gif" href="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/workspaceStorageDirectory.gif"><img alt="Setting up the workspace explorer storage directory configuration" src="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/workspaceStorageDirectory_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 Five quick steps to get you up and running:
 
@@ -82,7 +67,7 @@ There are at least three ways to create a sub-folder:
 2. Right clicking on a folder in the Workspace Explorer > **Create Sub-folder**.
 3. Through the **Open Workspace Storage Directory** button where you can then create a sub-folder using the standard OS menus.
 
-<a title="Click to view high resolution gif" href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/createSubFolder.gif"><img alt="Creating Sub-folders" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/createSubFolder_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a title="Click to view high resolution gif" href="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/createSubFolder.gif"><img alt="Creating Sub-folders" src="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/createSubFolder_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 ## Deleting Folders
 
@@ -93,7 +78,7 @@ There are at least two ways to remove a sub-folder:
 1. Right clicking on a folder in the Workspace Explorer > **Delete**.
 2. Through the **Open Workspace Storage Directory** button where you can then remove a folder using the standard OS menus.
 
-<a title="Click to view high resolution gif" href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/deleteFolder.gif"><img alt="Creating Sub-folders" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/deleteFolder_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a title="Click to view high resolution gif" href="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/deleteFolder.gif"><img alt="Creating Sub-folders" src="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/deleteFolder_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 ## Renaming Folders
 
@@ -104,7 +89,7 @@ There are at least two ways to rename a sub-folder:
 1. Right clicking on a folder in the Workspace Explorer > **Rename**.
 2. Through the **Open Workspace Storage Directory** button where you can then rename a folder using the standard OS menus.
 
-<a title="Click to view high resolution gif" href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/renameFolder.gif"><img alt="Creating Sub-folders" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/renameFolder_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a title="Click to view high resolution gif" href="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/renameFolder.gif"><img alt="Creating Sub-folders" src="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/renameFolder_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 ## Creating a Workspace
 
@@ -115,13 +100,13 @@ folders to build a workspace from scratch.
 2. Subfolder: Create a workspace in a sub-folder of your Workspace Storage Directory by **right clicking on the sub-folder** and choosing **Create Workspace**.
 3. Anywhere: Save a workspace in you Workspace Storage Directory using VSCode's File or Code menu > **Save Workspace As**
 
-<a title="Click to view high resolution gif" href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/createWorkspace.gif"><img alt="Creating Sub-folders" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/createWorkspace_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a title="Click to view high resolution gif" href="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/createWorkspace.gif"><img alt="Creating Sub-folders" src="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/createWorkspace_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 ## Deleting a Workspace
 
 Remove a workspace simply by right clicking on it in the Workspace Explorer and choosing **Delete**.
 
-<a title="Click to view high resolution gif" href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/deleteWorkspace.gif"><img alt="Creating Sub-folders" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/deleteWorkspace_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a title="Click to view high resolution gif" href="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/deleteWorkspace.gif"><img alt="Creating Sub-folders" src="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/deleteWorkspace_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 ## Renaming a Workspace
 
@@ -132,7 +117,7 @@ There are at least two ways to rename a workspace:
 1. Right clicking on a workspace in the Workspace Explorer > **Rename**.
 2. Through the **Open Workspace Storage Directory** button where you can then rename a workspace using the standard OS menus.
 
-<a title="Click to view high resolution gif" href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/renameWorkspace.gif"><img alt="Creating Sub-folders" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/renameWorkspace_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a title="Click to view high resolution gif" href="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/renameWorkspace.gif"><img alt="Creating Sub-folders" src="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/renameWorkspace_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 ## Setting Custom Icons
 
@@ -150,7 +135,7 @@ You can add icons in one of three ways:
    4. **Refresh** the Workspace Explorer using the **Refresh** button
 3. Use an additional icons folder (See [Additional Custom Icons Directory](#additional-custom-icons-directory))
 
-<a title="Click to view high resolution gif" title="Click to view high resolution gif" href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/changeIcon.gif"><img alt="Creating Sub-folders" src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/changeIcon_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a title="Click to view high resolution gif" title="Click to view high resolution gif" href="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/changeIcon.gif"><img alt="Creating Sub-folders" src="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/changeIcon_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 ## Additional Custom Icons Directory
 
@@ -161,7 +146,7 @@ and where to put them) then it will search the **Additional Custom Icon Director
 It will only search one level of the directory (no sub-directories). If
 no icon is found at that point, default icons are used.
 
-<a title="Click to view high resolution gif" title="Click to view high resolution gif"  href="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/additionalCustomIconDirectory.gif"><img alt="Enabling the custom icon configuration." src="https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/raw/master/resources/images/additionalCustomIconDirectory_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+<a title="Click to view high resolution gif" title="Click to view high resolution gif"  href="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/additionalCustomIconDirectory.gif"><img alt="Enabling the custom icon configuration." src="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/additionalCustomIconDirectory_lowres.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 Enabling the **Additional Custom Icon Directory**
 
@@ -217,6 +202,10 @@ ${env:USERPROFILE}\my\windows\path
 ```
 
 # Release Notes
+
+## 2.1.0
+- Added experimental support for opening workspaces via command palette. PR by @fhemberger.
+- Migrated Git repo from GitLab to GitHub
 
 ## 2.0.0
 - Removed support for `.svg` icons.
@@ -328,12 +317,13 @@ the initial version of the code for this feature.
 
 # Contributors
 
-- Tom Saunders (original author, primary maintainer)
-- Xaryphon
-- stripedpajamas
-- CugeDe
-- betterthanclay
-- shadowbq
+- [Tom Saunders](https://github.com/sirfuzzalot) (original author, primary maintainer)
+- [@xaryphon](https://gitlab.com/xaryphon)
+- [@stripedpajamas](https://gitlab.com/stripedpajamas)
+- [@CugeDe](https://gitlab.com/CugeDe)
+- [@betterthanclay](https://gitlab.com/betterthanclay)
+- [@shadowbq](https://gitlab.com/shadowbq)
+- [@fhemberger](https://github.com/fhemberger)
 
 # Testers
 

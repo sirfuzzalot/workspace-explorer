@@ -2,7 +2,7 @@
     "name": "workspace-explorer",
     "displayName": "Workspace Explorer",
     "description": "Browse, open, and manage your VSCode workspaces in this simple view.",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "icon": "resources/icons/icon.png",
     "publisher": "tomsaunders-code",
     "author": {
@@ -13,13 +13,13 @@
         "theme": "dark"
     },
     "license": "Apache-2.0",
-    "homepage": "https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/blob/master/README.md",
+    "homepage": "https://github.com/sirfuzzalot/workspace-explorer#readme",
     "bugs": {
-        "url": "https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/issues/new"
+        "url": "https://github.com/sirfuzzalot/workspace-explorer/issues"
     },
     "repository": {
         "type": "git",
-        "url": "https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer.git"
+        "url": "https://github.com/sirfuzzalot/workspace-explorer.git"
     },
     "engines": {
         "vscode": "^1.55.0"
@@ -293,5 +293,8 @@
         "typescript": "^4.2.4",
         "vsce": "^1.88.0",
         "vscode-test": "^1.5.2"
+    },
+    "eslintConfig": {
+        "extends": "airbnb-base"
     }
 }
