@@ -300,21 +300,6 @@ the initial version of the code for this feature.
 
 - Beta versions
 
-# Development Roadmap
-
-## Proposed Features:
-
-- Add the ability to open the Additional Custom Icon Directory from the Workspace Explorer
-  - Add a button the the title bar that would open a file explorer
-    at the Additional Custom Icon Directory.
-- Add the ability for Workspace Explorer to search sub-folders for icons
-  - Workspace Explorer would recursively search the
-    **Workspace Storage Directory** for icons.
-  - Workspace Explorer would recursively search the
-    **Additional Custom Icons Directory** for icons.
-- Add the ability to use an **ignore** file to ignore specified sub-folders
-  in the **Workspace Storage Directory**.
-
 # Contributors
 
 - [Tom Saunders](https://github.com/sirfuzzalot) (original author, primary maintainer)
