@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to the "workspace-explorer" extension will be documented in this file.
 
+## 2.2.0
+*  Updated extension config for remote development workflows. VSCode will first try to run the extension locally and fallback to the remote extension host. This enables desktop VSCode users to continue seeing their workspaces while using remote extensions.
+* Patched a bug where folder creation would not work when running a remote extension
+* Patched a bug where workspace creation would not work when running a remote extension
+
 ## 2.1.0
 * Added experimental support for opening workspaces via command palette. PR by @fhemberger.
 * Migrated Git repo from GitLab to GitHub

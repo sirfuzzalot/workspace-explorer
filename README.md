@@ -6,14 +6,15 @@ This extension is now published and supported under the name
 [workspace-explorer](https://marketplace.visualstudio.com/items?itemName=tomsaunders-code.workspace-explorer). If you have **vscode-workspace-explorer** please
 install this version instead, as **vscode-workspace-explorer** is no longer supported.
 
-## Release 2.1.0
+## Release 2.2.0
 
-In this release we've added experimental support for opening workspaces using the command palette. Courtesy of [@fhemberger](https://github.com/fhemberger).
+
+**Support for Remote SSH, Remote WSL, and Remote Containers extensions.** Workspace Explorer should now continue to display a list of workspaces for users of the desktop version of VSCode when using the [remote extensions](https://code.visualstudio.com/docs/remote/remote-overview). If you installed Workspace Explorer both on your local and remote machine, to take advantage of this feature you'll need to uninstall Workspace Explorer from the remote machine.
+
+In case you missed it, **2.1.0** brought experimental support for opening workspaces using the command palette. Courtesy of [@fhemberger](https://github.com/fhemberger).
 
 - `Ctrl-k w` - open a workspace in same window
 - `Ctrl-k Ctrl-w` - open a workspace in a new window
-
-Also, this release marks the migration of the project source code from GitLab to GitHub. You can now find the project at [sirfuzzalot/workspace-explorer](https://github.com/sirfuzzalot/workspace-explorer/). The default branch has changed from `master` to `main`.
 
 # Introduction
 
@@ -202,6 +203,11 @@ ${env:USERPROFILE}\my\windows\path
 ```
 
 # Release Notes
+
+## 2.2.0
+- Updated extension config for remote development workflows. VSCode will first try to run the extension locally and fallback to the remote extension host. This enables desktop VSCode users to continue seeing their workspaces while using [remote extensions](https://code.visualstudio.com/docs/remote/remote-overview)
+- Patched a bug where folder creation would not work when running a remote extension
+- Pathed a bug where workspace creation would not work when running a remote extension
 
 ## 2.1.0
 - Added experimental support for opening workspaces via command palette. PR by @fhemberger.
