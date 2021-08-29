@@ -6,10 +6,10 @@ const vscode = require('vscode');
 const createWorkspace = async (context, treeDataProvider) => {
   const inputResults = await vscode.window.showInputBox(
     {
-      prompt: 'Enter a name for the workspace. The contents of your ' +
-      'current file browser panel will be set as the workspace. If ' +
-      'the file browser panel is empty you will be prompted to choose ' +
-      'a folder.',
+      prompt: 'Enter a name for the workspace. The contents of your '
+      + 'current file browser panel will be set as the workspace. If '
+      + 'the file browser panel is empty you will be prompted to choose '
+      + 'a folder.',
       validateInput: (value) => {
         if (/[/\\:?*"<>|]/.test(value)) {
           return 'Folder name may not contain /\\:?*"<>|';
@@ -26,8 +26,7 @@ const createWorkspace = async (context, treeDataProvider) => {
 
   let basePath = context ? context.workspaceFileNameAndFilePath : undefined;
   if (basePath === undefined) {
-    const config = vscode.workspace.getConfiguration('workspaceExplorer');
-    basePath = config.get('workspaceStorageDirectory');
+    basePath = treeDataProvider.workspaceStorageDirectory;
   }
 
   // Build new workspace URI.
@@ -41,12 +40,15 @@ const createWorkspace = async (context, treeDataProvider) => {
   // Get Explorer Info
   let folderPaths;
   let workspaceFolders;
+  let remoteAuthority;
   workspaceFolders = vscode.workspace.workspaceFolders;
+
   if (workspaceFolders === undefined || workspaceFolders.length === 0) {
     // Get Folders from User as none are open in Explorer.
     workspaceFolders = [];
     let addAnother = true;
     while (workspaceFolders.length === 0 || addAnother) {
+      // Opens locally for desktop users. This will not work for desktop remote.
       const newFolder = await vscode.window.showOpenDialog(
         {
           canSelectFiles: false,
@@ -54,7 +56,7 @@ const createWorkspace = async (context, treeDataProvider) => {
           canSelectMany: true,
         },
       );
-  
+
       // Skip if nothing is entered.
       if (!newFolder && workspaceFolders.length === 0) {
         return;
@@ -69,7 +71,7 @@ const createWorkspace = async (context, treeDataProvider) => {
 
       if (
         await vscode.window.showQuickPick(
-          ['Add Another Folder', 'Done']
+          ['Add Another Folder', 'Done'],
         ) === 'Add Another Folder'
       ) {
         addAnother = true;
@@ -78,26 +80,30 @@ const createWorkspace = async (context, treeDataProvider) => {
       }
     }
 
-    // Grab fsPath, name and index
-    folderPaths = workspaceFolders.map((folder) => {
-      return {
-        path: folder,
-      };
-    });
+    // Build file path for addition to workspace file.
+    folderPaths = workspaceFolders.map((folder) => ({ path: folder }));
   } else {
-    // Get Folders from  workspace.
+    // Get folders from currently opened folders.
     folderPaths = workspaceFolders.map((folder) => {
+      if (folder.uri.scheme === 'vscode-remote') {
+        remoteAuthority = folder.uri.authority;
+        return {
+          uri: folder.uri.toString(),
+        };
+      }
       return {
         path: folder.uri.fsPath,
       };
     });
   }
 
-  // Local workspace
   const workspaceFileContents = {
     folders: folderPaths,
     settings: {},
   };
+  if (remoteAuthority) {
+    workspaceFileContents.remoteAuthority = remoteAuthority;
+  }
 
   // Create workspace file.
   await vscode.workspace.fs.writeFile(
@@ -105,7 +111,6 @@ const createWorkspace = async (context, treeDataProvider) => {
     Uint8Array.from(Buffer.from(JSON.stringify(workspaceFileContents, null, 4))),
   );
 
-  // Refresh Tree
   treeDataProvider.refresh();
 };
 

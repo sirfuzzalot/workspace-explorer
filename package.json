@@ -2,7 +2,7 @@
     "name": "workspace-explorer",
     "displayName": "Workspace Explorer",
     "description": "Browse, open, and manage your VSCode workspaces in this simple view.",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "icon": "resources/icons/icon.png",
     "publisher": "tomsaunders-code",
     "author": {
@@ -22,7 +22,7 @@
         "url": "https://github.com/sirfuzzalot/workspace-explorer.git"
     },
     "engines": {
-        "vscode": "^1.55.0"
+        "vscode": "^1.59.0"
     },
     "categories": [
         "Other"
@@ -39,6 +39,10 @@
         "*"
     ],
     "main": "./src/extension",
+    "extensionKind": [
+        "ui",
+        "workspace"
+    ],
     "contributes": {
         "configuration": {
             "type": "object",
@@ -277,22 +281,20 @@
         ]
     },
     "scripts": {
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "node ./node_modules/vscode/bin/test",
         "lint": "./node_modules/.bin/eslint ./src",
         "fix": "./node_modules/.bin/eslint --fix ./src",
         "build": "vsce package",
         "publish": "vsce publish"
     },
     "devDependencies": {
-        "@types/node": "^15.0.1",
-        "@types/vscode": "^1.55.0",
-        "eslint": "^7.25.0",
+        "@types/node": "^15.14.9",
+        "@types/vscode": "^1.59.0",
+        "eslint": "^7.32.0",
         "eslint-config-airbnb-base": "^14.2.1",
-        "eslint-plugin-import": "^2.22.1",
-        "typescript": "^4.2.4",
-        "vsce": "^1.88.0",
-        "vscode-test": "^1.5.2"
+        "eslint-plugin-import": "^2.24.2",
+        "typescript": "^4.4.2",
+        "vsce": "^1.96.1",
+        "vscode-test": "^1.6.1"
     },
     "eslintConfig": {
         "extends": "airbnb-base"

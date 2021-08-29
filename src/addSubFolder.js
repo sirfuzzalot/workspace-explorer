@@ -24,8 +24,7 @@ const addSubFolder = async (context, treeDataProvider) => {
 
   let basePath = context ? context.workspaceFileNameAndFilePath : undefined;
   if (basePath === undefined) {
-    const config = vscode.workspace.getConfiguration('workspaceExplorer');
-    basePath = config.get('workspaceStorageDirectory');
+    basePath = treeDataProvider.workspaceStorageDirectory;
   }
 
   // Build new Directory path.

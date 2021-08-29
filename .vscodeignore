@@ -3,6 +3,5 @@
 test/**
 .gitignore
 jsconfig.json
-.eslintrc.json
 resources/images/
 tools/
