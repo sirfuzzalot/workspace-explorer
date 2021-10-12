@@ -6,15 +6,16 @@ This extension is now published and supported under the name
 [workspace-explorer](https://marketplace.visualstudio.com/items?itemName=tomsaunders-code.workspace-explorer). If you have **vscode-workspace-explorer** please
 install this version instead, as **vscode-workspace-explorer** is no longer supported.
 
-## Release 2.2.0
+## Release 2.3.0
 
+** Support for opening folder in new or same window.**
 
-**Support for Remote SSH, Remote WSL, and Remote Containers extensions.** Workspace Explorer should now continue to display a list of workspaces for users of the desktop version of VSCode when using the [remote extensions](https://code.visualstudio.com/docs/remote/remote-overview). If you installed Workspace Explorer both on your local and remote machine, to take advantage of this feature you'll need to uninstall Workspace Explorer from the remote machine.
+In case you missed it, **2.2.0** support for Remote SSH, Remote WSL, and Remote Containers extensions.\*\* Workspace Explorer should now continue to display a list of workspaces for users of the desktop version of VSCode when using the [remote extensions](https://code.visualstudio.com/docs/remote/remote-overview). If you installed Workspace Explorer both on your local and remote machine, to take advantage of this feature you'll need to uninstall Workspace Explorer from the remote machine.
 
-In case you missed it, **2.1.0** brought experimental support for opening workspaces using the command palette. Courtesy of [@fhemberger](https://github.com/fhemberger).
+Also, **2.1.0** brought experimental support for opening workspaces using the command palette. Courtesy of [@fhemberger](https://github.com/fhemberger).
 
-- `Ctrl-k w` - open a workspace in same window
-- `Ctrl-k Ctrl-w` - open a workspace in a new window
+-  `Ctrl-k w` - open a workspace in same window
+-  `Ctrl-k Ctrl-w` - open a workspace in a new window
 
 # Introduction
 
@@ -33,9 +34,9 @@ Five quick steps to get you up and running:
 
 1. Install the Workspace Explorer extension.
 2. Add a directory to the **Workspace Explorer: Workspace Storage Directory** setting.
-   - On Windows/Linux - **File > Preferences > Settings > search "Workspace Explorer"**.
-   - On Mac - **Code > Preferences > Settings > search "Workspace Explorer"**.
-   - Environment variables are supported in paths, see [Using Variables in Config Paths](#using-variables-in-config-paths).
+   -  On Windows/Linux - **File > Preferences > Settings > search "Workspace Explorer"**.
+   -  On Mac - **Code > Preferences > Settings > search "Workspace Explorer"**.
+   -  Environment variables are supported in paths, see [Using Variables in Config Paths](#using-variables-in-config-paths).
 3. Add your existing **.code-workspace** files or save a new workspace to the **Workspace Storage Directory**.
 4. Open the Workspace Explorer by clicking on the **WORKSPACES** (two windows) icon on the VSCode activity bar, typically far left or right of the window.
 5. Hit the **refresh** icon that appears when you hover over the **WORKSPACES** title.
@@ -44,17 +45,17 @@ Five quick steps to get you up and running:
 
 Workspace Explorer allows you to have quick access to all your workspaces in one convenient UI.
 
-- Sub-Folders
-  - [Organize in Sub-folders](#creating-sub-folders)
-  - [Delete Sub-folders](#deleting-folders)
-  - [Rename Sub-Folders](#renaming-folders)
-- Workspaces
-  - [Create Workspaces](#creating-a-workspace)
-  - [Delete Workspaces](#deleting-a-workspace)
-  - [Rename Workspaces](#renaming-a-workspace)
-- Custom Icons
-  - [Set Custom Icons](#setting-custom-icons)
-  - [Additional Icons Directory](#additional-custom-icons-directory)
+-  Sub-Folders
+   -  [Organize in Sub-folders](#creating-sub-folders)
+   -  [Delete Sub-folders](#deleting-folders)
+   -  [Rename Sub-Folders](#renaming-folders)
+-  Workspaces
+   -  [Create Workspaces](#creating-a-workspace)
+   -  [Delete Workspaces](#deleting-a-workspace)
+   -  [Rename Workspaces](#renaming-a-workspace)
+-  Custom Icons
+   -  [Set Custom Icons](#setting-custom-icons)
+   -  [Additional Icons Directory](#additional-custom-icons-directory)
 
 ## Creating Sub-folders
 
@@ -161,31 +162,31 @@ Enabling the **Additional Custom Icon Directory**
 
 Workspace Explorer contributes the following settings:
 
-- `workspaceExplorer.workspaceStorageDirectory`
+-  `workspaceExplorer.workspaceStorageDirectory`
 
-  The root directory containing your **.code-workspace** files.
-  Workspace Explorer will show you any **.code-workspace's** in this
-  directory and will also display any **sub-folders**. This will allow
-  you to organize your workspaces into categories by sub-folder.
-  **Ex: C:\\Users\\appuser\\workspaces**
+   The root directory containing your **.code-workspace** files.
+   Workspace Explorer will show you any **.code-workspace's** in this
+   directory and will also display any **sub-folders**. This will allow
+   you to organize your workspaces into categories by sub-folder.
+   **Ex: C:\\Users\\appuser\\workspaces**
 
-- `workspaceExplorer.enableCustomIconSearch`
+-  `workspaceExplorer.enableCustomIconSearch`
 
-  Allow Workspace Explorer to search for **.png** and **.jpg** files with
-  the same name as your workspaces and folders. Then to use those
-  as icons in the Workspace Explorer. The search path defaults to
-  the same location as your workspace file. An additional search
-  directory can be added in the
-  **Workspace Explorer: Additional Custom Icon Directory** setting.
+   Allow Workspace Explorer to search for **.png** and **.jpg** files with
+   the same name as your workspaces and folders. Then to use those
+   as icons in the Workspace Explorer. The search path defaults to
+   the same location as your workspace file. An additional search
+   directory can be added in the
+   **Workspace Explorer: Additional Custom Icon Directory** setting.
 
-- `workspaceExplorer.additionalCustomIconDirectory`
+-  `workspaceExplorer.additionalCustomIconDirectory`
 
-  Give Workspace Explorer an additional search directory
-  for **.png** and **.jpg** files with the same name as
-  your workspaces and folders. Then use those as icons in the
-  Workspace Explorer. Workspace Explorer will first look in
-  the **Workspace Storage Directory** and then will look in
-  the **Additional Custom Icon Directory**. Ex: C:\\Users\\appuser\\icons
+   Give Workspace Explorer an additional search directory
+   for **.png** and **.jpg** files with the same name as
+   your workspaces and folders. Then use those as icons in the
+   Workspace Explorer. Workspace Explorer will first look in
+   the **Workspace Storage Directory** and then will look in
+   the **Additional Custom Icon Directory**. Ex: C:\\Users\\appuser\\icons
 
 ## Using Variables in Config Paths
 
@@ -204,87 +205,94 @@ ${env:USERPROFILE}\my\windows\path
 
 # Release Notes
 
+## 2.3.0
+
+-  Added support for opening te folder in same or new window
+
 ## 2.2.0
-- Updated extension config for remote development workflows. VSCode will first try to run the extension locally and fallback to the remote extension host. This enables desktop VSCode users to continue seeing their workspaces while using [remote extensions](https://code.visualstudio.com/docs/remote/remote-overview)
-- Patched a bug where folder creation would not work when running a remote extension
-- Pathed a bug where workspace creation would not work when running a remote extension
+
+-  Updated extension config for remote development workflows. VSCode will first try to run the extension locally and fallback to the remote extension host. This enables desktop VSCode users to continue seeing their workspaces while using [remote extensions](https://code.visualstudio.com/docs/remote/remote-overview)
+-  Patched a bug where folder creation would not work when running a remote extension
+-  Pathed a bug where workspace creation would not work when running a remote extension
 
 ## 2.1.0
-- Added experimental support for opening workspaces via command palette. PR by @fhemberger.
-- Migrated Git repo from GitLab to GitHub
+
+-  Added experimental support for opening workspaces via command palette. PR by @fhemberger.
+-  Migrated Git repo from GitLab to GitHub
 
 ## 2.0.0
-- Removed support for `.svg` icons.
-- Added support for `.jpg` icons.
-- Added support for environment variables in config paths, using template syntax.
-- Added clearer workspace save prompt.
-- Removed all command palette commands. These were unsupported.
+
+-  Removed support for `.svg` icons.
+-  Added support for `.jpg` icons.
+-  Added support for environment variables in config paths, using template syntax.
+-  Added clearer workspace save prompt.
+-  Removed all command palette commands. These were unsupported.
 
 ## 1.7.0
 
-- Moved Workspaces view inside a new Workspaces view container. This move increases usability for large collections of workspaces and subfolders. Additionally, moving the view frees up space in the Explorer view container to allow developers to access other Explorer views that are more relevant to active development in the editor panels. https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/-/issues/14
-- Updated Docs and doc gifs to reflect the new location of the Workspaces view.
+-  Moved Workspaces view inside a new Workspaces view container. This move increases usability for large collections of workspaces and subfolders. Additionally, moving the view frees up space in the Explorer view container to allow developers to access other Explorer views that are more relevant to active development in the editor panels. https://gitlab.com/tomsaunders-tools/vscode-workspace-explorer/-/issues/14
+-  Updated Docs and doc gifs to reflect the new location of the Workspaces view.
 
 ## 1.6.2
 
-- Patched workspaceExplorer.openWorkspaceInSameWindow and workspaceExplorer.openWorkspaceInNewWindow commands to use existing VSCode internal commands. This fixes an issue in the browser version of VSCode. This also removes the dependency
-  on having `code` in your system `$PATH`.
+-  Patched workspaceExplorer.openWorkspaceInSameWindow and workspaceExplorer.openWorkspaceInNewWindow commands to use existing VSCode internal commands. This fixes an issue in the browser version of VSCode. This also removes the dependency
+   on having `code` in your system `$PATH`.
 
 ## 1.6.1
 
-- Updated docs with information about new marketplace name
+-  Updated docs with information about new marketplace name
 
 ## 1.6.0
 
-- When workspace storage directory has not been entered the notification dialog will now provide an option to choose the workspace by opening a file dialog.
-- Updated Change Icon to force reload icons that are overwritten by the user
+-  When workspace storage directory has not been entered the notification dialog will now provide an option to choose the workspace by opening a file dialog.
+-  Updated Change Icon to force reload icons that are overwritten by the user
 
 ## 1.5.0
 
-- Added Experimantal Create Workspace right click option.
-- Added Experimental Create Workspace button on the Workspace Explorer navigation menu.
-- Added Delete right click option. Works for both folders and workspaces.
-- Added Create Sub-folder right click option.
-- Added Create Sub-folder button on the Workspace Explorer navigation menu.
-- Added Rename right click options. Works for both folders and workspaces.
-- Updated Enable Custom Icon Search Configuration to be enabled by default
+-  Added Experimantal Create Workspace right click option.
+-  Added Experimental Create Workspace button on the Workspace Explorer navigation menu.
+-  Added Delete right click option. Works for both folders and workspaces.
+-  Added Create Sub-folder right click option.
+-  Added Create Sub-folder button on the Workspace Explorer navigation menu.
+-  Added Rename right click options. Works for both folders and workspaces.
+-  Updated Enable Custom Icon Search Configuration to be enabled by default
 
 ## 1.4.1
 
-- Fix for POSIX style pathing on extension load that would prevent the extension from finding its version. Thanks to @CugeDe for finding the source of the issue.
+-  Fix for POSIX style pathing on extension load that would prevent the extension from finding its version. Thanks to @CugeDe for finding the source of the issue.
 
 ## 1.4.0
 
-- Added Open workspace storage directory button.
-- Added Collapse All button
-- Add Change Icon option in right click menu
-- Removed Settings button.
-- Updated Requirements Section of README
-- Fixed support for VSCodium to call **codium** when changing workspace.
+-  Added Open workspace storage directory button.
+-  Added Collapse All button
+-  Add Change Icon option in right click menu
+-  Removed Settings button.
+-  Updated Requirements Section of README
+-  Fixed support for VSCodium to call **codium** when changing workspace.
 
 ## 1.3.0
 
-- Updated default icon sets to use default icons from [VSCode](https://github.com/microsoft/vscode-icons).
+-  Updated default icon sets to use default icons from [VSCode](https://github.com/microsoft/vscode-icons).
 
 ## 1.2.2
 
-- Migrated repository to new home.
+-  Migrated repository to new home.
 
 ## 1.2.1
 
-- Additional Docs update for version 1.2
+-  Additional Docs update for version 1.2
 
 ## 1.2.0
 
-- Added support for additional versions of VSCode.
-  - VSCodium
-  - VSCode OSS
+-  Added support for additional versions of VSCode.
+   -  VSCodium
+   -  VSCode OSS
 
 Contributed by @stripedpajamas
 
 ## 1.1.0
 
-- Added support for symlinked directories.
+-  Added support for symlinked directories.
 
 Workspace Explorer will now follow symlinked directories to find
 .code-workspace files and image files. Thanks to @Xaryphon for providing
@@ -292,34 +300,34 @@ the initial version of the code for this feature.
 
 ## 1.0.3
 
-- Updated .vscodeignore to not include animations.
+-  Updated .vscodeignore to not include animations.
 
 ## 1.0.2
 
-- Updated Documentation with proper animations.
+-  Updated Documentation with proper animations.
 
 ## 1.0.0
 
-- Initial Release
+-  Initial Release
 
 ## 0.0.1 to 1.0.0 Pre-release
 
-- Beta versions
+-  Beta versions
 
 # Contributors
 
-- [Tom Saunders](https://github.com/sirfuzzalot) (original author, primary maintainer)
-- [@xaryphon](https://gitlab.com/xaryphon)
-- [@stripedpajamas](https://gitlab.com/stripedpajamas)
-- [@CugeDe](https://gitlab.com/CugeDe)
-- [@betterthanclay](https://gitlab.com/betterthanclay)
-- [@shadowbq](https://gitlab.com/shadowbq)
-- [@fhemberger](https://github.com/fhemberger)
+-  [Tom Saunders](https://github.com/sirfuzzalot) (original author, primary maintainer)
+-  [@xaryphon](https://gitlab.com/xaryphon)
+-  [@stripedpajamas](https://gitlab.com/stripedpajamas)
+-  [@CugeDe](https://gitlab.com/CugeDe)
+-  [@betterthanclay](https://gitlab.com/betterthanclay)
+-  [@shadowbq](https://gitlab.com/shadowbq)
+-  [@fhemberger](https://github.com/fhemberger)
 
 # Testers
 
 Special thanks to the project testers.
 
-- Renaud Talon
-- Robert Tomcik
-- Ryan Gold
+-  Renaud Talon
+-  Robert Tomcik
+-  Ryan Gold
