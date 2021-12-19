@@ -200,6 +200,32 @@ const activate = async () => {
       },
     );
 
+    // Register Open Folder in Same Window Command
+    vscode.commands.registerCommand("workspaceExplorer.openFolder", async (context) => {
+      try {
+        vscode.commands.executeCommand(
+          "vscode.openFolder",
+          vscode.Uri.file(context.workspaceFileNameAndFilePath),
+          false
+        );
+      } catch (err) {
+        vscode.window.showErrorMessage(err);
+      }
+    });
+
+    // Register Open Folder in New Window Command
+    vscode.commands.registerCommand("workspaceExplorer.openFolderInNewWindow", async (context) => {
+      try {
+        vscode.commands.executeCommand(
+          "vscode.openFolder",
+          vscode.Uri.file(context.workspaceFileNameAndFilePath),
+          true
+        );
+      } catch (err) {
+        vscode.window.showErrorMessage(err);
+      }
+    });
+
     // Register Refresh Command.
     vscode.commands.registerCommand(
       'workspaceExplorer.refreshWorkspaceExplorer',

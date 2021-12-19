@@ -2,7 +2,7 @@
     "name": "workspace-explorer",
     "displayName": "Workspace Explorer",
     "description": "Browse, open, and manage your VSCode workspaces in this simple view.",
-    "version": "2.2.0",
+    "version": "2.3.0",
     "icon": "resources/icons/icon.png",
     "publisher": "tomsaunders-code",
     "author": {
@@ -93,6 +93,14 @@
                 }
             },
             {
+                "command": "workspaceExplorer.openFolder",
+                "title": "Open Folder"
+            },
+            {
+                "command": "workspaceExplorer.openFolderInNewWindow",
+                "title": "Open Folder in New Window"
+            },
+            {
                 "command": "workspaceExplorer.openWorkspaceInSameWindow",
                 "title": "Open Workspace in Same Window"
             },
@@ -165,39 +173,49 @@
                     "group": "inline"
                 },
                 {
+                    "command": "workspaceExplorer.openFolder",
+                    "when": "view == workspaceExplorer && viewItem == folder",
+                    "group": "1_open@1"
+                },
+                {
+                    "command": "workspaceExplorer.openFolderInNewWindow",
+                    "when": "view == workspaceExplorer && viewItem == folder",
+                    "group": "1_open@2"
+                },
+                {
                     "command": "workspaceExplorer.createWorkspace",
                     "when": "view == workspaceExplorer && viewItem == folder",
-                    "group": "1_create@1"
+                    "group": "2_create@1"
                 },
                 {
                     "command": "workspaceExplorer.addSubFolder",
                     "when": "view == workspaceExplorer && viewItem == folder",
-                    "group": "1_create@2"
+                    "group": "2_create@2"
                 },
                 {
                     "command": "workspaceExplorer.changeWorkspaceIcon",
                     "when": "view == workspaceExplorer && viewItem == workspaceFile && config.workspaceExplorer.enableCustomIconSearch == true",
-                    "group": "2_icons@1"
+                    "group": "3_icons@1"
                 },
                 {
                     "command": "workspaceExplorer.changeFolderIcon",
                     "when": "view == workspaceExplorer && viewItem == folder && config.workspaceExplorer.enableCustomIconSearch == true",
-                    "group": "2_icons@2"
+                    "group": "3_icons@2"
                 },
                 {
                     "command": "workspaceExplorer.rename",
                     "when": "view == workspaceExplorer",
-                    "group": "3_modification@1"
+                    "group": "4_modification@1"
                 },
                 {
                     "command": "workspaceExplorer.deleteWorkspace",
                     "when": "view == workspaceExplorer && viewItem == workspaceFile",
-                    "group": "3_modification@2"
+                    "group": "4_modification@2"
                 },
                 {
                     "command": "workspaceExplorer.deleteFolder",
                     "when": "view == workspaceExplorer && viewItem == folder",
-                    "group": "3_modification@3"
+                    "group": "4_modification@3"
                 }
             ],
             "view/title": [
