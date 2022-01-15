@@ -3,8 +3,8 @@
  */
 
 const constants = {
-  supportedFormats: ['png', 'jpg'],
-  supportedExtensions: ['.png', '.jpg'],
+  supportedFormats: ["png", "jpg"],
+  supportedExtensions: [".png", ".jpg"],
 };
 
 module.exports = constants;

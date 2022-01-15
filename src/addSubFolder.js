@@ -1,21 +1,18 @@
-const path = require('path');
+const path = require("path");
 
-const vscode = require('vscode');
+const vscode = require("vscode");
 
 // Prompts the user for a new folder name and then creates it.
 const addSubFolder = async (context, treeDataProvider) => {
-  const inputResults = await vscode.window.showInputBox(
-    {
-      prompt: 'Enter a name for the sub-folder.',
-      validateInput: (value) => {
-        if (/[/\\:?*"<>|]/.test(value)) {
-          return 'Folder name may not contain /\\:?*"<>|';
-        }
-        return '';
-      },
-
+  const inputResults = await vscode.window.showInputBox({
+    prompt: "Enter a name for the sub-folder.",
+    validateInput: (value) => {
+      if (/[/\\:?*"<>|]/.test(value)) {
+        return 'Folder name may not contain /\\:?*"<>|';
+      }
+      return "";
     },
-  );
+  });
 
   // Skip if nothing is entered.
   if (!inputResults) {
@@ -28,10 +25,7 @@ const addSubFolder = async (context, treeDataProvider) => {
   }
 
   // Build new Directory path.
-  const newFolder = vscode.Uri.file(path.join(
-    basePath,
-    inputResults,
-  ));
+  const newFolder = vscode.Uri.file(path.join(basePath, inputResults));
 
   // Create directory
   await vscode.workspace.fs.createDirectory(newFolder);

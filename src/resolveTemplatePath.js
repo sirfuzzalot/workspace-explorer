@@ -1,8 +1,8 @@
-const process = require('process');
+const process = require("process");
 
-const path = require('path');
+const path = require("path");
 
-const fs = require('fs');
+const fs = require("fs");
 
 const templatePattern = /(?<template>\${(?<type>env):(?<variable>[a-zA-Z_]+)})/;
 
@@ -10,7 +10,7 @@ const templatePattern = /(?<template>\${(?<type>env):(?<variable>[a-zA-Z_]+)})/;
 
 class InvalidTemplateStringError extends Error {
   constructor() {
-    super('Invalid Template String');
+    super("Invalid Template String");
   }
 }
 
@@ -29,7 +29,7 @@ const resolveEnvVar = (variable) => {
 };
 
 const replaceMatch = (match, group1, group2, group3) => {
-  if (group2 === 'env') {
+  if (group2 === "env") {
     return resolveEnvVar(group3);
   }
   throw new InvalidTemplateStringError();
@@ -43,9 +43,10 @@ const replaceMatch = (match, group1, group2, group3) => {
 const resolveTemplatePath = (filepath) => {
   let templateString = filepath;
   while (true) {
+    /* eslint no-constant-condition: "off" */
     const resolvedString = templateString.replace(
       templatePattern,
-      replaceMatch,
+      replaceMatch
     );
     if (templateString === resolvedString) {
       const resolvedPath = path.resolve(resolvedString);

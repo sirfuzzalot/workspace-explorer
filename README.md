@@ -8,7 +8,6 @@ install this version instead, as **vscode-workspace-explorer** is no longer supp
 
 ## Release 2.2.0
 
-
 **Support for Remote SSH, Remote WSL, and Remote Containers extensions.** Workspace Explorer should now continue to display a list of workspaces for users of the desktop version of VSCode when using the [remote extensions](https://code.visualstudio.com/docs/remote/remote-overview). If you installed Workspace Explorer both on your local and remote machine, to take advantage of this feature you'll need to uninstall Workspace Explorer from the remote machine.
 
 In case you missed it, **2.1.0** brought experimental support for opening workspaces using the command palette. Courtesy of [@fhemberger](https://github.com/fhemberger).
@@ -205,15 +204,18 @@ ${env:USERPROFILE}\my\windows\path
 # Release Notes
 
 ## 2.2.0
+
 - Updated extension config for remote development workflows. VSCode will first try to run the extension locally and fallback to the remote extension host. This enables desktop VSCode users to continue seeing their workspaces while using [remote extensions](https://code.visualstudio.com/docs/remote/remote-overview)
 - Patched a bug where folder creation would not work when running a remote extension
 - Pathed a bug where workspace creation would not work when running a remote extension
 
 ## 2.1.0
+
 - Added experimental support for opening workspaces via command palette. PR by @fhemberger.
 - Migrated Git repo from GitLab to GitHub
 
 ## 2.0.0
+
 - Removed support for `.svg` icons.
 - Added support for `.jpg` icons.
 - Added support for environment variables in config paths, using template syntax.
