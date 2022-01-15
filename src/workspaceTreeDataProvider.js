@@ -3,17 +3,17 @@
 // TreeDataProvider to feed data to the Workspace Explorer view.
 // ------------------------------------------------------------------ //
 
-const fs = require('fs');
+const fs = require("fs");
 
-const path = require('path');
+const path = require("path");
 
-const util = require('util');
+const util = require("util");
 
-const vscode = require('vscode');
+const vscode = require("vscode");
 
-const { WorkspaceTreeItem } = require('./workspaceTreeItem');
+const { WorkspaceTreeItem } = require("./workspaceTreeItem");
 
-const resolveConfigs = require('./resolveConfigs');
+const resolveConfigs = require("./resolveConfigs");
 
 // Sort folders and workspace files alphabetically,
 // putting folders above workspace files.
@@ -49,12 +49,13 @@ const findChildren = async (workspaceStorageDirectory) => {
   const filenames = await readdirAsync(workspaceStorageDirectory);
   const workspaceFiles = [];
   filenames.forEach((value) => {
-    if (value.endsWith('.code-workspace')) {
+    if (value.endsWith(".code-workspace")) {
       workspaceFiles.push(value);
     } else if (
-      fs.lstatSync(fs.realpathSync(
-        `${workspaceStorageDirectory}/${value}`,
-      )).isDirectory()) {
+      fs
+        .lstatSync(fs.realpathSync(`${workspaceStorageDirectory}/${value}`))
+        .isDirectory()
+    ) {
       workspaceFiles.push(value);
     }
   });
@@ -62,14 +63,13 @@ const findChildren = async (workspaceStorageDirectory) => {
   const workspaceArray = [];
   workspaceFiles.forEach((value) => {
     workspaceArray.push({
-      label: value.replace('.code-workspace', ''),
-      workspaceFileNameAndFilePath: (
-        fs.realpathSync(
-          `${workspaceStorageDirectory}/${value}`,
-        )),
-      collapsableState: (fs.lstatSync(fs.realpathSync(
-        `${workspaceStorageDirectory}/${value}`,
-      )).isDirectory())
+      label: value.replace(".code-workspace", ""),
+      workspaceFileNameAndFilePath: fs.realpathSync(
+        `${workspaceStorageDirectory}/${value}`
+      ),
+      collapsableState: fs
+        .lstatSync(fs.realpathSync(`${workspaceStorageDirectory}/${value}`))
+        .isDirectory()
         ? vscode.TreeItemCollapsibleState.Collapsed
         : vscode.TreeItemCollapsibleState.None,
     });
@@ -94,9 +94,7 @@ class WorkspaceTreeDataProvider {
     return resolveConfigs(this.refresh.bind(this))
       .then((configs) => {
         this.extensionConfig = configs;
-        this.workspaceStorageDirectory = (
-          configs.workspaceStorageDirectory
-        );
+        this.workspaceStorageDirectory = configs.workspaceStorageDirectory;
       })
       .catch((err) => vscode.window.showErrorMessage(err));
   }
@@ -123,11 +121,11 @@ class WorkspaceTreeDataProvider {
     if (this.targetIconUri) {
       const partialIconPath = this.targetIconUri.fsPath.replace(
         path.extname(this.targetIconUri.fsPath),
-        '',
+        ""
       );
       const partialWorkspacePath = element.workspaceFileNameAndFilePath.replace(
         path.extname(element.workspaceFileNameAndFilePath),
-        '',
+        ""
       );
       if (partialIconPath === partialWorkspacePath) {
         useNewUri = true;
@@ -138,11 +136,11 @@ class WorkspaceTreeDataProvider {
       element.workspaceFileNameAndFilePath,
       element.collapsableState,
       this.extensionConfig,
-      useNewUri,
+      useNewUri
     );
 
     if (useNewUri) {
-      this.targetIconUri = '';
+      this.targetIconUri = "";
     }
 
     return treeItem;

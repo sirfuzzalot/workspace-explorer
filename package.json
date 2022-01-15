@@ -1,302 +1,311 @@
 {
-    "name": "workspace-explorer",
-    "displayName": "Workspace Explorer",
-    "description": "Browse, open, and manage your VSCode workspaces in this simple view.",
-    "version": "2.2.0",
-    "icon": "resources/icons/icon.png",
-    "publisher": "tomsaunders-code",
-    "author": {
-        "name": "Tom Saunders"
-    },
-    "galleryBanner": {
-        "color": "#282c34",
-        "theme": "dark"
-    },
-    "license": "Apache-2.0",
-    "homepage": "https://github.com/sirfuzzalot/workspace-explorer#readme",
-    "bugs": {
-        "url": "https://github.com/sirfuzzalot/workspace-explorer/issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sirfuzzalot/workspace-explorer.git"
-    },
-    "engines": {
-        "vscode": "^1.59.0"
-    },
-    "categories": [
-        "Other"
-    ],
-    "keywords": [
-        "workspace",
-        "explorer",
-        "organize",
-        "switch",
-        "change",
-        "panel"
-    ],
-    "activationEvents": [
-        "*"
-    ],
-    "main": "./src/extension",
-    "extensionKind": [
-        "ui",
-        "workspace"
-    ],
-    "contributes": {
-        "configuration": {
-            "type": "object",
-            "title": "Workspace Explorer Configuration",
-            "properties": {
-                "workspaceExplorer.workspaceStorageDirectory": {
-                    "type": "string",
-                    "default": "",
-                    "markdownDescription": "The root directory containing your .code-workspace files. Workspace Explorer will show you any .code-workspace's in this directory and will also display any sub-folders. This will allow you to organize your workspaces into categories by sub-folder. Ex: C:\\Users\\appuser\\workspaces"
-                },
-                "workspaceExplorer.enableCustomIconSearch": {
-                    "type": "boolean",
-                    "default": true,
-                    "markdownDescription": "Allow Workspace Explorer to search for .svg and .png files with the same name as your workspaces and folders. Then to use those as icons in the Workspace Explorer. The search path defaults to the same location as your workspace file. An additional search directory can be added in additionalCustomIconDirectory."
-                },
-                "workspaceExplorer.additionalCustomIconDirectory": {
-                    "type": "string",
-                    "default": "",
-                    "markdownDescription": "Give Workspace Explorer an additional search directory for .svg and .png files with the same name as your workspaces and folders. Then use those as icons in the Workspace Explorer. Workspace Explorer will first look in the Workspace Storage Directory and then will look in the Additional Custom Icon Directory. Ex: C:\\Users\\appuser\\icons"
-                }
-            }
+  "name": "workspace-explorer",
+  "displayName": "Workspace Explorer",
+  "description": "Browse, open, and manage your VSCode workspaces in this simple view.",
+  "version": "2.2.0",
+  "icon": "resources/icons/icon.png",
+  "publisher": "tomsaunders-code",
+  "author": {
+    "name": "Tom Saunders"
+  },
+  "galleryBanner": {
+    "color": "#282c34",
+    "theme": "dark"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/sirfuzzalot/workspace-explorer#readme",
+  "bugs": {
+    "url": "https://github.com/sirfuzzalot/workspace-explorer/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sirfuzzalot/workspace-explorer.git"
+  },
+  "engines": {
+    "vscode": "^1.63.1"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "workspace",
+    "explorer",
+    "organize",
+    "switch",
+    "change",
+    "panel"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./src/extension",
+  "extensionKind": [
+    "ui",
+    "workspace"
+  ],
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Workspace Explorer Configuration",
+      "properties": {
+        "workspaceExplorer.workspaceStorageDirectory": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "The root directory containing your .code-workspace files. Workspace Explorer will show you any .code-workspace's in this directory and will also display any sub-folders. This will allow you to organize your workspaces into categories by sub-folder. Ex: C:\\Users\\appuser\\workspaces"
         },
-        "viewsContainers": {
-            "activitybar": [
-                {
-                    "id": "workspace-explorer",
-                    "title": "Workspaces",
-                    "icon": "resources/icons/view_container_icon.svg"
-                }
-            ]
+        "workspaceExplorer.enableCustomIconSearch": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Allow Workspace Explorer to search for .svg and .png files with the same name as your workspaces and folders. Then to use those as icons in the Workspace Explorer. The search path defaults to the same location as your workspace file. An additional search directory can be added in additionalCustomIconDirectory."
         },
-        "views": {
-            "workspace-explorer": [
-                {
-                    "id": "workspaceExplorer",
-                    "name": "Workspaces",
-                    "contextualTitle": "Workspaces"
-                }
-            ]
+        "workspaceExplorer.additionalCustomIconDirectory": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Give Workspace Explorer an additional search directory for .svg and .png files with the same name as your workspaces and folders. Then use those as icons in the Workspace Explorer. Workspace Explorer will first look in the Workspace Storage Directory and then will look in the Additional Custom Icon Directory. Ex: C:\\Users\\appuser\\icons"
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "workspace-explorer",
+          "title": "Workspaces",
+          "icon": "resources/icons/view_container_icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "workspace-explorer": [
+        {
+          "id": "workspaceExplorer",
+          "name": "Workspaces",
+          "contextualTitle": "Workspaces"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "workspaceExplorer.openWorkspaceInNewWindow",
+        "title": "Open Workspace in New Window",
+        "icon": {
+          "light": "resources/icons/light/new_window.svg",
+          "dark": "resources/icons/dark/new_window.svg"
+        }
+      },
+      {
+        "command": "workspaceExplorer.openWorkspaceInSameWindow",
+        "title": "Open Workspace in Same Window"
+      },
+      {
+        "command": "workspaceExplorer.openWorkspaceInNewWindowQuickPick",
+        "title": "Open Workspace in New Window"
+      },
+      {
+        "command": "workspaceExplorer.openWorkspaceInSameWindowQuickPick",
+        "title": "Open Workspace in Same Window"
+      },
+      {
+        "command": "workspaceExplorer.refreshWorkspaceExplorer",
+        "title": "Refresh the Workspace Explorer",
+        "icon": {
+          "light": "resources/icons/light/refresh.svg",
+          "dark": "resources/icons/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "workspaceExplorer.openWorkspaceExplorerStorageDirectory",
+        "title": "Open the Workspace Explorer Storage Directory",
+        "icon": {
+          "light": "resources/icons/light/workspace_storage.svg",
+          "dark": "resources/icons/dark/workspace_storage.svg"
+        }
+      },
+      {
+        "command": "workspaceExplorer.addSubFolder",
+        "title": "Create Sub-folder",
+        "icon": {
+          "light": "resources/icons/light/new_folder.svg",
+          "dark": "resources/icons/dark/new_folder.svg"
+        }
+      },
+      {
+        "command": "workspaceExplorer.deleteFolder",
+        "title": "Delete"
+      },
+      {
+        "command": "workspaceExplorer.changeWorkspaceIcon",
+        "title": "Change Workspace Icon"
+      },
+      {
+        "command": "workspaceExplorer.changeFolderIcon",
+        "title": "Change Folder Icon"
+      },
+      {
+        "command": "workspaceExplorer.createWorkspace",
+        "title": "Create Workspace",
+        "icon": {
+          "light": "resources/icons/light/new_workspace.svg",
+          "dark": "resources/icons/dark/new_workspace.svg"
+        }
+      },
+      {
+        "command": "workspaceExplorer.deleteWorkspace",
+        "title": "Delete"
+      },
+      {
+        "command": "workspaceExplorer.rename",
+        "title": "Rename"
+      }
+    ],
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "workspaceExplorer.openWorkspaceInNewWindow",
+          "when": "view == workspaceExplorer && viewItem == workspaceFile",
+          "group": "inline"
         },
-        "commands": [
-            {
-                "command": "workspaceExplorer.openWorkspaceInNewWindow",
-                "title": "Open Workspace in New Window",
-                "icon": {
-                    "light": "resources/icons/light/new_window.svg",
-                    "dark": "resources/icons/dark/new_window.svg"
-                }
-            },
-            {
-                "command": "workspaceExplorer.openWorkspaceInSameWindow",
-                "title": "Open Workspace in Same Window"
-            },
-            {
-                "command": "workspaceExplorer.openWorkspaceInNewWindowQuickPick",
-                "title": "Open Workspace in New Window"
-            },
-            {
-                "command": "workspaceExplorer.openWorkspaceInSameWindowQuickPick",
-                "title": "Open Workspace in Same Window"
-            },
-            {
-                "command": "workspaceExplorer.refreshWorkspaceExplorer",
-                "title": "Refresh the Workspace Explorer",
-                "icon": {
-                    "light": "resources/icons/light/refresh.svg",
-                    "dark": "resources/icons/dark/refresh.svg"
-                }
-            },
-            {
-                "command": "workspaceExplorer.openWorkspaceExplorerStorageDirectory",
-                "title": "Open the Workspace Explorer Storage Directory",
-                "icon": {
-                    "light": "resources/icons/light/workspace_storage.svg",
-                    "dark": "resources/icons/dark/workspace_storage.svg"
-                }
-            },
-            {
-                "command": "workspaceExplorer.addSubFolder",
-                "title": "Create Sub-folder",
-                "icon": {
-                    "light": "resources/icons/light/new_folder.svg",
-                    "dark": "resources/icons/dark/new_folder.svg"
-                }
-            },
-            {
-                "command": "workspaceExplorer.deleteFolder",
-                "title": "Delete"
-            },
-            {
-                "command": "workspaceExplorer.changeWorkspaceIcon",
-                "title": "Change Workspace Icon"
-            },
-            {
-                "command": "workspaceExplorer.changeFolderIcon",
-                "title": "Change Folder Icon"
-            },
-            {
-                "command": "workspaceExplorer.createWorkspace",
-                "title": "Create Workspace",
-                "icon": {
-                    "light": "resources/icons/light/new_workspace.svg",
-                    "dark": "resources/icons/dark/new_workspace.svg"
-                }
-            },
-            {
-                "command": "workspaceExplorer.deleteWorkspace",
-                "title": "Delete"
-            },
-            {
-                "command": "workspaceExplorer.rename",
-                "title": "Rename"
-            }
-        ],
-        "menus": {
-            "view/item/context": [
-                {
-                    "command": "workspaceExplorer.openWorkspaceInNewWindow",
-                    "when": "view == workspaceExplorer && viewItem == workspaceFile",
-                    "group": "inline"
-                },
-                {
-                    "command": "workspaceExplorer.createWorkspace",
-                    "when": "view == workspaceExplorer && viewItem == folder",
-                    "group": "1_create@1"
-                },
-                {
-                    "command": "workspaceExplorer.addSubFolder",
-                    "when": "view == workspaceExplorer && viewItem == folder",
-                    "group": "1_create@2"
-                },
-                {
-                    "command": "workspaceExplorer.changeWorkspaceIcon",
-                    "when": "view == workspaceExplorer && viewItem == workspaceFile && config.workspaceExplorer.enableCustomIconSearch == true",
-                    "group": "2_icons@1"
-                },
-                {
-                    "command": "workspaceExplorer.changeFolderIcon",
-                    "when": "view == workspaceExplorer && viewItem == folder && config.workspaceExplorer.enableCustomIconSearch == true",
-                    "group": "2_icons@2"
-                },
-                {
-                    "command": "workspaceExplorer.rename",
-                    "when": "view == workspaceExplorer",
-                    "group": "3_modification@1"
-                },
-                {
-                    "command": "workspaceExplorer.deleteWorkspace",
-                    "when": "view == workspaceExplorer && viewItem == workspaceFile",
-                    "group": "3_modification@2"
-                },
-                {
-                    "command": "workspaceExplorer.deleteFolder",
-                    "when": "view == workspaceExplorer && viewItem == folder",
-                    "group": "3_modification@3"
-                }
-            ],
-            "view/title": [
-                {
-                    "command": "workspaceExplorer.refreshWorkspaceExplorer",
-                    "when": "view == workspaceExplorer",
-                    "group": "navigation@4"
-                },
-                {
-                    "command": "workspaceExplorer.openWorkspaceExplorerStorageDirectory",
-                    "when": "view == workspaceExplorer && config.workspaceExplorer.workspaceStorageDirectory != ''",
-                    "group": "navigation@3"
-                },
-                {
-                    "command": "workspaceExplorer.addSubFolder",
-                    "when": "view == workspaceExplorer && config.workspaceExplorer.workspaceStorageDirectory != ''",
-                    "group": "navigation@2"
-                },
-                {
-                    "command": "workspaceExplorer.createWorkspace",
-                    "when": "view == workspaceExplorer  && config.workspaceExplorer.workspaceStorageDirectory != ''",
-                    "group": "navigation@1"
-                }
-            ],
-            "commandPalette": [
-                {
-                    "command": "workspaceExplorer.openWorkspaceInNewWindow",
-                    "when": "false"
-                },
-                {
-                    "command": "workspaceExplorer.openWorkspaceInSameWindow",
-                    "when": "false"
-                },
-                {
-                    "command": "workspaceExplorer.refreshWorkspaceExplorer",
-                    "when": "false"
-                },
-                {
-                    "command": "workspaceExplorer.openWorkspaceExplorerStorageDirectory",
-                    "when": "false"
-                },
-                {
-                    "command": "workspaceExplorer.addSubFolder",
-                    "when": "false"
-                },
-                {
-                    "command": "workspaceExplorer.deleteFolder",
-                    "when": "false"
-                },
-                {
-                    "command": "workspaceExplorer.changeWorkspaceIcon",
-                    "when": "false"
-                },
-                {
-                    "command": "workspaceExplorer.changeFolderIcon",
-                    "when": "false"
-                },
-                {
-                    "command": "workspaceExplorer.createWorkspace",
-                    "when": "false"
-                },
-                {
-                    "command": "workspaceExplorer.deleteWorkspace",
-                    "when": "false"
-                },
-                {
-                    "command": "workspaceExplorer.rename",
-                    "when": "false"
-                }
-            ]
+        {
+          "command": "workspaceExplorer.createWorkspace",
+          "when": "view == workspaceExplorer && viewItem == folder",
+          "group": "1_create@1"
         },
-        "keybindings": [
-            {
-                "key": "Ctrl-k w",
-                "command": "workspaceExplorer.openWorkspaceInSameWindowQuickPick"
-            },
-            {
-                "key": "Ctrl-k Ctrl-w",
-                "command": "workspaceExplorer.openWorkspaceInNewWindowQuickPick"
-            }
-        ]
+        {
+          "command": "workspaceExplorer.addSubFolder",
+          "when": "view == workspaceExplorer && viewItem == folder",
+          "group": "1_create@2"
+        },
+        {
+          "command": "workspaceExplorer.changeWorkspaceIcon",
+          "when": "view == workspaceExplorer && viewItem == workspaceFile && config.workspaceExplorer.enableCustomIconSearch == true",
+          "group": "2_icons@1"
+        },
+        {
+          "command": "workspaceExplorer.changeFolderIcon",
+          "when": "view == workspaceExplorer && viewItem == folder && config.workspaceExplorer.enableCustomIconSearch == true",
+          "group": "2_icons@2"
+        },
+        {
+          "command": "workspaceExplorer.rename",
+          "when": "view == workspaceExplorer",
+          "group": "3_modification@1"
+        },
+        {
+          "command": "workspaceExplorer.deleteWorkspace",
+          "when": "view == workspaceExplorer && viewItem == workspaceFile",
+          "group": "3_modification@2"
+        },
+        {
+          "command": "workspaceExplorer.deleteFolder",
+          "when": "view == workspaceExplorer && viewItem == folder",
+          "group": "3_modification@3"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "workspaceExplorer.refreshWorkspaceExplorer",
+          "when": "view == workspaceExplorer",
+          "group": "navigation@4"
+        },
+        {
+          "command": "workspaceExplorer.openWorkspaceExplorerStorageDirectory",
+          "when": "view == workspaceExplorer && config.workspaceExplorer.workspaceStorageDirectory != ''",
+          "group": "navigation@3"
+        },
+        {
+          "command": "workspaceExplorer.addSubFolder",
+          "when": "view == workspaceExplorer && config.workspaceExplorer.workspaceStorageDirectory != ''",
+          "group": "navigation@2"
+        },
+        {
+          "command": "workspaceExplorer.createWorkspace",
+          "when": "view == workspaceExplorer  && config.workspaceExplorer.workspaceStorageDirectory != ''",
+          "group": "navigation@1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "workspaceExplorer.openWorkspaceInNewWindow",
+          "when": "false"
+        },
+        {
+          "command": "workspaceExplorer.openWorkspaceInSameWindow",
+          "when": "false"
+        },
+        {
+          "command": "workspaceExplorer.refreshWorkspaceExplorer",
+          "when": "false"
+        },
+        {
+          "command": "workspaceExplorer.openWorkspaceExplorerStorageDirectory",
+          "when": "false"
+        },
+        {
+          "command": "workspaceExplorer.addSubFolder",
+          "when": "false"
+        },
+        {
+          "command": "workspaceExplorer.deleteFolder",
+          "when": "false"
+        },
+        {
+          "command": "workspaceExplorer.changeWorkspaceIcon",
+          "when": "false"
+        },
+        {
+          "command": "workspaceExplorer.changeFolderIcon",
+          "when": "false"
+        },
+        {
+          "command": "workspaceExplorer.createWorkspace",
+          "when": "false"
+        },
+        {
+          "command": "workspaceExplorer.deleteWorkspace",
+          "when": "false"
+        },
+        {
+          "command": "workspaceExplorer.rename",
+          "when": "false"
+        }
+      ]
     },
-    "scripts": {
-        "lint": "./node_modules/.bin/eslint ./src",
-        "fix": "./node_modules/.bin/eslint --fix ./src",
-        "build": "vsce package",
-        "publish": "vsce publish"
+    "keybindings": [
+      {
+        "key": "Ctrl-k w",
+        "command": "workspaceExplorer.openWorkspaceInSameWindowQuickPick"
+      },
+      {
+        "key": "Ctrl-k Ctrl-w",
+        "command": "workspaceExplorer.openWorkspaceInNewWindowQuickPick"
+      }
+    ]
+  },
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint ./src",
+    "fix": "./node_modules/.bin/eslint --fix ./src",
+    "build": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.8",
+    "@types/vscode": "^1.63.1",
+    "eslint": "~8.6.0",
+    "eslint-config-prettier": "~8.3.0",
+    "prettier": "~2.5.1",
+    "typescript": "^4.5.4",
+    "vsce": "^2.6.3",
+    "vscode-test": "^1.6.1"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es2021": true
     },
-    "devDependencies": {
-        "@types/node": "^15.14.9",
-        "@types/vscode": "^1.59.0",
-        "eslint": "^7.32.0",
-        "eslint-config-airbnb-base": "^14.2.1",
-        "eslint-plugin-import": "^2.24.2",
-        "typescript": "^4.4.2",
-        "vsce": "^1.96.1",
-        "vscode-test": "^1.6.1"
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 13
     },
-    "eslintConfig": {
-        "extends": "airbnb-base"
-    }
+    "rules": {}
+  }
 }
