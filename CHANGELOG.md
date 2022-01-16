@@ -2,6 +2,13 @@
 
 All notable changes to the "workspace-explorer" extension will be documented in this file.
 
+## 2.3.0
+
+- Opening of workspaces via command palette is now no longer experimental
+- Icons have been added for folders and workspaces within the command palette to assist in navigation
+- Documenation added for command palette commands
+- Update activation event to onStartupFinished
+
 ## 2.2.0
 
 - Updated extension config for remote development workflows. VSCode will first try to run the extension locally and fallback to the remote extension host. This enables desktop VSCode users to continue seeing their workspaces while using remote extensions.

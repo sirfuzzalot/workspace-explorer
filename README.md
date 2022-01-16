@@ -6,14 +6,12 @@ This extension is now published and supported under the name
 [workspace-explorer](https://marketplace.visualstudio.com/items?itemName=tomsaunders-code.workspace-explorer). If you have **vscode-workspace-explorer** please
 install this version instead, as **vscode-workspace-explorer** is no longer supported.
 
-## Release 2.2.0
+## Release 2.3.0
 
-**Support for Remote SSH, Remote WSL, and Remote Containers extensions.** Workspace Explorer should now continue to display a list of workspaces for users of the desktop version of VSCode when using the [remote extensions](https://code.visualstudio.com/docs/remote/remote-overview). If you installed Workspace Explorer both on your local and remote machine, to take advantage of this feature you'll need to uninstall Workspace Explorer from the remote machine.
-
-In case you missed it, **2.1.0** brought experimental support for opening workspaces using the command palette. Courtesy of [@fhemberger](https://github.com/fhemberger).
-
-- `Ctrl-k w` - open a workspace in same window
-- `Ctrl-k Ctrl-w` - open a workspace in a new window
+This release formalizes support for opening workspaces from within Command Palette.
+Check out the docs at [Open Workspaces with Command Palette](#opening-a-workspace-using-command-palette)
+for more details. Icons have been added to the Command Palette in several
+places to make the options more clear.
 
 # Introduction
 
@@ -51,6 +49,7 @@ Workspace Explorer allows you to have quick access to all your workspaces in one
   - [Create Workspaces](#creating-a-workspace)
   - [Delete Workspaces](#deleting-a-workspace)
   - [Rename Workspaces](#renaming-a-workspace)
+  - [Open Workspaces with Command Palette](#opening-a-workspace-using-command-palette)
 - Custom Icons
   - [Set Custom Icons](#setting-custom-icons)
   - [Additional Icons Directory](#additional-custom-icons-directory)
@@ -118,6 +117,27 @@ There are at least two ways to rename a workspace:
 2. Through the **Open Workspace Storage Directory** button where you can then rename a workspace using the standard OS menus.
 
 <a title="Click to view high resolution gif" href="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/renameWorkspace.gif"><img alt="Creating Sub-folders" src="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/renameWorkspace_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
+
+## Opening a Workspace Using Command Palette
+
+Workspace Explorer allows you to open a workspace in the existing window
+or a new window using the Command Palette.
+
+### Search the Command Palette
+
+1. Open Command Palette with `CTRL+SHIFT+P`
+2. Search for **🗂️ Workspace Explorer: Open Workspace In New Window** or **🗂️ Workspace Explorer: Open Workspace In Same Window**
+3. Choose the desired option and navigate the folder structure with mouse or up and down arrows.
+4. Hit enter to go into a folder or to select a workspace.
+
+### Keyboard Shortcuts
+
+You can jump straight to the workspace list using keyboard shortcuts.
+
+- Open Workspace in Same Window -> `CTRL+k + w`
+- Open Workspace in New Window -> `CTRL+k + CTRL+w`
+
+<a title="Click to view high resolution gif" href="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/openWorkspaceWithPalette.gif"><img alt="Opening Workspaces with Command Palette" src="https://raw.githubusercontent.com/sirfuzzalot/workspace-explorer/main/resources/images/openWorkspaceWithPalette_480p.gif" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></a>
 
 ## Setting Custom Icons
 
@@ -229,11 +249,16 @@ for more information.
 
 # Release Notes
 
+## 2.3.0
+
+- Opening of workspaces via command palette is now no longer experimental
+- Icons have been added for folders and workspaces within the command palette to assist in navigation
+
 ## 2.2.0
 
 - Updated extension config for remote development workflows. VSCode will first try to run the extension locally and fallback to the remote extension host. This enables desktop VSCode users to continue seeing their workspaces while using [remote extensions](https://code.visualstudio.com/docs/remote/remote-overview)
 - Patched a bug where folder creation would not work when running a remote extension
-- Pathed a bug where workspace creation would not work when running a remote extension
+- Patched a bug where workspace creation would not work when running a remote extension
 
 ## 2.1.0
 

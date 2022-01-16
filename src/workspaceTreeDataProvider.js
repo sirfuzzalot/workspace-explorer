@@ -45,7 +45,7 @@ const readdirAsync = util.promisify(fs.readdir);
 
 // Gets the list of .code-workspace files in the directory specified and
 // also returns any sub-directories.
-const findChildren = async (workspaceStorageDirectory) => {
+const findChildren = async (workspaceStorageDirectory, workspaceIcon) => {
   const filenames = await readdirAsync(workspaceStorageDirectory);
   const workspaceFiles = [];
   filenames.forEach((value) => {
@@ -62,8 +62,14 @@ const findChildren = async (workspaceStorageDirectory) => {
   // Create a tree-item for each .code-workspaces file.
   const workspaceArray = [];
   workspaceFiles.forEach((value) => {
+    let fileOrFolder = "";
+    if (workspaceIcon) {
+      fileOrFolder = value.endsWith(".code-workspace")
+        ? `$(${workspaceIcon}) `
+        : "$(settings-group-collapsed) ";
+    }
     workspaceArray.push({
-      label: value.replace(".code-workspace", ""),
+      label: `${fileOrFolder}${value.replace(".code-workspace", "")}`,
       workspaceFileNameAndFilePath: fs.realpathSync(
         `${workspaceStorageDirectory}/${value}`
       ),
@@ -80,12 +86,13 @@ const findChildren = async (workspaceStorageDirectory) => {
 // Custom TreeDataProvider that returns workspace and folder data
 // to be displayed in the TreeView.
 class WorkspaceTreeDataProvider {
-  constructor() {
+  constructor(options = { workspaceIcon: null }) {
     this._onDidChangeTreeData = new vscode.EventEmitter();
     this.onDidChangeTreeData = this._onDidChangeTreeData.event;
     this.extensionConfig;
     this.workspaceStorageDirectory;
     this.targetIconUri;
+    this.workspaceIcon = options.workspaceIcon;
     this.getConfigs();
   }
 
@@ -152,9 +159,12 @@ class WorkspaceTreeDataProvider {
       return [];
     }
     if (element === undefined) {
-      return findChildren(this.workspaceStorageDirectory);
+      return findChildren(this.workspaceStorageDirectory, this.workspaceIcon);
     }
-    return findChildren(element.workspaceFileNameAndFilePath);
+    return findChildren(
+      element.workspaceFileNameAndFilePath,
+      this.workspaceIcon
+    );
   }
 }
 
