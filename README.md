@@ -201,6 +201,32 @@ ${env:NAME_OF_ENV_VAR}/remainder/of/your/path
 ${env:USERPROFILE}\my\windows\path
 ```
 
+## Support for Remote SSH, Remote WSL, and Remote Containers Extensions
+
+Workspace Explorer will continue to display a list of workspaces
+for users of the desktop version of VSCode when using the [remote extensions](https://code.visualstudio.com/docs/remote/remote-overview).
+If you installed Workspace Explorer both on your local and remote machine,
+to take advantage of this feature you'll need to uninstall Workspace
+Explorer from the remote machine.
+
+### Using Workspace Explorer Remote Only
+
+If you intend to work AND store your workspaces on a remote machine/container
+you can do so by updating the following values in your VSCode config. This
+will ensure the extension runs on the **remote** host rather than locally.
+This is automatically set for you if you are running in Codespaces.
+Check out [issue #14](https://github.com/sirfuzzalot/workspace-explorer/issues/14#issuecomment-922165831)
+for more information.
+
+```json
+{
+  "remote.extensionKind": {
+    "tomsaunders-code.workspace-explorer": ["workspace"]
+  },
+  ...
+}
+```
+
 # Release Notes
 
 ## 2.2.0
