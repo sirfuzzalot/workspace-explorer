@@ -24,11 +24,19 @@ const deleteWorkspace = require("./deleteWorkspace");
 
 const renameTreeItem = require("./renameTreeItem");
 
+const { selectWorkspace } = require("./openWorkspaceWithPalette");
+
 // Activates the Extension when the Explorer view-container is open
 // and the workspace explorer is expanded.
 const activate = async () => {
   // Setup tree data structure
-  const treeDataProvider = new WorkspaceTreeDataProvider();
+  const explorerTreeDataProvider = new WorkspaceTreeDataProvider();
+  const quickPickNewWindowTreeDataProvider = new WorkspaceTreeDataProvider({
+    workspaceIcon: "multiple-windows",
+  });
+  const quickPickSameWindowTreeDataProvider = new WorkspaceTreeDataProvider({
+    workspaceIcon: "window",
+  });
 
   // Grab the extension version from the package.json file and publish
   // it on key commands.
@@ -60,42 +68,13 @@ const activate = async () => {
       }
     );
 
-    const selectWorkspace = async (placeHolder, tree, node) => {
-      const workspaceEntries = await tree.getChildren(node);
-
-      if (!workspaceEntries) {
-        vscode.window.showInformationMessage("No workspaces found");
-        return {};
-      }
-
-      const options = {
-        matchOnDescription: false,
-        matchOnDetail: false,
-        placeHolder,
-      };
-
-      const selectedItem = await vscode.window.showQuickPick(
-        workspaceEntries,
-        options
-      );
-      if (!selectedItem) {
-        return {};
-      }
-
-      if (selectedItem.collapsableState === 1) {
-        return selectWorkspace(placeHolder, tree, selectedItem);
-      }
-
-      return selectedItem;
-    };
-
     vscode.commands.registerCommand(
       "workspaceExplorer.openWorkspaceInNewWindowQuickPick",
       async () => {
         try {
           const workspace = await selectWorkspace(
             "Choose a workspace to switch to in a new window ...",
-            treeDataProvider
+            quickPickNewWindowTreeDataProvider
           );
           if (!Object.keys(workspace).length) {
             return;
@@ -118,7 +97,7 @@ const activate = async () => {
         try {
           const workspace = await selectWorkspace(
             "Choose a workspace to switch to ...",
-            treeDataProvider
+            quickPickSameWindowTreeDataProvider
           );
           if (!Object.keys(workspace).length) {
             return;
@@ -175,7 +154,7 @@ const activate = async () => {
     // Setup TreeView
     vscode.window.createTreeView("workspaceExplorer", {
       showCollapseAll: true,
-      treeDataProvider,
+      treeDataProvider: explorerTreeDataProvider,
     });
 
     // TODO: Add default text in tree view. Awaiting API stablization
@@ -188,7 +167,7 @@ const activate = async () => {
       "workspaceExplorer.addSubFolder",
       async (context) => {
         try {
-          await addSubFolder(context, treeDataProvider);
+          await addSubFolder(context, explorerTreeDataProvider);
         } catch (err) {
           vscode.window.showErrorMessage(err);
         }
@@ -200,7 +179,7 @@ const activate = async () => {
       "workspaceExplorer.deleteFolder",
       async (context) => {
         try {
-          await deleteFolder(context, treeDataProvider);
+          await deleteFolder(context, explorerTreeDataProvider);
         } catch (err) {
           vscode.window.showErrorMessage(err);
         }
@@ -211,7 +190,9 @@ const activate = async () => {
     vscode.commands.registerCommand(
       "workspaceExplorer.refreshWorkspaceExplorer",
       () => {
-        treeDataProvider.refresh();
+        explorerTreeDataProvider.refresh();
+        quickPickNewWindowTreeDataProvider.refresh();
+        quickPickSameWindowTreeDataProvider.refresh();
       }
     );
 
@@ -220,7 +201,7 @@ const activate = async () => {
       "workspaceExplorer.changeFolderIcon",
       async (e) => {
         try {
-          await changeIcon(e, treeDataProvider);
+          await changeIcon(e, explorerTreeDataProvider);
         } catch (err) {
           vscode.window.showErrorMessage(err);
         }
@@ -232,7 +213,7 @@ const activate = async () => {
       "workspaceExplorer.changeWorkspaceIcon",
       async (e) => {
         try {
-          await changeIcon(e, treeDataProvider);
+          await changeIcon(e, explorerTreeDataProvider);
         } catch (err) {
           vscode.window.showErrorMessage(err);
         }
@@ -244,7 +225,7 @@ const activate = async () => {
       "workspaceExplorer.createWorkspace",
       async (e) => {
         try {
-          await createWorkspace(e, treeDataProvider);
+          await createWorkspace(e, explorerTreeDataProvider);
         } catch (err) {
           vscode.window.showErrorMessage(err);
         }
@@ -256,7 +237,7 @@ const activate = async () => {
       "workspaceExplorer.deleteWorkspace",
       async (e) => {
         try {
-          await deleteWorkspace(e, treeDataProvider);
+          await deleteWorkspace(e, explorerTreeDataProvider);
         } catch (err) {
           vscode.window.showErrorMessage(err);
         }
@@ -266,7 +247,7 @@ const activate = async () => {
     // Register Rename Command.
     vscode.commands.registerCommand("workspaceExplorer.rename", async (e) => {
       try {
-        await renameTreeItem(e, treeDataProvider);
+        await renameTreeItem(e, explorerTreeDataProvider);
       } catch (err) {
         vscode.window.showErrorMessage(err);
       }
