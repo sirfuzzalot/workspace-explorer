@@ -1,12 +1,16 @@
-const path = require("path");
+import path from "node:path";
+import vscode from "vscode";
 
-const vscode = require("vscode");
-
-const constants = require("./constants");
+import constants from "./constants";
+import WorkspaceTreeDataProvider from "./workspaceTreeDataProvider";
+import WorkspaceTreeItem from "./workspaceTreeItem";
 
 // Creates a copy of the selected file and renames it the name of the
 // folder or workspace file.
-const changeIcon = async (context, treeDataProvider) => {
+export default async function (
+  context: WorkspaceTreeItem,
+  treeDataProvider: WorkspaceTreeDataProvider,
+) {
   try {
     const inputResults = await vscode.window.showOpenDialog({
       // defaultUri: vscode.Uri.file(config.workspaceStorageDirectory),
@@ -26,12 +30,12 @@ const changeIcon = async (context, treeDataProvider) => {
     const selectedImageFile = inputResults[0].path;
 
     const contextualWorkspaceDirectoryPath = path.dirname(
-      context.workspaceFileNameAndFilePath
+      context.workspaceFileNameAndFilePath,
     );
 
     // Get Name of workspace or folder. Drop the .code-workspace extension.
     let contextualWorkspaceOrDirectoryName = path.basename(
-      context.workspaceFileNameAndFilePath
+      context.workspaceFileNameAndFilePath,
     );
     if (
       path.extname(contextualWorkspaceOrDirectoryName) === ".code-workspace"
@@ -41,16 +45,16 @@ const changeIcon = async (context, treeDataProvider) => {
     }
 
     const newIconName = `${contextualWorkspaceOrDirectoryName}${path.extname(
-      selectedImageFile
+      selectedImageFile,
     )}`;
 
     const destinationUri = vscode.Uri.file(
-      path.join(contextualWorkspaceDirectoryPath, newIconName)
+      path.join(contextualWorkspaceDirectoryPath, newIconName),
     );
 
     // Check if image files already exists for the folder or workspace file.
     const workspaceDirectoryContents = await vscode.workspace.fs.readDirectory(
-      vscode.Uri.file(contextualWorkspaceDirectoryPath)
+      vscode.Uri.file(contextualWorkspaceDirectoryPath),
     );
 
     const existingIcons = workspaceDirectoryContents
@@ -59,7 +63,7 @@ const changeIcon = async (context, treeDataProvider) => {
           item[1] === 1 && // Is file
           constants.supportedExtensions.includes(path.extname(item[0])) &&
           item[0].replace(path.extname(item[0]), "") ===
-            contextualWorkspaceOrDirectoryName
+            contextualWorkspaceOrDirectoryName,
       )
       .map((x) => x[0]);
 
@@ -72,13 +76,13 @@ const changeIcon = async (context, treeDataProvider) => {
         const userFeedBack = await vscode.window.showWarningMessage(
           `Conflicting file(s) exists in this directory: ${conflictingFiles}`,
           "Remove File(s)",
-          "Cancel"
+          "Cancel",
         );
 
         if (userFeedBack === "Remove File(s)") {
           const deleteTasks = await existingIcons.map(async (item) => {
             conflictingFile = vscode.Uri.file(
-              path.join(contextualWorkspaceDirectoryPath, item)
+              path.join(contextualWorkspaceDirectoryPath, item),
             );
             await vscode.workspace.fs.delete(conflictingFile);
           });
@@ -89,7 +93,7 @@ const changeIcon = async (context, treeDataProvider) => {
       }
     } catch (err) {
       vscode.window.showErrorMessage(
-        `ERROR: There was an Error Deleting the Duplicate - ${err}`
+        `ERROR: There was an Error Deleting the Duplicate - ${err}`,
       );
     }
 
@@ -106,6 +110,4 @@ const changeIcon = async (context, treeDataProvider) => {
   } catch (err) {
     vscode.window.showErrorMessage(`ERROR: ${err}`);
   }
-};
-
-module.exports = changeIcon;
+}

@@ -1,7 +1,7 @@
 node_modules
 .vscode-test/
-.vscode/
 *.vsix
+out/
 
 tools/windows/*
 resources/images/projects/*

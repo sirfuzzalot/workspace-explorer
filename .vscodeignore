@@ -1,7 +1,12 @@
 .vscode/**
 .vscode-test/**
-test/**
+src/**
 .gitignore
-jsconfig.json
+.yarnrc
+**/tsconfig.json
+**/eslint.config.mjs
+**/*.map
+**/*.ts
+**/.vscode-test.*
 resources/images/
 tools/

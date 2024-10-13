@@ -3,19 +3,25 @@
  * Prompt users to enter or correct information when needed.
  */
 
-const vscode = require("vscode");
+import vscode from "vscode";
+import resolveTemplatePath from "./resolveTemplatePath";
+import { InvalidTemplateStringError } from "./resolveTemplatePath";
 
-const resolveTemplatePath = require("./resolveTemplatePath");
+export interface ResolvedExtensionConfig {
+  enableCustomIconSearch: boolean;
+  additionalCustomIconDirectory: string;
+  workspaceStorageDirectory: string;
+}
 
 const promptForFilePath = async (
-  extensionConfig,
-  message,
-  configName,
-  configDisplayName
+  extensionConfig: vscode.WorkspaceConfiguration,
+  message: string,
+  configName: string,
+  configDisplayName: string,
 ) => {
   const results = await vscode.window.showWarningMessage(
     message,
-    ...["Choose a Directory", "Enter a Template Path"]
+    ...["Choose a Directory", "Enter a Template Path"],
   );
   if (results === "Choose a Directory") {
     const userFolder = await vscode.window.showOpenDialog({
@@ -27,7 +33,7 @@ const promptForFilePath = async (
       await extensionConfig.update(
         configName,
         userFolder[0].fsPath,
-        vscode.ConfigurationTarget.Global
+        vscode.ConfigurationTarget.Global,
       );
     }
   } else if (results === "Enter a Template Path") {
@@ -42,15 +48,15 @@ const promptForFilePath = async (
       await extensionConfig.update(
         configName,
         inputResults,
-        vscode.ConfigurationTarget.Global
+        vscode.ConfigurationTarget.Global,
       );
     }
   }
 };
 
 const resolveWorkspaceStorageDirectory = async (
-  extensionConfig,
-  refreshFunction
+  extensionConfig: vscode.WorkspaceConfiguration,
+  refreshFunction: (targetIconUri?: vscode.Uri) => void,
 ) => {
   const wsdPath = extensionConfig.workspaceStorageDirectory;
   if (wsdPath === "") {
@@ -63,17 +69,17 @@ const resolveWorkspaceStorageDirectory = async (
       extensionConfig,
       message,
       "workspaceStorageDirectory",
-      "Workspace Storage Directory"
+      "Workspace Storage Directory",
     );
 
     setTimeout(refreshFunction, 100);
-    return;
+    return "";
   }
 
   try {
     return resolveTemplatePath(wsdPath);
   } catch (err) {
-    if (err.name === "InvalidTemplateStringError") {
+    if (err instanceof InvalidTemplateStringError) {
       const message =
         "Workspace Explorer: The workspace storage directory path is " +
         "invalid. Please enter a new path.";
@@ -81,10 +87,10 @@ const resolveWorkspaceStorageDirectory = async (
         extensionConfig,
         message,
         "workspaceStorageDirectory",
-        "Workspace Storage Directory"
+        "Workspace Storage Directory",
       );
       setTimeout(refreshFunction, 100);
-      return;
+      return "";
     }
 
     throw err;
@@ -92,14 +98,14 @@ const resolveWorkspaceStorageDirectory = async (
 };
 
 const resolveAdditionalCustomIconDirectory = async (
-  extensionConfig,
-  refreshFunction
+  extensionConfig: vscode.WorkspaceConfiguration,
+  refreshFunction: (targetIconUri?: vscode.Uri) => void,
 ) => {
   const acidPath = extensionConfig.additionalCustomIconDirectory;
   try {
     return resolveTemplatePath(acidPath);
   } catch (err) {
-    if (err.name === "InvalidTemplateStringError") {
+    if (err instanceof InvalidTemplateStringError) {
       const message =
         "Workspace Explorer: The additional custom icon directory path is " +
         "invalid. Please enter a new path.";
@@ -107,7 +113,7 @@ const resolveAdditionalCustomIconDirectory = async (
         extensionConfig,
         message,
         "additionalCustomIconDirectory",
-        "Additional Custom Icon Directory"
+        "Additional Custom Icon Directory",
       );
       setTimeout(refreshFunction, 100);
     } else {
@@ -124,30 +130,35 @@ const resolveAdditionalCustomIconDirectory = async (
  * @returns {Object} - extension config object containing resolved and
  *    validated configuration values from those provided by the user
  */
-const resolveConfigs = async (refreshFunction) => {
+export default async function (
+  refreshFunction: (targetIconUri?: vscode.Uri) => void,
+) {
   const extensionConfig =
     vscode.workspace.getConfiguration("workspaceExplorer");
 
-  const resolvedConfig = {
+  const workspaceStorageDirectory = await resolveWorkspaceStorageDirectory(
+    extensionConfig,
+    refreshFunction,
+  );
+
+  const resolvedConfig: ResolvedExtensionConfig = {
     enableCustomIconSearch: extensionConfig.enableCustomIconSearch,
     additionalCustomIconDirectory:
       extensionConfig.additionalCustomIconDirectory,
+    workspaceStorageDirectory,
   };
-
-  resolvedConfig.workspaceStorageDirectory =
-    await resolveWorkspaceStorageDirectory(extensionConfig, refreshFunction);
   if (
     extensionConfig.enableCustomIconSearch === true &&
     extensionConfig.additionalCustomIconDirectory !== ""
   ) {
-    resolvedConfig.additionalCustomIconDirectory =
+    const resolvedAdditionalCustomIconDirectory =
       await resolveAdditionalCustomIconDirectory(
         extensionConfig,
-        refreshFunction
+        refreshFunction,
       );
+    resolvedConfig.additionalCustomIconDirectory =
+      resolvedAdditionalCustomIconDirectory || "";
   }
 
   return resolvedConfig;
-};
-
-module.exports = resolveConfigs;
+}

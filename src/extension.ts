@@ -4,33 +4,25 @@
 // data tree provider.
 // ------------------------------------------------------------------ //
 
-const fsPromises = require("fs").promises;
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 
-const path = require("path");
+import vscode from "vscode";
 
-const vscode = require("vscode");
-
-const WorkspaceTreeDataProvider = require("./workspaceTreeDataProvider");
-
-const changeIcon = require("./changeIcon");
-
-const addSubFolder = require("./addSubFolder");
-
-const deleteFolder = require("./deleteFolder");
-
-const createWorkspace = require("./createWorkspace");
-
-const deleteWorkspace = require("./deleteWorkspace");
-
-const renameTreeItem = require("./renameTreeItem");
-
-const { selectWorkspace } = require("./openWorkspaceWithPalette");
+import WorkspaceTreeDataProvider from "./workspaceTreeDataProvider";
+import changeIcon from "./changeIcon";
+import addSubFolder from "./addSubFolder";
+import deleteFolder from "./deleteFolder";
+import createWorkspace from "./createWorkspace";
+import deleteWorkspace from "./deleteWorkspace";
+import renameTreeItem from "./renameTreeItem";
+import { selectWorkspace } from "./openWorkspaceWithPalette";
 
 // Activates the Extension when the Explorer view-container is open
 // and the workspace explorer is expanded.
-const activate = async () => {
+export async function activate(context: vscode.ExtensionContext) {
   // Setup tree data structure
-  const explorerTreeDataProvider = new WorkspaceTreeDataProvider();
+  const explorerTreeDataProvider = new WorkspaceTreeDataProvider({});
   const quickPickNewWindowTreeDataProvider = new WorkspaceTreeDataProvider({
     workspaceIcon: "multiple-windows",
   });
@@ -43,13 +35,10 @@ const activate = async () => {
   let extensionVersion;
   try {
     const extensionRootPath = path.dirname(
-      path.dirname(__filename)
+      path.dirname(__filename),
     ); /* eslint no-undef: "off" */
     extensionVersion = JSON.parse(
-      await fsPromises.readFile(
-        path.join(extensionRootPath, "package.json"),
-        "utf8"
-      )
+      await readFile(path.join(extensionRootPath, "package.json"), "utf8"),
     ).version;
 
     // Register open in new window command.
@@ -60,12 +49,12 @@ const activate = async () => {
           vscode.commands.executeCommand(
             "vscode.openFolder",
             vscode.Uri.file(context.workspaceFileNameAndFilePath),
-            true
+            true,
           );
         } catch (err) {
-          vscode.window.showErrorMessage(err);
+          vscode.window.showErrorMessage(String(err));
         }
-      }
+      },
     );
 
     vscode.commands.registerCommand(
@@ -74,21 +63,22 @@ const activate = async () => {
         try {
           const workspace = await selectWorkspace(
             "Choose a workspace to switch to in a new window ...",
-            quickPickNewWindowTreeDataProvider
+            quickPickNewWindowTreeDataProvider,
+            undefined,
           );
-          if (!Object.keys(workspace).length) {
+          if (!workspace) {
             return;
           }
 
           vscode.commands.executeCommand(
             "vscode.openFolder",
             vscode.Uri.file(workspace.workspaceFileNameAndFilePath),
-            true
+            true,
           );
         } catch (err) {
-          vscode.window.showErrorMessage(err);
+          vscode.window.showErrorMessage(String(err));
         }
-      }
+      },
     );
 
     vscode.commands.registerCommand(
@@ -97,21 +87,22 @@ const activate = async () => {
         try {
           const workspace = await selectWorkspace(
             "Choose a workspace to switch to ...",
-            quickPickSameWindowTreeDataProvider
+            quickPickSameWindowTreeDataProvider,
+            undefined,
           );
-          if (!Object.keys(workspace).length) {
+          if (!workspace) {
             return;
           }
 
           vscode.commands.executeCommand(
             "vscode.openFolder",
             vscode.Uri.file(workspace.workspaceFileNameAndFilePath),
-            false
+            false,
           );
         } catch (err) {
-          vscode.window.showErrorMessage(err);
+          vscode.window.showErrorMessage(String(err));
         }
-      }
+      },
     );
 
     // Register open in same window command.
@@ -122,12 +113,12 @@ const activate = async () => {
           vscode.commands.executeCommand(
             "vscode.openFolder",
             vscode.Uri.file(workspaceFileNameAndFilePath),
-            false
+            false,
           );
         } catch (err) {
-          vscode.window.showErrorMessage(err);
+          vscode.window.showErrorMessage(String(err));
         }
-      }
+      },
     );
 
     // Register Open Workspace Explorer Storage Directory Command.
@@ -146,9 +137,9 @@ const activate = async () => {
             },
           });
         } catch (err) {
-          vscode.window.showErrorMessage(err);
+          vscode.window.showErrorMessage(String(err));
         }
-      }
+      },
     );
 
     // Setup TreeView
@@ -169,9 +160,9 @@ const activate = async () => {
         try {
           await addSubFolder(context, explorerTreeDataProvider);
         } catch (err) {
-          vscode.window.showErrorMessage(err);
+          vscode.window.showErrorMessage(String(err));
         }
-      }
+      },
     );
 
     // Register Delete Folder Command.
@@ -181,9 +172,9 @@ const activate = async () => {
         try {
           await deleteFolder(context, explorerTreeDataProvider);
         } catch (err) {
-          vscode.window.showErrorMessage(err);
+          vscode.window.showErrorMessage(String(err));
         }
-      }
+      },
     );
 
     // Register Refresh Command.
@@ -193,7 +184,7 @@ const activate = async () => {
         explorerTreeDataProvider.refresh();
         quickPickNewWindowTreeDataProvider.refresh();
         quickPickSameWindowTreeDataProvider.refresh();
-      }
+      },
     );
 
     // Register Change Folder icon Command.
@@ -203,9 +194,9 @@ const activate = async () => {
         try {
           await changeIcon(e, explorerTreeDataProvider);
         } catch (err) {
-          vscode.window.showErrorMessage(err);
+          vscode.window.showErrorMessage(String(err));
         }
-      }
+      },
     );
 
     // Register Change Workspace icon Command.
@@ -215,9 +206,9 @@ const activate = async () => {
         try {
           await changeIcon(e, explorerTreeDataProvider);
         } catch (err) {
-          vscode.window.showErrorMessage(err);
+          vscode.window.showErrorMessage(String(err));
         }
-      }
+      },
     );
 
     // Register Create Workspace Command.
@@ -227,9 +218,9 @@ const activate = async () => {
         try {
           await createWorkspace(e, explorerTreeDataProvider);
         } catch (err) {
-          vscode.window.showErrorMessage(err);
+          vscode.window.showErrorMessage(String(err));
         }
-      }
+      },
     );
 
     // Register Delete Workspace Command.
@@ -239,9 +230,9 @@ const activate = async () => {
         try {
           await deleteWorkspace(e, explorerTreeDataProvider);
         } catch (err) {
-          vscode.window.showErrorMessage(err);
+          vscode.window.showErrorMessage(String(err));
         }
-      }
+      },
     );
 
     // Register Rename Command.
@@ -249,16 +240,17 @@ const activate = async () => {
       try {
         await renameTreeItem(e, explorerTreeDataProvider);
       } catch (err) {
-        vscode.window.showErrorMessage(err);
+        vscode.window.showErrorMessage(String(err));
       }
     });
 
     console.log(
-      `[vscode-workspace-explorer] ${extensionVersion} ==> Activated`
+      `[vscode-workspace-explorer] ${extensionVersion} ==> Activated`,
     );
   } catch (err) {
-    vscode.window.showErrorMessage(err);
+    vscode.window.showErrorMessage(String(err));
   }
-};
+}
 
-exports.activate = activate;
+// This method is called when the extension is deactivated
+export function deactivate() {}
