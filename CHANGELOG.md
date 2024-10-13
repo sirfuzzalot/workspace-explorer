@@ -2,6 +2,12 @@
 
 All notable changes to the "workspace-explorer" extension will be documented in this file.
 
+## 2.4.0
+
+- Migrate JS files to TS
+- Update dependencies to current versions and to support TypeScript
+- Add VSCode launch, settings, and tasks configurations
+
 ## 2.3.0
 
 - Opening of workspaces via command palette is now no longer experimental

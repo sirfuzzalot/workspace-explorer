@@ -1,12 +1,17 @@
-const vscode = require("vscode");
+import vscode from "vscode";
+import WorkspaceTreeDataProvider from "./workspaceTreeDataProvider";
+import WorkspaceTreeItem from "./workspaceTreeItem";
 
 // Prompts the user for confirmation and then deletes a folder.
-const deleteFolder = async (context, treeDataProvider) => {
+export default async function (
+  context: WorkspaceTreeItem,
+  treeDataProvider: WorkspaceTreeDataProvider,
+) {
   const folderUri = vscode.Uri.file(context.workspaceFileNameAndFilePath);
 
   const results = await vscode.window.showWarningMessage(
     `Are you sure you want to delete ${context.label} folder and its contents?`,
-    ...["Delete Folder", "Cancel"]
+    ...["Delete Folder", "Cancel"],
   );
 
   if (results === undefined || results === "Cancel") {
@@ -18,6 +23,4 @@ const deleteFolder = async (context, treeDataProvider) => {
 
   // Refresh Tree
   treeDataProvider.refresh();
-};
-
-module.exports = deleteFolder;
+}

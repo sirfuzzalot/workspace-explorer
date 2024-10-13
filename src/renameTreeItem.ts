@@ -1,10 +1,14 @@
-const path = require("path");
-
-const vscode = require("vscode");
+import path from "node:path";
+import vscode from "vscode";
+import WorkspaceTreeDataProvider from "./workspaceTreeDataProvider";
+import WorkspaceTreeItem from "./workspaceTreeItem";
 
 // Prompts the user for a new folder or workspace name and then renames it.
-const renameTreeItem = async (context, treeDataProvider) => {
-  const oldName = path.basename(context.label);
+export default async function (
+  context: WorkspaceTreeItem,
+  treeDataProvider: WorkspaceTreeDataProvider,
+) {
+  const oldName = path.basename(String(context.label));
   const inputResults = await vscode.window.showInputBox({
     prompt: `Enter a new name for ${oldName}.`,
     validateInput: (value) => {
@@ -29,8 +33,8 @@ const renameTreeItem = async (context, treeDataProvider) => {
       path.dirname(context.workspaceFileNameAndFilePath),
       currentNameUri.path.includes(".code-workspace")
         ? `${inputResults}.code-workspace`
-        : inputResults
-    )
+        : inputResults,
+    ),
   );
 
   // Rename
@@ -38,6 +42,4 @@ const renameTreeItem = async (context, treeDataProvider) => {
 
   // Refresh Tree
   treeDataProvider.refresh();
-};
-
-module.exports = renameTreeItem;
+}

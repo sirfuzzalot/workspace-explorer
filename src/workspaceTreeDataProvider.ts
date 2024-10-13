@@ -3,23 +3,21 @@
 // TreeDataProvider to feed data to the Workspace Explorer view.
 // ------------------------------------------------------------------ //
 
-const fs = require("fs");
-
-const path = require("path");
-
-const util = require("util");
-
-const vscode = require("vscode");
-
-const { WorkspaceTreeItem } = require("./workspaceTreeItem");
-
-const resolveConfigs = require("./resolveConfigs");
+import fs from "node:fs";
+import path from "node:path";
+import util from "node:util";
+import vscode from "vscode";
+import WorkspaceTreeItem from "./workspaceTreeItem";
+import resolveConfigs, { ResolvedExtensionConfig } from "./resolveConfigs";
 
 // Sort folders and workspace files alphabetically,
 // putting folders above workspace files.
-const sortFilesAndFolders = function sortFilesAndFolders(a, b) {
-  if (a.collapsableState === vscode.TreeItemCollapsibleState.Collapsed) {
-    if (b.collapsableState === vscode.TreeItemCollapsibleState.Collapsed) {
+const sortFilesAndFolders = function sortFilesAndFolders(
+  a: WorkspaceTreeItem,
+  b: WorkspaceTreeItem,
+) {
+  if (a.collapsibleState === vscode.TreeItemCollapsibleState.Collapsed) {
+    if (b.collapsibleState === vscode.TreeItemCollapsibleState.Collapsed) {
       const sortingArray = [a.label, b.label];
       sortingArray.sort();
       if (a.label === sortingArray[0]) {
@@ -29,7 +27,7 @@ const sortFilesAndFolders = function sortFilesAndFolders(a, b) {
     }
     return -1;
   }
-  if (b.collapsableState === vscode.TreeItemCollapsibleState.Collapsed) {
+  if (b.collapsibleState === vscode.TreeItemCollapsibleState.Collapsed) {
     return 1;
   }
   const sortingArray = [a.label, b.label];
@@ -45,9 +43,12 @@ const readdirAsync = util.promisify(fs.readdir);
 
 // Gets the list of .code-workspace files in the directory specified and
 // also returns any sub-directories.
-const findChildren = async (workspaceStorageDirectory, workspaceIcon) => {
+const findChildren = async (
+  workspaceStorageDirectory: string,
+  workspaceIcon: string | null,
+) => {
   const filenames = await readdirAsync(workspaceStorageDirectory);
-  const workspaceFiles = [];
+  const workspaceFiles: string[] = [];
   filenames.forEach((value) => {
     if (value.endsWith(".code-workspace")) {
       workspaceFiles.push(value);
@@ -60,7 +61,7 @@ const findChildren = async (workspaceStorageDirectory, workspaceIcon) => {
     }
   });
   // Create a tree-item for each .code-workspaces file.
-  const workspaceArray = [];
+  const workspaceArray: WorkspaceTreeItem[] = [];
   workspaceFiles.forEach((value) => {
     let fileOrFolder = "";
     if (workspaceIcon) {
@@ -68,31 +69,50 @@ const findChildren = async (workspaceStorageDirectory, workspaceIcon) => {
         ? `$(${workspaceIcon}) `
         : "$(settings-group-collapsed) ";
     }
-    workspaceArray.push({
-      label: `${fileOrFolder}${value.replace(".code-workspace", "")}`,
-      workspaceFileNameAndFilePath: fs.realpathSync(
-        `${workspaceStorageDirectory}/${value}`
-      ),
-      collapsableState: fs
-        .lstatSync(fs.realpathSync(`${workspaceStorageDirectory}/${value}`))
-        .isDirectory()
-        ? vscode.TreeItemCollapsibleState.Collapsed
-        : vscode.TreeItemCollapsibleState.None,
-    });
+    const label = `${fileOrFolder}${value.replace(".code-workspace", "")}`;
+    const workspaceFileNameAndFilePath = fs.realpathSync(
+      `${workspaceStorageDirectory}/${value}`,
+    );
+    const collapsibleState = fs
+      .lstatSync(workspaceFileNameAndFilePath)
+      .isDirectory()
+      ? vscode.TreeItemCollapsibleState.Collapsed
+      : vscode.TreeItemCollapsibleState.None;
+    const treeItem = new WorkspaceTreeItem(
+      label,
+      workspaceFileNameAndFilePath,
+      collapsibleState,
+      undefined,
+      false,
+    );
+    workspaceArray.push(treeItem);
   });
   return workspaceArray.sort(sortFilesAndFolders);
 };
 
 // Custom TreeDataProvider that returns workspace and folder data
 // to be displayed in the TreeView.
-class WorkspaceTreeDataProvider {
-  constructor(options = { workspaceIcon: null }) {
+export default class WorkspaceTreeDataProvider
+  implements vscode.TreeDataProvider<WorkspaceTreeItem>
+{
+  private _onDidChangeTreeData: vscode.EventEmitter<
+    WorkspaceTreeItem | undefined
+  >;
+  readonly onDidChangeTreeData: vscode.Event<
+    WorkspaceTreeItem | undefined | null | void
+  >;
+  private workspaceIcon: string | null;
+  private targetIconUri: vscode.Uri | undefined;
+  public workspaceStorageDirectory: string;
+  public extensionConfig: ResolvedExtensionConfig | undefined;
+
+  constructor({ workspaceIcon }: { workspaceIcon?: string }) {
     this._onDidChangeTreeData = new vscode.EventEmitter();
     this.onDidChangeTreeData = this._onDidChangeTreeData.event;
     this.extensionConfig;
-    this.workspaceStorageDirectory;
+    this.workspaceStorageDirectory = "";
     this.targetIconUri;
-    this.workspaceIcon = options.workspaceIcon;
+    this.workspaceIcon = workspaceIcon || null;
     this.getConfigs();
   }
 
@@ -108,19 +128,19 @@ class WorkspaceTreeDataProvider {
 
   // Rebuilds the Tree of workspaces and sub-folders.
   // Repopulates the Workspace Explorer view.
-  refresh(targetIconUri) {
+  refresh(targetIconUri?: vscode.Uri) {
     this.getConfigs();
     this.targetIconUri = targetIconUri;
-    this._onDidChangeTreeData.fire();
+    this._onDidChangeTreeData.fire(undefined);
   }
 
   // Gets the parent of the current workspace file or folder.
-  getParent(element) {
+  getParent(element: WorkspaceTreeItem): WorkspaceTreeItem | undefined {
     return element.parent;
   }
 
   // Gets vscode Tree Items representing a workspace or folder.
-  getTreeItem(element) {
+  getTreeItem(element: WorkspaceTreeItem) {
     // Check if item is using an icon that must be force reloaded due
     // to a change icon action initiated by the user who overwrote the
     // original icon file.
@@ -128,44 +148,46 @@ class WorkspaceTreeDataProvider {
     if (this.targetIconUri) {
       const partialIconPath = this.targetIconUri.fsPath.replace(
         path.extname(this.targetIconUri.fsPath),
-        ""
+        "",
       );
       const partialWorkspacePath = element.workspaceFileNameAndFilePath.replace(
         path.extname(element.workspaceFileNameAndFilePath),
-        ""
+        "",
       );
       if (partialIconPath === partialWorkspacePath) {
         useNewUri = true;
       }
     }
+
     const treeItem = new WorkspaceTreeItem(
-      element.label,
+      element.label || "",
       element.workspaceFileNameAndFilePath,
-      element.collapsableState,
+      element.collapsibleState !== undefined
+        ? element.collapsibleState
+        : vscode.TreeItemCollapsibleState.None,
       this.extensionConfig,
-      useNewUri
+      useNewUri,
     );
 
     if (useNewUri) {
-      this.targetIconUri = "";
+      this.targetIconUri = undefined;
     }
 
     return treeItem;
   }
 
   // This runs on activation and any time a collapsed item is expanded.
-  async getChildren(element) {
+  async getChildren(element?: WorkspaceTreeItem) {
     if (this.workspaceStorageDirectory === undefined) {
       return [];
     }
+    // Find root level workspaces and folders.
     if (element === undefined) {
       return findChildren(this.workspaceStorageDirectory, this.workspaceIcon);
     }
     return findChildren(
       element.workspaceFileNameAndFilePath,
-      this.workspaceIcon
+      this.workspaceIcon,
     );
   }
 }
-
-module.exports = WorkspaceTreeDataProvider;

@@ -1,10 +1,8 @@
-const fs = require("fs");
-
-const path = require("path");
-
-const vscode = require("vscode");
-
-const constants = require("./constants");
+import fs from "node:fs";
+import path from "node:path";
+import vscode from "vscode";
+import constants from "./constants";
+import { ResolvedExtensionConfig } from "./resolveConfigs";
 
 // Establish Extension's Root Path.
 const currentFilePathSegmentList = path
@@ -15,23 +13,23 @@ const extensionRootPath = path.join(...currentFilePathSegmentList);
 
 // Gets light and dark icon paths from default values.
 const getDefaultWorkspaceIcons = function getDefaultWorkspaceIcons(
-  collapsableState
+  collapsibleState: vscode.TreeItemCollapsibleState,
 ) {
-  if (collapsableState === vscode.TreeItemCollapsibleState.Collapsed) {
+  if (collapsibleState === vscode.TreeItemCollapsibleState.Collapsed) {
     return {
       light: path.join(
         extensionRootPath,
         "resources",
         "icons",
         "light",
-        "folder.svg"
+        "folder.svg",
       ),
       dark: path.join(
         extensionRootPath,
         "resources",
         "icons",
         "dark",
-        "folder.svg"
+        "folder.svg",
       ),
     };
   }
@@ -41,14 +39,14 @@ const getDefaultWorkspaceIcons = function getDefaultWorkspaceIcons(
       "resources",
       "icons",
       "light",
-      "workspace.svg"
+      "workspace.svg",
     ),
     dark: path.join(
       extensionRootPath,
       "resources",
       "icons",
       "dark",
-      "workspace.svg"
+      "workspace.svg",
     ),
   };
 };
@@ -56,9 +54,9 @@ const getDefaultWorkspaceIcons = function getDefaultWorkspaceIcons(
 // Searches the same directory as the workspace file or folder
 // in search of images of the same name.
 const getCustomWorkspaceIcons = (
-  workspaceFileNameAndFilePath,
-  collapsableState,
-  extensionConfig
+  workspaceFileNameAndFilePath: string,
+  collapsibleState: vscode.TreeItemCollapsibleState,
+  additionalCustomIconDirectory: string,
 ) => {
   // Check if custom image exists. Else use the default.
   for (let x = 0; x < constants.supportedExtensions.length; x += 1) {
@@ -67,7 +65,7 @@ const getCustomWorkspaceIcons = (
     if (workspaceFileNameAndFilePath.includes(".code-workspace")) {
       imagePath = workspaceFileNameAndFilePath.replace(
         ".code-workspace",
-        constants.supportedExtensions[x]
+        constants.supportedExtensions[x],
       );
     } else {
       imagePath = `${workspaceFileNameAndFilePath}${constants.supportedExtensions[x]}`;
@@ -81,39 +79,46 @@ const getCustomWorkspaceIcons = (
   }
 
   // Check the Additional Custom Icon Directory if configured.
-  if (extensionConfig.additionalCustomIconDirectory !== "") {
+  if (additionalCustomIconDirectory !== "") {
     return getCustomWorkspaceIcons(
       path.join(
-        extensionConfig.additionalCustomIconDirectory,
-        path.basename(workspaceFileNameAndFilePath)
+        additionalCustomIconDirectory,
+        path.basename(workspaceFileNameAndFilePath),
       ),
-      collapsableState,
-      { additionalCustomIconDirectory: "" }
+      collapsibleState,
+      "",
     );
   }
-  return getDefaultWorkspaceIcons(collapsableState);
+  return getDefaultWorkspaceIcons(collapsibleState);
 };
 
 // Reimplemented vscode.TreeItem. Provides functionality to each item in
 // the TreeView. Calls functions to get custom and default icons.
-class WorkspaceTreeItem extends vscode.TreeItem {
+export default class WorkspaceTreeItem extends vscode.TreeItem {
+  private tooltipLabel: string | undefined;
+  workspaceFileNameAndFilePath: string;
+  tooltip: string | undefined;
+  parent: WorkspaceTreeItem | undefined;
+
   constructor(
-    label,
-    workspaceFileNameAndFilePath,
-    collapsableState,
-    extensionConfig,
-    useNewUri
+    label: string | vscode.TreeItemLabel,
+    workspaceFileNameAndFilePath: string,
+    collapsibleState: vscode.TreeItemCollapsibleState,
+    extensionConfig: ResolvedExtensionConfig | undefined,
+    useNewUri: boolean,
   ) {
-    super(label, collapsableState);
+    super(label, collapsibleState);
     this.workspaceFileNameAndFilePath = workspaceFileNameAndFilePath;
+    this.tooltipLabel;
+    this.parent = undefined;
 
     // Look for custom icons if configuration setting is enabled.
     // Else, get defaults.
-    if (extensionConfig.enableCustomIconSearch === true) {
+    if (extensionConfig && extensionConfig.enableCustomIconSearch === true) {
       const icons = getCustomWorkspaceIcons(
         workspaceFileNameAndFilePath,
-        collapsableState,
-        extensionConfig
+        collapsibleState,
+        extensionConfig.additionalCustomIconDirectory,
       );
       if (useNewUri) {
         // Create dummy query args to force reload of icon that has
@@ -130,13 +135,11 @@ class WorkspaceTreeItem extends vscode.TreeItem {
         this.iconPath = icons;
       }
     } else {
-      this.iconPath = getDefaultWorkspaceIcons(collapsableState);
+      this.iconPath = getDefaultWorkspaceIcons(collapsibleState);
     }
 
-    this.tooltipLabel;
-
     // Gives workspace Tree Items click to open in same window behavior.
-    if (collapsableState !== vscode.TreeItemCollapsibleState.Collapsed) {
+    if (collapsibleState !== vscode.TreeItemCollapsibleState.Collapsed) {
       this.command = {
         command: "workspaceExplorer.openWorkspaceInSameWindow",
         title: "Open workspace in same window",
@@ -152,13 +155,7 @@ class WorkspaceTreeItem extends vscode.TreeItem {
       // Displays the filepath tooltip for folders.
       this.tooltipLabel = this.workspaceFileNameAndFilePath;
     }
-  }
 
-  get tooltip() {
-    return this.tooltipLabel;
+    this.tooltip = this.tooltipLabel;
   }
 }
-
-module.exports = {
-  WorkspaceTreeItem,
-};

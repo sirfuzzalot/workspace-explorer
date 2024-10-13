@@ -1,9 +1,13 @@
-const path = require("path");
-
-const vscode = require("vscode");
+import path from "node:path";
+import vscode from "vscode";
+import WorkspaceTreeDataProvider from "./workspaceTreeDataProvider";
+import WorkspaceTreeItem from "./workspaceTreeItem";
 
 // Prompts the user for a new folder name and then creates it.
-const addSubFolder = async (context, treeDataProvider) => {
+export default async function (
+  context: WorkspaceTreeItem,
+  treeDataProvider: WorkspaceTreeDataProvider,
+) {
   const inputResults = await vscode.window.showInputBox({
     prompt: "Enter a name for the sub-folder.",
     validateInput: (value) => {
@@ -32,6 +36,4 @@ const addSubFolder = async (context, treeDataProvider) => {
 
   // Refresh Tree
   treeDataProvider.refresh();
-};
-
-module.exports = addSubFolder;
+}
