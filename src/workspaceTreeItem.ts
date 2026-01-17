@@ -17,36 +17,44 @@ const getDefaultWorkspaceIcons = function getDefaultWorkspaceIcons(
 ) {
   if (collapsibleState === vscode.TreeItemCollapsibleState.Collapsed) {
     return {
-      light: path.join(
-        extensionRootPath,
-        "resources",
-        "icons",
-        "light",
-        "folder.svg",
+      light: vscode.Uri.file(
+        path.join(
+          extensionRootPath,
+          "resources",
+          "icons",
+          "light",
+          "folder.svg",
+        ),
       ),
-      dark: path.join(
-        extensionRootPath,
-        "resources",
-        "icons",
-        "dark",
-        "folder.svg",
+      dark: vscode.Uri.file(
+        path.join(
+          extensionRootPath,
+          "resources",
+          "icons",
+          "dark",
+          "folder.svg",
+        ),
       ),
     };
   }
   return {
-    light: path.join(
-      extensionRootPath,
-      "resources",
-      "icons",
-      "light",
-      "workspace.svg",
+    light: vscode.Uri.file(
+      path.join(
+        extensionRootPath,
+        "resources",
+        "icons",
+        "light",
+        "workspace.svg",
+      ),
     ),
-    dark: path.join(
-      extensionRootPath,
-      "resources",
-      "icons",
-      "dark",
-      "workspace.svg",
+    dark: vscode.Uri.file(
+      path.join(
+        extensionRootPath,
+        "resources",
+        "icons",
+        "dark",
+        "workspace.svg",
+      ),
     ),
   };
 };
@@ -72,8 +80,8 @@ const getCustomWorkspaceIcons = (
     }
     if (fs.existsSync(imagePath)) {
       return {
-        light: imagePath,
-        dark: imagePath,
+        light: vscode.Uri.file(imagePath),
+        dark: vscode.Uri.file(imagePath),
       };
     }
   }
@@ -97,7 +105,6 @@ const getCustomWorkspaceIcons = (
 export default class WorkspaceTreeItem extends vscode.TreeItem {
   private tooltipLabel: string | undefined;
   workspaceFileNameAndFilePath: string;
-  tooltip: string | undefined;
   parent: WorkspaceTreeItem | undefined;
 
   constructor(
@@ -106,6 +113,7 @@ export default class WorkspaceTreeItem extends vscode.TreeItem {
     collapsibleState: vscode.TreeItemCollapsibleState,
     extensionConfig: ResolvedExtensionConfig | undefined,
     useNewUri: boolean,
+    useTooltip: boolean = true,
   ) {
     super(label, collapsibleState);
     this.workspaceFileNameAndFilePath = workspaceFileNameAndFilePath;
@@ -124,10 +132,10 @@ export default class WorkspaceTreeItem extends vscode.TreeItem {
         // Create dummy query args to force reload of icon that has
         // been overwritten by the user.
         this.iconPath = {
-          light: vscode.Uri.file(icons.light).with({
+          light: icons.light.with({
             query: `x=${Math.random()}`,
           }),
-          dark: vscode.Uri.file(icons.dark).with({
+          dark: icons.dark.with({
             query: `x=${Math.random()}`,
           }),
         };
@@ -156,6 +164,9 @@ export default class WorkspaceTreeItem extends vscode.TreeItem {
       this.tooltipLabel = this.workspaceFileNameAndFilePath;
     }
 
-    this.tooltip = this.tooltipLabel;
+    // Only set tooltip when used in explorer, not command palette
+    if (useTooltip) {
+      this.tooltip = this.tooltipLabel;
+    }
   }
 }
