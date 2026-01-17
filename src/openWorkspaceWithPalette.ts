@@ -5,7 +5,7 @@ import WorkspaceTreeItem from "./workspaceTreeItem";
 export async function selectWorkspace(
   placeHolder: string,
   tree: WorkspaceTreeDataProvider,
-  node: WorkspaceTreeItem | undefined
+  node: WorkspaceTreeItem | undefined,
 ) {
   const workspaceEntries = await tree.getChildren(node);
 
@@ -26,7 +26,7 @@ export async function selectWorkspace(
     await vscode.window.showQuickPick(
       // @ts-ignore
       workspaceEntries,
-      options
+      options,
     );
   if (!selectedItem) {
     return;

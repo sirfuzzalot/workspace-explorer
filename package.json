@@ -22,7 +22,7 @@
     "url": "https://github.com/sirfuzzalot/workspace-explorer.git"
   },
   "engines": {
-    "vscode": "^1.94.2"
+    "vscode": "^1.108.1"
   },
   "categories": [
     "Other"
@@ -56,7 +56,7 @@
         "workspaceExplorer.enableCustomIconSearch": {
           "type": "boolean",
           "default": true,
-          "markdownDescription": "Allow Workspace Explorer to search for .svg and .png files with the same name as your workspaces and folders. Then to use those as icons in the Workspace Explorer. The search path defaults to the same location as your workspace file. An additional search directory can be added in additionalCustomIconDirectory."
+          "markdownDescription": "Allow Workspace Explorer to search for .jpg and .png files with the same name as your workspaces and folders. Then to use those as icons in the Workspace Explorer. The search path defaults to the same location as your workspace file. An additional search directory can be added in additionalCustomIconDirectory."
         },
         "workspaceExplorer.additionalCustomIconDirectory": {
           "type": "string",
@@ -282,21 +282,24 @@
   },
   "scripts": {
     "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
     "format": "npx prettier --write .",
+    "format:check": "npx prettier --check .",
+    "type:check": "tsc --noEmit",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
+    "pre-commit": "npm run format && npm run format:check && npm run lint:fix && npm run lint && npm run type:check && npm run format && npm run format:check",
     "build": "npm run compile && vsce package",
     "publish": "vsce publish"
   },
   "devDependencies": {
     "@types/vscode": "^1.94.0",
-    "@types/node": "20.x",
-    "eslint": "~9.12.0",
+    "@types/node": "22.x",
+    "eslint": "~9.39.2",
     "@typescript-eslint/eslint-plugin": "^8.7.0",
     "@typescript-eslint/parser": "^8.7.0",
-    "eslint-config-prettier": "~9.1.0",
-    "prettier": "~3.3.3",
+    "eslint-config-prettier": "~10.1.8",
+    "prettier": "~3.8.0",
     "typescript": "^5.6.2",
     "@vscode/vsce": "^3.1.1"
   }

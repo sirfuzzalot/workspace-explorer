@@ -22,12 +22,16 @@ import { selectWorkspace } from "./openWorkspaceWithPalette";
 // and the workspace explorer is expanded.
 export async function activate(context: vscode.ExtensionContext) {
   // Setup tree data structure
-  const explorerTreeDataProvider = new WorkspaceTreeDataProvider({});
+  const explorerTreeDataProvider = new WorkspaceTreeDataProvider({
+    isForExplorer: true,
+  });
   const quickPickNewWindowTreeDataProvider = new WorkspaceTreeDataProvider({
     workspaceIcon: "multiple-windows",
+    isForExplorer: false,
   });
   const quickPickSameWindowTreeDataProvider = new WorkspaceTreeDataProvider({
     workspaceIcon: "window",
+    isForExplorer: false,
   });
 
   // Grab the extension version from the package.json file and publish

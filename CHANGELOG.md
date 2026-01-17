@@ -4,6 +4,9 @@ All notable changes to the "workspace-explorer" extension will be documented in 
 
 ## 2.4.0
 
+- Sorting of folders and workspaces in both explorer and command palette is now case-insensitive
+- Fix popup loop issue when workspace directory is not set
+- Fix issue on newer versions of VSCode where the command palette commands would crash.
 - Migrate JS files to TS
 - Update dependencies to current versions and to support TypeScript
 - Add VSCode launch, settings, and tasks configurations

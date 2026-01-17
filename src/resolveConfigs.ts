@@ -13,44 +13,64 @@ export interface ResolvedExtensionConfig {
   workspaceStorageDirectory: string;
 }
 
+let isShowingConfigPrompt = false;
+const dismissedConfigPrompts = new Set<string>();
+
 const promptForFilePath = async (
   extensionConfig: vscode.WorkspaceConfiguration,
   message: string,
   configName: string,
   configDisplayName: string,
 ) => {
-  const results = await vscode.window.showWarningMessage(
-    message,
-    ...["Choose a Directory", "Enter a Template Path"],
-  );
-  if (results === "Choose a Directory") {
-    const userFolder = await vscode.window.showOpenDialog({
-      canSelectFiles: false,
-      canSelectFolders: true,
-      canSelectMany: false,
-    });
-    if (userFolder) {
-      await extensionConfig.update(
-        configName,
-        userFolder[0].fsPath,
-        vscode.ConfigurationTarget.Global,
-      );
-    }
-  } else if (results === "Enter a Template Path") {
-    const inputResults = await vscode.window.showInputBox({
-      prompt:
-        `Enter a file system path for your ${configDisplayName}. ` +
-        "Environment variable substitution is supported. " +
-        "Ex: ${env:USERPROFILE} or ${env:HOME}/workspaces .",
-    });
+  if (isShowingConfigPrompt) {
+    return;
+  }
 
-    if (inputResults) {
-      await extensionConfig.update(
-        configName,
-        inputResults,
-        vscode.ConfigurationTarget.Global,
-      );
+  if (dismissedConfigPrompts.has(configName)) {
+    return;
+  }
+
+  try {
+    isShowingConfigPrompt = true;
+    const results = await vscode.window.showWarningMessage(
+      message,
+      ...["Choose a Directory", "Enter a Template Path"],
+    );
+    if (results === undefined) {
+      dismissedConfigPrompts.add(configName);
+      return;
     }
+    if (results === "Choose a Directory") {
+      const userFolder = await vscode.window.showOpenDialog({
+        canSelectFiles: false,
+        canSelectFolders: true,
+        canSelectMany: false,
+      });
+      if (userFolder) {
+        await extensionConfig.update(
+          configName,
+          userFolder[0].fsPath,
+          vscode.ConfigurationTarget.Global,
+        );
+      }
+    } else if (results === "Enter a Template Path") {
+      const inputResults = await vscode.window.showInputBox({
+        prompt:
+          `Enter a file system path for your ${configDisplayName}. ` +
+          "Environment variable substitution is supported. " +
+          "Ex: ${env:USERPROFILE} or ${env:HOME}/workspaces .",
+      });
+
+      if (inputResults) {
+        await extensionConfig.update(
+          configName,
+          inputResults,
+          vscode.ConfigurationTarget.Global,
+        );
+      }
+    }
+  } finally {
+    isShowingConfigPrompt = false;
   }
 };
 

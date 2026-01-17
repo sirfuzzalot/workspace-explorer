@@ -6,12 +6,9 @@ This extension is now published and supported under the name
 [workspace-explorer](https://marketplace.visualstudio.com/items?itemName=tomsaunders-code.workspace-explorer). If you have **vscode-workspace-explorer** please
 install this version instead, as **vscode-workspace-explorer** is no longer supported.
 
-## Release 2.3.0
+## Release 2.4.0
 
-This release formalizes support for opening workspaces from within Command Palette.
-Check out the docs at [Open Workspaces with Command Palette](#opening-a-workspace-using-command-palette)
-for more details. Icons have been added to the Command Palette in several
-places to make the options more clear.
+This is a modernization update. The extension is now migrated to TypeScript, and it uses current versions of its dependencies. It also includes a long awaited fix for the popup loop when the workspace directory is not set. Lastly, folder and workspaces are now sorted in the explorer and command palette with case-insensitivity. See full release at bottom or in CHANGELOG.md.
 
 # Introduction
 
@@ -248,6 +245,15 @@ for more information.
 ```
 
 # Release Notes
+
+## 2.4.0
+
+- Sorting of folders and workspaces in both explorer and command palette is now case-insensitive
+- Fix popup loop issue when workspace directory is not set
+- Fix issue on newer versions of VSCode where the command palette commands would crash.
+- Migrate JS files to TS
+- Update dependencies to current versions and to support TypeScript
+- Add VSCode launch, settings, and tasks configurations
 
 ## 2.3.0
 
