@@ -44,27 +44,63 @@
     "workspace"
   ],
   "contributes": {
-    "configuration": {
-      "type": "object",
-      "title": "Workspace Explorer Configuration",
-      "properties": {
-        "workspaceExplorer.workspaceStorageDirectory": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "The root directory containing your .code-workspace files. Workspace Explorer will show you any .code-workspace's in this directory and will also display any sub-folders. This will allow you to organize your workspaces into categories by sub-folder. Ex: C:\\Users\\appuser\\workspaces"
-        },
-        "workspaceExplorer.enableCustomIconSearch": {
-          "type": "boolean",
-          "default": true,
-          "markdownDescription": "Allow Workspace Explorer to search for .jpg and .png files with the same name as your workspaces and folders. Then to use those as icons in the Workspace Explorer. The search path defaults to the same location as your workspace file. An additional search directory can be added in additionalCustomIconDirectory."
-        },
-        "workspaceExplorer.additionalCustomIconDirectory": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "Give Workspace Explorer an additional search directory for .svg and .png files with the same name as your workspaces and folders. Then use those as icons in the Workspace Explorer. Workspace Explorer will first look in the Workspace Storage Directory and then will look in the Additional Custom Icon Directory. Ex: C:\\Users\\appuser\\icons"
+    "configuration": [
+      {
+        "title": "Storage & Icons",
+        "properties": {
+          "workspaceExplorer.workspaceStorageDirectory": {
+            "type": "string",
+            "default": "",
+            "markdownDescription": "The root directory containing your .code-workspace files. Workspace Explorer will show you any .code-workspace's in this directory and will also display any sub-folders. This will allow you to organize your workspaces into categories by sub-folder. Ex: C:\\Users\\appuser\\workspaces"
+          },
+          "workspaceExplorer.enableCustomIconSearch": {
+            "type": "boolean",
+            "default": true,
+            "markdownDescription": "Allow Workspace Explorer to search for .jpg and .png files with the same name as your workspaces and folders. Then to use those as icons in the Workspace Explorer. The search path defaults to the same location as your workspace file. An additional search directory can be added in additionalCustomIconDirectory."
+          },
+          "workspaceExplorer.additionalCustomIconDirectory": {
+            "type": "string",
+            "default": "",
+            "markdownDescription": "Give Workspace Explorer an additional search directory for .svg and .png files with the same name as your workspaces and folders. Then use those as icons in the Workspace Explorer. Workspace Explorer will first look in the Workspace Storage Directory and then will look in the Additional Custom Icon Directory. Ex: C:\\Users\\appuser\\icons"
+          }
+        }
+      },
+      {
+        "title": "Click Behavior",
+        "properties": {
+          "workspaceExplorer.clickAction": {
+            "type": "string",
+            "enum": [
+              "newWindow",
+              "sameWindow",
+              "none"
+            ],
+            "enumDescriptions": [
+              "Open the workspace in a new VS Code window",
+              "Open the workspace in the current window (replaces it)",
+              "Disable click-to-open (clicking only selects the item)"
+            ],
+            "default": "sameWindow",
+            "markdownDescription": "What happens when you click a workspace name in the tree view."
+          },
+          "workspaceExplorer.buttonAction": {
+            "type": "string",
+            "enum": [
+              "newWindow",
+              "sameWindow",
+              "none"
+            ],
+            "enumDescriptions": [
+              "Show a button that opens the workspace in a new window",
+              "Show a button that opens the workspace in the current window",
+              "Hide the inline button"
+            ],
+            "default": "newWindow",
+            "markdownDescription": "What the inline button on workspace items does. Set to `none` to hide it."
+          }
         }
       }
-    },
+    ],
     "viewsContainers": {
       "activitybar": [
         {
@@ -79,7 +115,8 @@
         {
           "id": "workspaceExplorer",
           "name": "Workspaces",
-          "contextualTitle": "Workspaces"
+          "contextualTitle": "Workspaces",
+          "icon": "resources/icons/view_container_icon.svg"
         }
       ]
     },
@@ -94,7 +131,8 @@
       },
       {
         "command": "workspaceExplorer.openWorkspaceInSameWindow",
-        "title": "Open Workspace in Same Window"
+        "title": "Open Workspace in Same Window",
+        "icon": "$(window)"
       },
       {
         "command": "workspaceExplorer.openWorkspaceInNewWindowQuickPick",
@@ -161,7 +199,12 @@
       "view/item/context": [
         {
           "command": "workspaceExplorer.openWorkspaceInNewWindow",
-          "when": "view == workspaceExplorer && viewItem == workspaceFile",
+          "when": "view == workspaceExplorer && viewItem == workspaceFile && config.workspaceExplorer.buttonAction == 'newWindow'",
+          "group": "inline"
+        },
+        {
+          "command": "workspaceExplorer.openWorkspaceInSameWindow",
+          "when": "view == workspaceExplorer && viewItem == workspaceFile && config.workspaceExplorer.buttonAction == 'sameWindow'",
           "group": "inline"
         },
         {

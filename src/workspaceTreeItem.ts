@@ -117,54 +117,52 @@ export default class WorkspaceTreeItem extends vscode.TreeItem {
   ) {
     super(label, collapsibleState);
     this.workspaceFileNameAndFilePath = workspaceFileNameAndFilePath;
-    this.tooltipLabel;
     this.parent = undefined;
 
-    // Look for custom icons if configuration setting is enabled.
-    // Else, get defaults.
-    if (extensionConfig && extensionConfig.enableCustomIconSearch === true) {
-      const icons = getCustomWorkspaceIcons(
-        workspaceFileNameAndFilePath,
-        collapsibleState,
-        extensionConfig.additionalCustomIconDirectory,
-      );
-      if (useNewUri) {
-        // Create dummy query args to force reload of icon that has
-        // been overwritten by the user.
-        this.iconPath = {
-          light: icons.light.with({
-            query: `x=${Math.random()}`,
-          }),
-          dark: icons.dark.with({
-            query: `x=${Math.random()}`,
-          }),
-        };
-      } else {
-        this.iconPath = icons;
-      }
-    } else {
-      this.iconPath = getDefaultWorkspaceIcons(collapsibleState);
-    }
+    const isFolder =
+      collapsibleState === vscode.TreeItemCollapsibleState.Collapsed;
+    this.contextValue = isFolder ? "folder" : "workspaceFile";
+    const randomQuery = { query: `x=${Math.random()}` };
 
-    // Gives workspace Tree Items click to open in same window behavior.
-    if (collapsibleState !== vscode.TreeItemCollapsibleState.Collapsed) {
+    // Icons: custom when enabled, otherwise defaults
+    const icons = extensionConfig?.enableCustomIconSearch
+      ? getCustomWorkspaceIcons(
+          workspaceFileNameAndFilePath,
+          collapsibleState,
+          extensionConfig.additionalCustomIconDirectory,
+        )
+      : getDefaultWorkspaceIcons(collapsibleState);
+
+    // Bust VSCode's icon cache when the user overwrote a custom icon file
+    const bustCache = useNewUri && extensionConfig?.enableCustomIconSearch;
+    this.iconPath = bustCache
+      ? {
+          light: icons.light.with(randomQuery),
+          dark: icons.dark.with(randomQuery),
+        }
+      : icons;
+
+    // Click behavior: workspace files get a configurable open command
+    this.tooltipLabel = this.workspaceFileNameAndFilePath;
+    const clickAction = isFolder
+      ? "none"
+      : (extensionConfig?.clickAction ?? "newWindow");
+    if (clickAction !== "none") {
+      const newWindow = clickAction === "newWindow";
       this.command = {
-        command: "workspaceExplorer.openWorkspaceInSameWindow",
-        title: "Open workspace in same window",
+        command: newWindow
+          ? "workspaceExplorer.openWorkspaceInNewWindow"
+          : "workspaceExplorer.openWorkspaceInSameWindow",
+        title: newWindow
+          ? "Open workspace in new window"
+          : "Open workspace in same window",
         arguments: [this.workspaceFileNameAndFilePath],
       };
-      // Ensures that only files have a plus window icon.
-      this.contextValue = "workspaceFile";
-      // Tool tip with workspace name for workspaces.
-      this.tooltipLabel = `Click to open ${this.label} workspace in this window.`;
-    } else {
-      // Ensures that only files have a plus window icon.
-      this.contextValue = "folder";
-      // Displays the filepath tooltip for folders.
-      this.tooltipLabel = this.workspaceFileNameAndFilePath;
+      this.tooltipLabel = newWindow
+        ? `Click to open ${this.label} workspace in a new window.`
+        : `Click to open ${this.label} workspace in this window.`;
     }
 
-    // Only set tooltip when used in explorer, not command palette
     if (useTooltip) {
       this.tooltip = this.tooltipLabel;
     }

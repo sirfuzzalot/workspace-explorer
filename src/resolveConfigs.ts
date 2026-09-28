@@ -7,10 +7,14 @@ import vscode from "vscode";
 import resolveTemplatePath from "./resolveTemplatePath";
 import { InvalidTemplateStringError } from "./resolveTemplatePath";
 
+export type ClickAction = "newWindow" | "sameWindow" | "none";
+
 export interface ResolvedExtensionConfig {
   enableCustomIconSearch: boolean;
   additionalCustomIconDirectory: string;
   workspaceStorageDirectory: string;
+  clickAction: ClickAction;
+  buttonAction: ClickAction;
 }
 
 let isShowingConfigPrompt = false;
@@ -161,11 +165,18 @@ export default async function (
     refreshFunction,
   );
 
+  const clickAction: ClickAction =
+    extensionConfig.get<ClickAction>("clickAction") ?? "sameWindow";
+  const buttonAction: ClickAction =
+    extensionConfig.get<ClickAction>("buttonAction") ?? "newWindow";
+
   const resolvedConfig: ResolvedExtensionConfig = {
     enableCustomIconSearch: extensionConfig.enableCustomIconSearch,
     additionalCustomIconDirectory:
       extensionConfig.additionalCustomIconDirectory,
     workspaceStorageDirectory,
+    clickAction,
+    buttonAction,
   };
   if (
     extensionConfig.enableCustomIconSearch === true &&

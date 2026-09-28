@@ -203,6 +203,14 @@ Workspace Explorer contributes the following settings:
   the **Workspace Storage Directory** and then will look in
   the **Additional Custom Icon Directory**. Ex: C:\\Users\\appuser\\icons
 
+- `workspaceExplorer.clickAction`
+
+  What happens when you click a workspace name in the tree view. Options: `newWindow`, `sameWindow` (default), or `none` (clicking only selects the item).
+
+- `workspaceExplorer.buttonAction`
+
+  What the inline button on workspace items does. Options: `newWindow` (default), `sameWindow`, or `none` (hides the button).
+
 ## Using Variables in Config Paths
 
 **Workspace Explorer** supports environment variables in your workspace
@@ -245,6 +253,12 @@ for more information.
 ```
 
 # Release Notes
+
+## 2.5.0
+
+- Configurable click behavior: choose what happens when you click a workspace (`newWindow`, `sameWindow`, or `none`)
+- Configurable inline button action: choose which command the inline button runs, or hide it entirely
+- Settings are now grouped into sections (Storage & Icons, Click Behavior) in the VS Code settings UI
 
 ## 2.4.1
 
