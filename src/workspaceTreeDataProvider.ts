@@ -9,6 +9,7 @@ import util from "node:util";
 import vscode from "vscode";
 import WorkspaceTreeItem from "./workspaceTreeItem";
 import resolveConfigs, { ResolvedExtensionConfig } from "./resolveConfigs";
+import OpenWorkspaceTracker, { normalizePath } from "./openWorkspaceTracker";
 
 // Sort folders and workspace files alphabetically,
 // putting folders above workspace files.
@@ -102,13 +103,16 @@ export default class WorkspaceTreeDataProvider implements vscode.TreeDataProvide
   public workspaceStorageDirectory: string;
   public extensionConfig: ResolvedExtensionConfig | undefined;
   private isForExplorer: boolean;
+  private openWorkspaceTracker: OpenWorkspaceTracker | null;
 
   constructor({
     workspaceIcon,
     isForExplorer,
+    openWorkspaceTracker,
   }: {
     workspaceIcon?: string;
     isForExplorer?: boolean;
+    openWorkspaceTracker?: OpenWorkspaceTracker;
   }) {
     this._onDidChangeTreeData = new vscode.EventEmitter();
     this.onDidChangeTreeData = this._onDidChangeTreeData.event;
@@ -117,6 +121,7 @@ export default class WorkspaceTreeDataProvider implements vscode.TreeDataProvide
     this.targetIconUri;
     this.workspaceIcon = workspaceIcon || null;
     this.isForExplorer = isForExplorer ?? false;
+    this.openWorkspaceTracker = openWorkspaceTracker ?? null;
     this.getConfigs();
   }
 
@@ -163,6 +168,19 @@ export default class WorkspaceTreeDataProvider implements vscode.TreeDataProvide
       }
     }
 
+    const showIndicator =
+      this.extensionConfig?.showOpenIndicator !== false &&
+      this.openWorkspaceTracker !== null;
+    const isOpen = showIndicator
+      ? this.openWorkspaceTracker!.isOpen(element.workspaceFileNameAndFilePath)
+      : false;
+    const currentWorkspacePath = vscode.workspace.workspaceFile?.fsPath;
+    const isCurrent =
+      showIndicator &&
+      currentWorkspacePath !== undefined &&
+      normalizePath(currentWorkspacePath) ===
+        normalizePath(element.workspaceFileNameAndFilePath);
+
     const treeItem = new WorkspaceTreeItem(
       element.label || "",
       element.workspaceFileNameAndFilePath,
@@ -172,6 +190,8 @@ export default class WorkspaceTreeDataProvider implements vscode.TreeDataProvide
       this.extensionConfig,
       useNewUri,
       this.isForExplorer,
+      isOpen,
+      isCurrent,
     );
 
     if (useNewUri) {

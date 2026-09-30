@@ -10,6 +10,9 @@ import path from "node:path";
 import vscode from "vscode";
 
 import WorkspaceTreeDataProvider from "./workspaceTreeDataProvider";
+import WorkspaceTreeItem from "./workspaceTreeItem";
+import OpenWorkspaceTracker from "./openWorkspaceTracker";
+import OpenWorkspaceDecorationProvider from "./openWorkspaceDecorationProvider";
 import changeIcon from "./changeIcon";
 import addSubFolder from "./addSubFolder";
 import deleteFolder from "./deleteFolder";
@@ -18,12 +21,37 @@ import deleteWorkspace from "./deleteWorkspace";
 import renameTreeItem from "./renameTreeItem";
 import { selectWorkspace } from "./openWorkspaceWithPalette";
 
+let activeTracker: OpenWorkspaceTracker | undefined;
+
+// Click commands receive a string path; inline button commands receive a TreeItem.
+function resolveWorkspacePath(
+  contextOrPath: WorkspaceTreeItem | string,
+): string {
+  return typeof contextOrPath === "string"
+    ? contextOrPath
+    : contextOrPath.workspaceFileNameAndFilePath;
+}
+
 // Activates the Extension when the Explorer view-container is open
 // and the workspace explorer is expanded.
 export async function activate(context: vscode.ExtensionContext) {
+  // Track which workspaces are open across VS Code windows
+  const tracker = new OpenWorkspaceTracker(context.globalStorageUri);
+  activeTracker = tracker;
+  const currentWorkspace = vscode.workspace.workspaceFile;
+  if (currentWorkspace) {
+    tracker.register(currentWorkspace.fsPath);
+  }
+
+  const decorationProvider = new OpenWorkspaceDecorationProvider(tracker);
+  context.subscriptions.push(
+    vscode.window.registerFileDecorationProvider(decorationProvider),
+  );
+
   // Setup tree data structure
   const explorerTreeDataProvider = new WorkspaceTreeDataProvider({
     isForExplorer: true,
+    openWorkspaceTracker: tracker,
   });
   const quickPickNewWindowTreeDataProvider = new WorkspaceTreeDataProvider({
     workspaceIcon: "multiple-windows",
@@ -45,14 +73,14 @@ export async function activate(context: vscode.ExtensionContext) {
       await readFile(path.join(extensionRootPath, "package.json"), "utf8"),
     ).version;
 
-    // Register open in new window command.
+    // Register the split command
     vscode.commands.registerCommand(
       "workspaceExplorer.openWorkspaceInNewWindow",
-      (context) => {
+      (contextOrPath) => {
         try {
           vscode.commands.executeCommand(
             "vscode.openFolder",
-            vscode.Uri.file(context.workspaceFileNameAndFilePath),
+            vscode.Uri.file(resolveWorkspacePath(contextOrPath)),
             true,
           );
         } catch (err) {
@@ -109,14 +137,13 @@ export async function activate(context: vscode.ExtensionContext) {
       },
     );
 
-    // Register open in same window command.
     vscode.commands.registerCommand(
       "workspaceExplorer.openWorkspaceInSameWindow",
-      (workspaceFileNameAndFilePath) => {
+      (contextOrPath) => {
         try {
           vscode.commands.executeCommand(
             "vscode.openFolder",
-            vscode.Uri.file(workspaceFileNameAndFilePath),
+            vscode.Uri.file(resolveWorkspacePath(contextOrPath)),
             false,
           );
         } catch (err) {
@@ -155,7 +182,22 @@ export async function activate(context: vscode.ExtensionContext) {
     // TODO: Add default text in tree view. Awaiting API stablization
     // treeView.message = 'Choose a Workspace Storage Directory';
 
-    // TODO: Add Configuration Change Listener
+    vscode.workspace.onDidChangeConfiguration((e) => {
+      if (e.affectsConfiguration("workspaceExplorer")) {
+        explorerTreeDataProvider.refresh();
+        quickPickNewWindowTreeDataProvider.refresh();
+        quickPickSameWindowTreeDataProvider.refresh();
+        decorationProvider.fire(undefined);
+      }
+    });
+
+    // Refresh open-workspace indicators when this window gains focus
+    vscode.window.onDidChangeWindowState((e) => {
+      if (e.focused) {
+        explorerTreeDataProvider.refresh();
+        decorationProvider.fire(undefined);
+      }
+    });
 
     // Register Add sub-folder Command.
     vscode.commands.registerCommand(
@@ -256,5 +298,6 @@ export async function activate(context: vscode.ExtensionContext) {
   }
 }
 
-// This method is called when the extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+  activeTracker?.unregister();
+}
